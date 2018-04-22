@@ -1,0 +1,18 @@
+{% extends 'recipes/recipe_base.html' %}
+{% block title %}RecipLees!{{ recipe.title }}{% endblock %}
+{% block content %}
+{% if recipe %}
+    <h1>{{ recipe.title }}</h1>
+    <h2>Ingredients</h2>
+    <ul>
+    {% for ingredient in recipe.ingredient_set.all %}
+        <li>{{ ingredient.raw_string }}</li>
+    {% endfor %}
+    </ul>
+    <h2>Directions</h2>
+    {% for direction in recipe.direction_set.all %}
+    <p>{{ direction.full_directions }}</p>
+    {% endfor %}
+    <p><a href="/recipes/">Back to Recipe List!</a></p>
+{% endif %}
+{% endblock %}

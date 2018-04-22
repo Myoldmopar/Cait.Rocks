@@ -4,14 +4,14 @@
 {% if recipe %}
     <h1>{{ recipe.title }}</h1>
     <h2>Ingredients</h2>
-    <ul>
+    <ul class="list-group">
     {% for ingredient in recipe.ingredient_set.all %}
-        <li>{{ ingredient.raw_string }}</li>
+        <li class="list-group-item">{{ ingredient.raw_string }}</li>
     {% endfor %}
     </ul>
     <h2>Directions</h2>
     {% for direction in recipe.direction_set.all %}
-    <p>{{ direction.full_directions }}</p>
+    <p>{{ direction.full_directions | linebreaks }}</p>
     {% endfor %}
     <p><a href="/recipes/">Back to Recipe List!</a></p>
 {% endif %}

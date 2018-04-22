@@ -3,11 +3,18 @@
 {% block content %}
 <h1>All Recipes</h1>
 {% if recipe_list %}
-    <ul class="list-group">
-    {% for recipe in recipe_list %}
-        <li class="list-group-item"><a href="/recipes/{{ recipe.id }}/">{{ recipe.title }}</a></li>
-    {% endfor %}
-    </ul>
+    <table class="table table-striped">
+        <tr>
+            <th>Recipe Type</th>
+            <th>Recipe Name</th>
+        </tr>
+        {% for recipe in recipe_list %}
+            <tr>
+                <td>{{ recipe.get_recipe_type_display }}</td>
+                <td><a href="/recipes/{{ recipe.id }}/">{{ recipe.title }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
 {% else %}
     <p>No recipes are available.</p>
 {% endif %}

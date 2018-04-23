@@ -6,7 +6,6 @@ from django.db import models
 
 class RecipeTypes(object):
     UNKNOWN = '10'
-    WHOLE_MEAL = '20'
     ENTREE = '30'
     SOUP = '40'
     SALAD = '50'
@@ -23,7 +22,6 @@ class Recipe(models.Model):
 
     RECIPE_TYPE_CHOICES = (
         (RecipeTypes.UNKNOWN, "Unknown"),
-        (RecipeTypes.WHOLE_MEAL, "Entire Meal"),
         (RecipeTypes.ENTREE, "Entree"),
         (RecipeTypes.SOUP, "Soup"),
         (RecipeTypes.SALAD, "Salad"),

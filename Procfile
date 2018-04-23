@@ -1,1 +1,1 @@
-web: gunicorn reciplees.wsgi --log-file -
+web: bin/runsvdir-dyno

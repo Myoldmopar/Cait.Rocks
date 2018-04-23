@@ -18,3 +18,8 @@ function filterTableRows() {
     } 
   }
 }
+
+function clearFilter() {
+    $("#filterInput").val('');
+    filterTableRows();
+}

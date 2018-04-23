@@ -3,8 +3,11 @@
 {% block content %}
 <h1>All Recipes</h1>
 {% if recipe_list %}
-    <div class="form-group">
-      <input type="text" class="form-control" id="filterInput" onkeyup="filterTableRows()" placeholder="Search by recipe title..">
+    <div class="input-group">
+      <input type="search" class="form-control" id="filterInput" onkeyup="filterTableRows()" placeholder="Search by recipe title..">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" onclick="clearFilter()">Clear</button>
+      </span>
     </div>
     <table id="recipeListTable" class="table table-striped">
         <tr>

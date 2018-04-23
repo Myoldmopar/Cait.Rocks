@@ -1,2 +1,0 @@
-django: gunicorn reciplees.wsgi --log-file -
-node: node server.js

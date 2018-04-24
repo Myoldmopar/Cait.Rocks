@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
+    "angular": "^1.6.4",
     "jquery": "^3.2.1",
     "bootstrap": "^3.3.7",
     "ubuntu-font": "https://google-fonts.azurewebsites.net/googleFonts/nameOfPackage?family=Ubuntu:regular,bold",

@@ -1,11 +1,12 @@
 {% extends 'recipes/recipe_base.html' %}
 {% block title %}RecipLees!{% endblock %}
 {% block content %}
-<h1>All Recipes</h1>
-{% if recipe_list %}
+    <h1>All Recipes</h1>
+
     <div class="input-group">
-      <input type="search" class="form-control" id="filterInput" onkeyup="filterTableRows()" placeholder="Search by recipe title..">
-      <span class="input-group-btn">
+        <input type="search" class="form-control" id="filterInput" onkeyup="filterTableRows()"
+               placeholder="Search by recipe title..">
+        <span class="input-group-btn">
         <button class="btn btn-primary" type="button" onclick="clearFilter()">Clear</button>
       </span>
     </div>
@@ -14,14 +15,9 @@
             <th>Recipe Type</th>
             <th>Recipe Name</th>
         </tr>
-        {% for recipe in recipe_list %}
-            <tr>
-                <td>{{ recipe.get_recipe_type_display }}</td>
-                <td><a href="/recipes/{{ recipe.id }}/">{{ recipe.title }}</a></td>
-            </tr>
-        {% endfor %}
+        <tr ng-repeat="recipe in recipe_list">
+            <td>{[{ recipe.recipe_type }]}</td>
+            <td><a href="/cookbook/recipe/{[{ recipe.id }]}/">{[{ recipe.title }]}</a></td>
+        </tr>
     </table>
-{% else %}
-    <p>No recipes are available.</p>
-{% endif %}
 {% endblock %}

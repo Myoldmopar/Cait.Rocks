@@ -16,7 +16,7 @@
 
 </head>
 
-<body style="font-family: Ubuntu, sans-serif;">
+<body style="font-family: Ubuntu, sans-serif;" ng-app="recipeApp" ng-controller="recipeController">
 
 {% block navbar %}
     <nav class="navbar navbar-default" style="border-radius: 0;">
@@ -52,7 +52,9 @@
 
 <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'angular/angular.min.js' %}"></script>
 <script src="{% static 'js/table_filter.js' %}"></script>
+<script src="{% static 'js/recipeApp.js' %}"></script>
 
 </body>
 

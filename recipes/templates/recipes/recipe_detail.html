@@ -13,6 +13,6 @@
     {% for direction in recipe.direction_set.all %}
     <p>{{ direction.full_directions | linebreaks }}</p>
     {% endfor %}
-    <p><a href="/recipes/">Back to Recipe List!</a></p>
+    <p><a href="/cookbook/">Back to Cookbook!</a></p>
 {% endif %}
 {% endblock %}

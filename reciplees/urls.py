@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_swagger.views import get_swagger_view
 
 from recipes.api import RecipeViewSet
-from recipes.views import get_monthly_view
+from recipes.views import get_monthly_view, grocery_list, monthly_plan
 
 schema_view = get_swagger_view(title='RecipLees API')
 
@@ -26,6 +26,8 @@ urlpatterns = [
 
     # Monthly Plan page, ultimately containing a nice calendar and table of ingredients for grocery shopping
     url(r'^thismonth/', get_monthly_view),
+    url(r'^grocery_list/', grocery_list),
+    url(r'^monthly_plan/', monthly_plan),
 
     # Main page, listing all the recipes
     url(r'^cookbook/', include('recipes.urls')),

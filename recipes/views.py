@@ -10,3 +10,7 @@ def cookbook(request):
 def detail_recipe(request, recipe_id=None):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     return render(request, 'recipes/recipe_detail.html', {'recipe': recipe})
+
+
+def get_monthly_view(request):
+    return render(request, 'recipes/monthly_view.html')

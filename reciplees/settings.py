@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dpvt@xbg@^81u%a^2nd-$-x6lzlpcs
 # DEPLOYMENT: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.10', 'caitrocks.herokuapp.com', 'cait.rocks']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.10', '192.168.1.100', 'caitrocks.herokuapp.com', 'cait.rocks']
 
 
 # Application definition

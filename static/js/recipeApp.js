@@ -8,12 +8,6 @@ app.config(function ($interpolateProvider) {
     $interpolateProvider.endSymbol('}]}');
 });
 
-// configure the module to perform C.S.R.F. operations nicely with Django
-app.config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-}]);
-
 // create a controller containing functions and variables made available in the controller's scope
 app.controller('recipeController', ['$scope', '$http', function ($scope, $http) {
     "use strict";
@@ -27,7 +21,34 @@ app.controller('recipeController', ['$scope', '$http', function ($scope, $http) 
         );
     };
 
-    // Variables, functions, and initialization for the package testing section
+    $scope.filterTableRows = function () {
+        // Declare variables
+        var filter, table, tr, td, i, inner_a;
+        filter = $scope.filterText.toUpperCase();
+        table = document.getElementById("recipeListTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1]; // Change this for a different column, really I just want to search the whole recipe maybe...
+            if (td) {
+                inner_a = td.getElementsByTagName("a")[0]; // Add error handling in case this doesn't have any a elements
+                if (inner_a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    };
+
+    $scope.clearFilter = function () {
+        $scope.filterText = '';
+        $scope.filterTableRows();
+    };
+
+    // things to do during page initialization
+    $scope.filterText = '';
     $scope.recipe_list = [];
     $scope.retrieve_recipes();
 

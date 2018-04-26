@@ -4,11 +4,11 @@
     <h1>All Recipes</h1>
 
     <div class="input-group">
-        <input type="search" class="form-control" id="filterInput" onkeyup="filterTableRows()"
-               placeholder="Search by recipe title..">
+        <input type="text" class="form-control" ng-model="filterText" ng-init="" ng-change="filterTableRows()"
+               placeholder="Search by recipe title.."/>
         <span class="input-group-btn">
-        <button class="btn btn-primary" type="button" onclick="clearFilter()">Clear</button>
-      </span>
+            <button class="btn btn-primary" type="button" ng-click="clearFilter()">Clear</button>
+        </span>
     </div>
     <table id="recipeListTable" class="table table-striped">
         <tr>

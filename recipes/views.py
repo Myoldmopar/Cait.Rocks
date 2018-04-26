@@ -1,8 +1,7 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseNotFound
 from rest_framework import status
 
-from recipes.models import Recipe
+from recipes.models.recipe import Recipe
 
 
 def cookbook(request):

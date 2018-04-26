@@ -16,10 +16,10 @@ urlpatterns = [
     url(r'^api/', include('recipes.api.urls')),
 
     # Swagger API documentation page
-    url(r'^swagger/', schema_view),
+    url(r'^swagger/', schema_view, name='api'),
 
     # Main page, listing all the recipes
-    url(r'^cookbook/', include('recipes.urls')),
+    url(r'^cookbook/', include('recipes.urls', namespace='cookbook')),
 
     # When in doubt, redirect to the main cookbook page
     url(r'^$', lambda r: HttpResponseRedirect('cookbook/')),

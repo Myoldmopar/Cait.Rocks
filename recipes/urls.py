@@ -1,7 +1,8 @@
 from django.conf.urls import url, include
-
-from recipes.views import MonthlyPlanViewSet, RecipeViewSet
 from rest_framework.routers import DefaultRouter
+
+from recipes.views.monthly_plan import MonthlyPlanViewSet
+from recipes.views.recipe_viewset import RecipeViewSet
 
 router = DefaultRouter()
 router.register(r'recipes', RecipeViewSet, base_name='recipes')

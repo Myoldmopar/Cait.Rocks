@@ -5,7 +5,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 schema_view = get_swagger_view(title='RecipLees API')
 
-handler404 = 'recipes.views.handle404'
+handler404 = 'recipes.views.utilities.handle404'
 
 urlpatterns = [
 

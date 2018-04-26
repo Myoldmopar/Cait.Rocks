@@ -22,6 +22,6 @@ urlpatterns = [
     url(r'^cookbook/', include('recipes.urls', namespace='cookbook')),
 
     # When in doubt, redirect to the main cookbook page
-    url(r'^$', lambda r: HttpResponseRedirect('cookbook/')),
+    url(r'^$', lambda r: HttpResponseRedirect('cookbook/recipes/')),
 
 ]

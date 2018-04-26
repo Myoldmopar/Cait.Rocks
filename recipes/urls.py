@@ -1,19 +1,16 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
-from recipes.views import get_monthly_view, grocery_list, monthly_plan, cookbook, detail_recipe
+from recipes.views import MonthlyPlanViewSet, RecipeViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'recipes', RecipeViewSet, base_name='recipes')
+router.register(r'monthly_plan', MonthlyPlanViewSet, base_name='monthly_plan')
 
 app_name = 'cookbook'
 urlpatterns = [
 
     # Main cookbook entry page
-    url(r'^$', cookbook, name='index'),
-
-    # Detailed recipe entry page
-    url(r'^recipe/(?P<recipe_id>[0-9]+)/$', detail_recipe, name='recipe'),
-
-    # Monthly Plan pages, ultimately containing a nice calendar and table of ingredients for grocery shopping
-    url(r'^thismonth/', get_monthly_view, name='monthlyview'),
-    url(r'^grocery_list/', grocery_list, name='grocerylist'),
-    url(r'^monthly_plan/', monthly_plan, name='monthlyplan'),
+    url(r'^', include(router.urls)),
 
 ]

@@ -10,6 +10,7 @@
             <button class="btn btn-primary" type="button" ng-click="clearFilter()">Clear</button>
         </span>
     </div>
+
     <table id="recipeListTable" class="table table-striped">
         <tr>
             <th>Recipe Type</th>
@@ -17,7 +18,8 @@
         </tr>
         <tr ng-repeat="recipe in recipe_list">
             <td>{[{ recipe.recipe_type }]}</td>
-            <td><a href="/cookbook/recipe/{[{ recipe.id }]}/">{[{ recipe.title }]}</a></td>
+            <td><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
         </tr>
     </table>
+
 {% endblock %}

@@ -1,28 +1,30 @@
 from django.shortcuts import get_object_or_404, render
 from rest_framework import status
+from rest_framework.viewsets import ViewSet
 
 from recipes.models.recipe import Recipe
 
 
-def cookbook(request):
-    return render(request, 'recipes/recipe_list.html')
+class RecipeViewSet(ViewSet):
+
+    def list(self, request):
+        return render(request, 'recipes/recipe_list.html')
+
+    def retrieve(self, request, recipe_id=None):
+        recipe = get_object_or_404(Recipe, pk=recipe_id)
+        return render(request, 'recipes/recipe_detail.html', {'recipe': recipe})
 
 
-def detail_recipe(request, recipe_id=None):
-    recipe = get_object_or_404(Recipe, pk=recipe_id)
-    return render(request, 'recipes/recipe_detail.html', {'recipe': recipe})
+class MonthlyPlanViewSet(ViewSet):
 
+    def list(self, request):
+        return render(request, 'recipes/monthly_view.html')
 
-def get_monthly_view(request):
-    return render(request, 'recipes/monthly_view.html')
+    def monthly_plan(self, request):
+        return render(request, 'recipes/meal_plan.html')
 
-
-def monthly_plan(request):
-    return render(request, 'recipes/meal_plan.html')
-
-
-def grocery_list(request):
-    return render(request, 'recipes/grocery_list.html')
+    def grocery_list(self, request):
+        return render(request, 'recipes/grocery_list.html')
 
 
 def handle404(request):

@@ -1,8 +1,6 @@
-import os
-
-from django.conf import settings
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseNotFound
+from rest_framework import status
 
 from recipes.models import Recipe
 
@@ -26,3 +24,7 @@ def monthly_plan(request):
 
 def grocery_list(request):
     return render(request, 'recipes/grocery_list.html')
+
+
+def handle404(request):
+    return render(request, 'recipes/404.html', status=status.HTTP_404_NOT_FOUND)

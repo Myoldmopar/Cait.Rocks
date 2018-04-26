@@ -5,13 +5,15 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_swagger.views import get_swagger_view
 
 from recipes.api import RecipeViewSet
-from recipes.views import get_monthly_view, grocery_list, monthly_plan
+from recipes.views import get_monthly_view, grocery_list, monthly_plan, handle404
 
 schema_view = get_swagger_view(title='RecipLees API')
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'recipes', RecipeViewSet)
+
+handler404 = 'recipes.views.handle404'
 
 urlpatterns = [
 

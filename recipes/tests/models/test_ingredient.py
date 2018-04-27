@@ -43,32 +43,32 @@ class IngredientFullStringFunctionTests(TestCase):
         Tests a bunch of perturbations of ingredient member variables to exercise the full_string function
         """
         self.create_and_test_ingredient(
-            ''
+            u''
         )
         self.create_and_test_ingredient(
-            '½ ', amount=AmountType.ONE_HALF
+            u'½ ', amount=AmountType.ONE_HALF
         )
         self.create_and_test_ingredient(
-            '',
+            u'tsp ',
             measurement=MeasurementType.TEASPOON
         )
         self.create_and_test_ingredient(
-            '',
+            u'Foodstuff',
             item_description='Foodstuff'
         )
         self.create_and_test_ingredient(
-            '',
+            u'½ tsp ',
             amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON
         )
         self.create_and_test_ingredient(
-            '',
+            u'½ Foodstuff',
             amount=AmountType.ONE_HALF, item_description='Foodstuff'
         )
         self.create_and_test_ingredient(
-            '',
+            u'tsp Foodstuff',
             measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
         )
         self.create_and_test_ingredient(
-            '',
+            u'½ tsp Foodstuff',
             amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
         )

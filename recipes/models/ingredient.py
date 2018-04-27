@@ -74,7 +74,7 @@ class Ingredient(models.Model):
     )
     measurement = models.CharField(max_length=25, choices=MEASUREMENT_TYPE_CHOICES, default='')
 
-    item_description = models.CharField(max_length=200, blank=False)
+    item_description = models.CharField(max_length=200, blank=True, default='')
 
     recipe = models.ForeignKey(Recipe)
 

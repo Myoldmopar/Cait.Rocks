@@ -5,8 +5,8 @@
     <h1>{{ recipe.title }}</h1>
     <h2>Ingredients</h2>
     <ul class="list-group">
-    {% for ingredient in recipe.ingredient_set.all %}
-        <li class="list-group-item">{{ ingredient.amount }} {{ ingredient.measurement }} {{ ingredient.item_description }}</li>
+    {% for ingredient in ingredients %}
+        <li class="list-group-item">{{ ingredient }}</li>
     {% endfor %}
     </ul>
     <h2>Directions</h2>

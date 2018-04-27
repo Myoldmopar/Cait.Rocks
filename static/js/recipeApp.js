@@ -4,6 +4,7 @@ var app = angular.module('recipeApp', []);
 
 // configure the module to use a different template interpolation sequence to avoid conflicting with Django
 app.config(function ($interpolateProvider) {
+    "use strict";
     $interpolateProvider.startSymbol('{[{');
     $interpolateProvider.endSymbol('}]}');
 });

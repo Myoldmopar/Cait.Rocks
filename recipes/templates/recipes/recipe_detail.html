@@ -6,13 +6,13 @@
     <h2>Ingredients</h2>
     <ul class="list-group">
     {% for ingredient in recipe.ingredient_set.all %}
-        <li class="list-group-item">{{ ingredient.raw_string }}</li>
+        <li class="list-group-item">{{ ingredient.amount }} {{ ingredient.measurement }} {{ ingredient.item_description }}</li>
     {% endfor %}
     </ul>
     <h2>Directions</h2>
     {% for direction in recipe.direction_set.all %}
     <p>{{ direction.full_directions | linebreaks }}</p>
     {% endfor %}
-    <p><a href="/cookbook/">Back to Cookbook!</a></p>
+    <p><a href="{% url 'cookbook:recipes-list' %}">Back to Cookbook!</a></p>
 {% endif %}
 {% endblock %}

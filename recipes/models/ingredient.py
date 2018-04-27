@@ -26,6 +26,18 @@ class AmountType(object):
     TEN = '150'
 
 
+class MeasurementType(object):
+    NONE = '0'
+    PINCH = '5'
+    TEASPOON = '10'
+    TABLESPOON = '20'
+    CUP = '30'
+    PINT = '40'
+    QUART = '50'
+    LITER = '60'
+    GALLON = '70'
+
+
 class Ingredient(models.Model):
 
     AMOUNT_TYPE_CHOICES = (
@@ -49,7 +61,18 @@ class Ingredient(models.Model):
     )
     amount = models.CharField(max_length=5, choices=AMOUNT_TYPE_CHOICES, default='')
 
-    measurement = models.CharField(max_length=25, default='')
+    MEASUREMENT_TYPE_CHOICES = (
+        (MeasurementType.NONE, ""),
+        (MeasurementType.PINCH, "Pinch"),
+        (MeasurementType.TEASPOON, "tsp"),
+        (MeasurementType.TABLESPOON, "Tbsp"),
+        (MeasurementType.CUP, "c"),
+        (MeasurementType.PINT, "pint"),
+        (MeasurementType.QUART, "qt"),
+        (MeasurementType.LITER, "liter"),
+        (MeasurementType.GALLON, "gallon"),
+    )
+    measurement = models.CharField(max_length=25, choices=MEASUREMENT_TYPE_CHOICES, default='')
 
     item_description = models.CharField(max_length=200, blank=False)
 

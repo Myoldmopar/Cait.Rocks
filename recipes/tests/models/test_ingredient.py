@@ -9,7 +9,7 @@ class IngredientModelConstructionTests(TestCase):
         """
         Makes sure ingredient can potentially be blank...do we want this?
         """
-        blank_ingredient = Ingredient(raw_string='')
+        blank_ingredient = Ingredient(item_description='')
         self.assertIs(str(blank_ingredient), '')
 
     def test_ingredient_default_construction(self):
@@ -24,5 +24,5 @@ class IngredientModelConstructionTests(TestCase):
         Makes sure ingredient can potentially be blank...do we want this?
         """
         ingredient_string = 'This is a normal ingredient'
-        blank_ingredient = Ingredient(raw_string=ingredient_string)
+        blank_ingredient = Ingredient(item_description=ingredient_string)
         self.assertIs(str(blank_ingredient), ingredient_string)

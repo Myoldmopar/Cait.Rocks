@@ -1,0 +1,6 @@
+[run]
+omit =
+        /usr/*
+        .tox/*
+        recipes/migrations/*
+        manage.py

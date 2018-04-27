@@ -12,6 +12,7 @@ env:
   matrix:
     - TOX_ENV=python
     - TOX_ENV=flake8
+    - TOX_ENV=structure
 
 install:
   - pip install tox

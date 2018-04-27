@@ -7,8 +7,8 @@
 
     <h2>Ingredients</h2>
     <ul class="list-group">
-    {% for ingredient in ingredients %}
-        <li class="list-group-item">{{ ingredient }}</li>
+    {% for ingredient in recipe.ingredient_set.all %}
+        <li class="list-group-item">{{ ingredient.full_string }}</li>
     {% endfor %}
     </ul>
 

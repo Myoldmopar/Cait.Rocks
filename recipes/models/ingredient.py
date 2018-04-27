@@ -80,3 +80,12 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.item_description
+
+    def full_string(self):
+        this_ingredient_string = ''
+        if self.amount:
+            this_ingredient_string += self.get_amount_display() + ' '
+        if self.measurement:
+            this_ingredient_string += self.get_measurement_display() + ' '
+        this_ingredient_string += self.item_description
+        return this_ingredient_string

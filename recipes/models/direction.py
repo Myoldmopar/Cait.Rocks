@@ -7,8 +7,8 @@ from recipes.models.recipe import Recipe
 
 
 class Direction(models.Model):
-    full_directions = models.TextField()
-    recipe = models.ForeignKey(Recipe)
+    full_directions = models.TextField(help_text="A freeform list of directions for making this recipe")
+    recipe = models.ForeignKey(Recipe, help_text="A pointer to an existing recipe to link them together")
 
     def __str__(self):
         if len(self.full_directions) < 40:

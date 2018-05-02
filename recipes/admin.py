@@ -7,24 +7,23 @@ from recipes.models.direction import Direction
 from recipes.models.ingredient import Ingredient
 from recipes.models.recipe import Recipe
 
-# Register your models here.
-admin.site.register(Ingredient)
 admin.site.register(Direction)
+admin.site.register(Ingredient)
 
 
-class IngredientAdmin(admin.StackedInline):
+class IngredientInline(admin.TabularInline):
     model = Ingredient
+    extra = 0
 
 
-class DirectionAdmin(admin.StackedInline):
+class DirectionInline(admin.StackedInline):
     model = Direction
     max_num = 1
 
 
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
-    # list_display = ['title', 'ingredient', ]
-    inlines = [IngredientAdmin, DirectionAdmin]
-
+    inlines = [IngredientInline, DirectionInline]
+    list_display = ('title', 'recipe_type')
 
 admin.site.register(Recipe, RecipeAdmin)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
@@ -6,6 +7,8 @@ from recipes.models.recipe import Recipe
 
 
 class CalendarDay(models.Model):
+    nickname = models.CharField(max_length=100,
+                                help_text="A brief nickname for this month, usually auto-generated as YY-MMM-DD")
     recipe01 = models.OneToOneField(Recipe, related_name="recipe01")
     recipe02 = models.OneToOneField(Recipe, related_name="recipe02")
     recipe03 = models.OneToOneField(Recipe, related_name="recipe03")
@@ -16,7 +19,8 @@ class CalendarDay(models.Model):
 
 
 class Calendar(models.Model):
-    nickname = models.CharField(max_length=100, help_text="A brief nickname for this month, could be just YY-MMM")
+    nickname = models.CharField(max_length=100,
+                                help_text="A brief nickname for this month, usually auto-generated as YY-MMM")
     day01 = models.OneToOneField(CalendarDay, help_text="A pointer to day #01 of this month", related_name="day01")
     day02 = models.OneToOneField(CalendarDay, help_text="A pointer to day #02 of this month", related_name="day02")
     day03 = models.OneToOneField(CalendarDay, help_text="A pointer to day #03 of this month", related_name="day03")

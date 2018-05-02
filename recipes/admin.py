@@ -26,4 +26,5 @@ class RecipeAdmin(admin.ModelAdmin):
     inlines = [IngredientInline, DirectionInline]
     list_display = ('title', 'recipe_type')
 
+
 admin.site.register(Recipe, RecipeAdmin)

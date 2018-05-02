@@ -6,7 +6,10 @@ from django.contrib import admin
 from recipes.models.direction import Direction
 from recipes.models.ingredient import Ingredient
 from recipes.models.recipe import Recipe
+from recipes.models.calendar import CalendarDay, Calendar
 
+admin.site.register(CalendarDay)
+admin.site.register(Calendar)
 admin.site.register(Direction)
 admin.site.register(Ingredient)
 

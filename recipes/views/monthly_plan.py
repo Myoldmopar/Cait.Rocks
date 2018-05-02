@@ -10,6 +10,10 @@ class MonthlyPlanViewSet(ViewSet):
         return render(request, 'recipes/monthly_view.html')
 
     @action(methods=['get'], detail=False)
+    def planner2(self, request):
+        return render(request, 'recipes/planner2.html')
+
+    @action(methods=['get'], detail=False)
     def monthly_plan(self, request):
         return render(request, 'recipes/meal_plan.html')
 

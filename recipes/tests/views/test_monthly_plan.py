@@ -55,3 +55,21 @@ class TestGroceryListView(TestCase):
         url_path = reverse('cookbook:monthly_plan-grocery-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, 200)
+
+
+class TestPlannerView(TestCase):
+
+    def test_url_path(self):
+        """
+        Test the path directly
+        """
+        response = self.client.get('/cookbook/monthly_plan/planner2/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_reversed_path(self):
+        """
+        Rely on the url reversing
+        """
+        url_path = reverse('cookbook:monthly_plan-planner2')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, 200)

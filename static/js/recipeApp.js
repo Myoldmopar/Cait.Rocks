@@ -48,9 +48,18 @@ app.controller('recipeController', ['$scope', '$http', function ($scope, $http) 
         $scope.filterTableRows();
     };
 
+    $scope.getCurrentCalendar = function () {
+        return $http.get('/api/calendars/1/').then(
+            function (response) {
+                $scope.calendar = response.data;
+            }
+        );
+    };
+
     // things to do during page initialization
     $scope.filterText = '';
     $scope.recipe_list = [];
     $scope.retrieve_recipes();
+    $scope.getCurrentCalendar();
 
 }]);

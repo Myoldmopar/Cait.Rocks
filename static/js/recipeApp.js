@@ -51,6 +51,43 @@ app.controller('recipeController', ['$scope', '$http', function ($scope, $http) 
     $scope.getCurrentCalendar = function () {
         return $http.get('/api/calendars/1/').then(
             function (response) {
+                if (response.data.day01) {
+                    $http.get('/api/calendardays/' + response.data.day01 + '/').then(
+                        function (day_response) {
+                            $scope.day01 = day_response.data;
+                            if (day_response.data.recipe01) {
+                                $http.get('/api/recipes/' + day_response.data.recipe01 + '/').then(
+                                    function (recipe_response) {
+                                        $scope.day01recipe01 = recipe_response.data.title;
+                                    }
+                                );
+                            }
+                            if (day_response.data.recipe02) {
+                                $http.get('/api/recipes/' + day_response.data.recipe02 + '/').then(
+                                    function (recipe_response) {
+                                        $scope.day01recipe02 = recipe_response.data.title;
+                                    }
+                                );
+                            }
+                            if (day_response.data.recipe03) {
+                                $http.get('/api/recipes/' + day_response.data.recipe03 + '/').then(
+                                    function (recipe_response) {
+                                        $scope.day01recipe03 = recipe_response.data.title;
+                                    }
+                                );
+                            }
+                            if (day_response.data.recipe04) {
+                                $http.get('/api/recipes/' + day_response.data.recipe04 + '/').then(
+                                    function (recipe_response) {
+                                        $scope.day01recipe04 = recipe_response.data.title;
+                                    }
+                                );
+                            }
+                        }
+                    );
+                // } else {
+                //     $scope.day01 = {id: 1, recipe01: 2};
+                }
                 $scope.calendar = response.data;
             }
         );

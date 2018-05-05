@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from recipes.api.direction import DirectionViewSet
 from recipes.api.ingredient import IngredientViewSet
 from recipes.api.recipe import RecipeViewSet
-from recipes.api.calendar import CalendarViewSet, CalendarDayViewSet
+from recipes.api.planning import CalendarViewSet, CalendarDayViewSet
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()

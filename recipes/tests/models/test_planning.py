@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
 
-from recipes.models.calendar import Calendar, CalendarDay
+from recipes.models.planning import Calendar, CalendarDay
 
 
 class CalendarModelConstructionTests(TestCase):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
-from recipes.models.calendar import Calendar, CalendarDay
+from recipes.models.planning import Calendar, CalendarDay
 
 
 class CalendarSerializer(serializers.ModelSerializer):

@@ -48,6 +48,23 @@ app.controller('recipeController', ['$scope', '$http', function ($scope, $http) 
         $scope.filterTableRows();
     };
 
+    $scope.getCalendars = function () {
+        $http.get('/api/calendars/').then(
+            function (calendars_response) {
+                $scope.allCalendars = calendars_response.data;
+                if ($scope.allCalendars.length !== 0) {
+                    $scope.selectedCalendar = $scope.allCalendars[0];
+                    $scope.updateForSelectedCalendar();
+                }
+            }
+        );
+    };
+
+    $scope.updateForSelectedCalendar = function () {
+        console.log($scope.selectedCalendar);
+        $scope.getMonthDates();
+    };
+
     $scope.getCurrentCalendar = function () {
         return $http.get('/api/calendars/1/').then(
             function (response) {
@@ -85,18 +102,29 @@ app.controller('recipeController', ['$scope', '$http', function ($scope, $http) 
                             }
                         }
                     );
-                // } else {
-                //     $scope.day01 = {id: 1, recipe01: 2};
                 }
-                $scope.calendar = response.data;
             }
         );
+    };
+
+    $scope.getMonthDates = function() {
+        if ($scope.selectedCalendar) {
+            $http.get('/api/calendars/' + $scope.selectedCalendar.id + '/monthly_dates/').then(
+                function (date_response) {
+                    $scope.monthly_dates = date_response.data;
+                    $scope.num_weeks = date_response.data.num_weeks;
+                    console.log($scope.monthly_dates);
+                    console.log($scope.num_weeks);
+                }
+            );
+        }
     };
 
     // things to do during page initialization
     $scope.filterText = '';
     $scope.recipe_list = [];
     $scope.retrieve_recipes();
+    $scope.getCalendars();
     $scope.getCurrentCalendar();
 
 }]);

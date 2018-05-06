@@ -62,58 +62,75 @@ app.controller('recipeController', ['$scope', '$http', function ($scope, $http) 
 
     $scope.updateForSelectedCalendar = function () {
         console.log($scope.selectedCalendar);
-        $scope.getMonthDates();
+        $scope.getMonthData().then(
+            function () {
+                $scope.day00 = $scope.monthly_data.dates.d00.full_day;
+                $scope.day01 = $scope.monthly_data.dates.d01.full_day;
+                $scope.day02 = $scope.monthly_data.dates.d02.full_day;
+                $scope.day03 = $scope.monthly_data.dates.d03.full_day;
+                $scope.day04 = $scope.monthly_data.dates.d04.full_day;
+                $scope.day05 = $scope.monthly_data.dates.d05.full_day;
+                $scope.day06 = $scope.monthly_data.dates.d06.full_day;
+            }
+        )
     };
 
-    $scope.getCurrentCalendar = function () {
-        return $http.get('/api/calendars/1/').then(
-            function (response) {
-                if (response.data.day01) {
-                    $http.get('/api/calendardays/' + response.data.day01 + '/').then(
-                        function (day_response) {
-                            $scope.day01 = day_response.data;
-                            if (day_response.data.recipe01) {
-                                $http.get('/api/recipes/' + day_response.data.recipe01 + '/').then(
-                                    function (recipe_response) {
-                                        $scope.day01recipe01 = recipe_response.data.title;
-                                    }
-                                );
-                            }
-                            if (day_response.data.recipe02) {
-                                $http.get('/api/recipes/' + day_response.data.recipe02 + '/').then(
-                                    function (recipe_response) {
-                                        $scope.day01recipe02 = recipe_response.data.title;
-                                    }
-                                );
-                            }
-                            if (day_response.data.recipe03) {
-                                $http.get('/api/recipes/' + day_response.data.recipe03 + '/').then(
-                                    function (recipe_response) {
-                                        $scope.day01recipe03 = recipe_response.data.title;
-                                    }
-                                );
-                            }
-                            if (day_response.data.recipe04) {
-                                $http.get('/api/recipes/' + day_response.data.recipe04 + '/').then(
-                                    function (recipe_response) {
-                                        $scope.day01recipe04 = recipe_response.data.title;
-                                    }
-                                );
-                            }
+    $scope.getCalendarDayData = function (day_index) {
+        if (!day_index) {
+            return {'recipe01': null, 'recipe02': null, 'recipe03': null, 'recipe04': null}
+        }
+        $http.get('/api/calendardays/' + day_index + '/').then(
+            function (day_response) {
+                var this_response = {};
+                if (day_response.data.recipe01) {
+                    $http.get('/api/recipes/' + day_response.data.recipe01 + '/').then(
+                        function (recipe_response) {
+                            this_response['recipe01'] = recipe_response.data.title;
                         }
                     );
                 }
+                if (day_response.data.recipe02) {
+                    $http.get('/api/recipes/' + day_response.data.recipe02 + '/').then(
+                        function (recipe_response) {
+                            this_response['recipe02'] = recipe_response.data.title;
+                        }
+                    );
+                }
+                if (day_response.data.recipe03) {
+                    $http.get('/api/recipes/' + day_response.data.recipe03 + '/').then(
+                        function (recipe_response) {
+                            this_response['recipe03'] = recipe_response.data.title;
+                        }
+                    );
+                }
+                if (day_response.data.recipe04) {
+                    $http.get('/api/recipes/' + day_response.data.recipe04 + '/').then(
+                        function (recipe_response) {
+                            this_response['recipe04'] = recipe_response.data.title;
+                        }
+                    );
+                }
+                return this_response;
             }
         );
     };
 
-    $scope.getMonthDates = function() {
+    $scope.getCurrentCalendar = function () {
+        // return $http.get('/api/calendars/' + $scope.selectedCalendar.id + '/').then(
+        //     function (response) {
+        //         $scope.day01 = $scope.getCalendarDayData(response.data.day01);
+        //         $scope.day02 = $scope.getCalendarDayData(response.data.day02);
+        //     }
+        // );
+    };
+
+    $scope.getMonthData = function () {
         if ($scope.selectedCalendar) {
-            $http.get('/api/calendars/' + $scope.selectedCalendar.id + '/monthly_dates/').then(
+            return $http.get('/api/calendars/' + $scope.selectedCalendar.id + '/monthly_dates/').then(
                 function (date_response) {
-                    $scope.monthly_dates = date_response.data;
+                    $scope.monthly_data = date_response.data;
                     $scope.num_weeks = date_response.data.num_weeks;
-                    console.log($scope.monthly_dates);
+                    console.log($scope.monthly_data);
                     console.log($scope.num_weeks);
                 }
             );

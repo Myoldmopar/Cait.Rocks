@@ -8,105 +8,135 @@ from django.db import models
 from recipes.models.recipe import Recipe
 
 
-class CalendarDay(models.Model):
-    nickname = models.CharField(max_length=100,
-                                help_text="A brief nickname for this month, usually auto-generated as YY-MMM-DD")
-    recipe01 = models.ForeignKey(Recipe, related_name="recipe01", null=True, blank=True)
-    recipe02 = models.ForeignKey(Recipe, related_name="recipe02", null=True, blank=True)
-    recipe03 = models.ForeignKey(Recipe, related_name="recipe03", null=True, blank=True)
-    recipe04 = models.ForeignKey(Recipe, related_name="recipe04", null=True, blank=True)
-
-    def __str__(self):
-        return "A single calendar day instance, containing up to 4 recipes"
-
-    def get_recipes_for_day(self):
-        results = []
-        if self.recipe01:
-            results.append({'title': self.recipe01.title, 'id': self.recipe01.id})
-        else:
-            results.append({'title': '', 'id': 0})
-        if self.recipe02:
-            results.append({'title': self.recipe02.title, 'id': self.recipe02.id})
-        else:
-            results.append({'title': '', 'id': 0})
-        if self.recipe03:
-            results.append({'title': self.recipe03.title, 'id': self.recipe03.id})
-        else:
-            results.append({'title': '', 'id': 0})
-        if self.recipe04:
-            results.append({'title': self.recipe04.title, 'id': self.recipe04.id})
-        else:
-            results.append({'title': '', 'id': 0})
-        return results
-
-
 class Calendar(models.Model):
     year = models.IntegerField(help_text="The year of this calendar month")
     month = models.IntegerField(help_text="The month index (1-12) of this calendar month")
     nickname = models.CharField(max_length=100,
                                 help_text="A brief nickname for this month, usually auto-generated as YY-MMM")
-    day01 = models.ForeignKey(CalendarDay, help_text="A pointer to day #01 of this month", related_name="day01",
-                              null=True, blank=True)
-    day02 = models.ForeignKey(CalendarDay, help_text="A pointer to day #02 of this month", related_name="day02",
-                              null=True, blank=True)
-    day03 = models.ForeignKey(CalendarDay, help_text="A pointer to day #03 of this month", related_name="day03",
-                              null=True, blank=True)
-    day04 = models.ForeignKey(CalendarDay, help_text="A pointer to day #04 of this month", related_name="day04",
-                              null=True, blank=True)
-    day05 = models.ForeignKey(CalendarDay, help_text="A pointer to day #05 of this month", related_name="day05",
-                              null=True, blank=True)
-    day06 = models.ForeignKey(CalendarDay, help_text="A pointer to day #06 of this month", related_name="day06",
-                              null=True, blank=True)
-    day07 = models.ForeignKey(CalendarDay, help_text="A pointer to day #07 of this month", related_name="day07",
-                              null=True, blank=True)
-    day08 = models.ForeignKey(CalendarDay, help_text="A pointer to day #08 of this month", related_name="day08",
-                              null=True, blank=True)
-    day09 = models.ForeignKey(CalendarDay, help_text="A pointer to day #09 of this month", related_name="day09",
-                              null=True, blank=True)
-    day10 = models.ForeignKey(CalendarDay, help_text="A pointer to day #10 of this month", related_name="day10",
-                              null=True, blank=True)
-    day11 = models.ForeignKey(CalendarDay, help_text="A pointer to day #11 of this month", related_name="day11",
-                              null=True, blank=True)
-    day12 = models.ForeignKey(CalendarDay, help_text="A pointer to day #12 of this month", related_name="day12",
-                              null=True, blank=True)
-    day13 = models.ForeignKey(CalendarDay, help_text="A pointer to day #13 of this month", related_name="day13",
-                              null=True, blank=True)
-    day14 = models.ForeignKey(CalendarDay, help_text="A pointer to day #14 of this month", related_name="day14",
-                              null=True, blank=True)
-    day15 = models.ForeignKey(CalendarDay, help_text="A pointer to day #15 of this month", related_name="day15",
-                              null=True, blank=True)
-    day16 = models.ForeignKey(CalendarDay, help_text="A pointer to day #16 of this month", related_name="day16",
-                              null=True, blank=True)
-    day17 = models.ForeignKey(CalendarDay, help_text="A pointer to day #17 of this month", related_name="day17",
-                              null=True, blank=True)
-    day18 = models.ForeignKey(CalendarDay, help_text="A pointer to day #18 of this month", related_name="day18",
-                              null=True, blank=True)
-    day19 = models.ForeignKey(CalendarDay, help_text="A pointer to day #19 of this month", related_name="day19",
-                              null=True, blank=True)
-    day20 = models.ForeignKey(CalendarDay, help_text="A pointer to day #20 of this month", related_name="day20",
-                              null=True, blank=True)
-    day21 = models.ForeignKey(CalendarDay, help_text="A pointer to day #21 of this month", related_name="day21",
-                              null=True, blank=True)
-    day22 = models.ForeignKey(CalendarDay, help_text="A pointer to day #22 of this month", related_name="day22",
-                              null=True, blank=True)
-    day23 = models.ForeignKey(CalendarDay, help_text="A pointer to day #23 of this month", related_name="day23",
-                              null=True, blank=True)
-    day24 = models.ForeignKey(CalendarDay, help_text="A pointer to day #24 of this month", related_name="day24",
-                              null=True, blank=True)
-    day25 = models.ForeignKey(CalendarDay, help_text="A pointer to day #25 of this month", related_name="day25",
-                              null=True, blank=True)
-    day26 = models.ForeignKey(CalendarDay, help_text="A pointer to day #26 of this month", related_name="day26",
-                              null=True, blank=True)
-    day27 = models.ForeignKey(CalendarDay, help_text="A pointer to day #27 of this month", related_name="day27",
-                              null=True, blank=True)
-    day28 = models.ForeignKey(CalendarDay, help_text="A pointer to day #28 of this month", related_name="day28",
-                              null=True, blank=True)
-    day29 = models.ForeignKey(CalendarDay, help_text="A pointer to day #29 of this month", related_name="day29",
-                              null=True, blank=True)
-    day30 = models.ForeignKey(CalendarDay, help_text="A pointer to day #30 of this month", related_name="day30",
-                              null=True, blank=True)
-    day31 = models.ForeignKey(CalendarDay, help_text="A pointer to day #31 of this month", related_name="day31",
-                              null=True, blank=True)
+    day01recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 01', related_name='day01recipe0',
+                                     null=True, blank=True)
+    day01recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 01', related_name='day01recipe1',
+                                     null=True, blank=True)
+    day02recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 02', related_name='day02recipe0',
+                                     null=True, blank=True)
+    day02recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 02', related_name='day02recipe1',
+                                     null=True, blank=True)
+    day03recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 03', related_name='day03recipe0',
+                                     null=True, blank=True)
+    day03recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 03', related_name='day03recipe1',
+                                     null=True, blank=True)
+    day04recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 04', related_name='day04recipe0',
+                                     null=True, blank=True)
+    day04recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 04', related_name='day04recipe1',
+                                     null=True, blank=True)
+    day05recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 05', related_name='day05recipe0',
+                                     null=True, blank=True)
+    day05recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 05', related_name='day05recipe1',
+                                     null=True, blank=True)
+    day06recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 06', related_name='day06recipe0',
+                                     null=True, blank=True)
+    day06recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 06', related_name='day06recipe1',
+                                     null=True, blank=True)
+    day07recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 07', related_name='day07recipe0',
+                                     null=True, blank=True)
+    day07recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 07', related_name='day07recipe1',
+                                     null=True, blank=True)
+    day08recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 08', related_name='day08recipe0',
+                                     null=True, blank=True)
+    day08recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 08', related_name='day08recipe1',
+                                     null=True, blank=True)
+    day09recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 09', related_name='day09recipe0',
+                                     null=True, blank=True)
+    day09recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 09', related_name='day09recipe1',
+                                     null=True, blank=True)
+    day10recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 10', related_name='day10recipe0',
+                                     null=True, blank=True)
+    day10recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 10', related_name='day10recipe1',
+                                     null=True, blank=True)
+    day11recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 11', related_name='day11recipe0',
+                                     null=True, blank=True)
+    day11recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 11', related_name='day11recipe1',
+                                     null=True, blank=True)
+    day12recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 12', related_name='day12recipe0',
+                                     null=True, blank=True)
+    day12recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 12', related_name='day12recipe1',
+                                     null=True, blank=True)
+    day13recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 13', related_name='day13recipe0',
+                                     null=True, blank=True)
+    day13recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 13', related_name='day13recipe1',
+                                     null=True, blank=True)
+    day14recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 14', related_name='day14recipe0',
+                                     null=True, blank=True)
+    day14recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 14', related_name='day14recipe1',
+                                     null=True, blank=True)
+    day15recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 15', related_name='day15recipe0',
+                                     null=True, blank=True)
+    day15recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 15', related_name='day15recipe1',
+                                     null=True, blank=True)
+    day16recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 16', related_name='day16recipe0',
+                                     null=True, blank=True)
+    day16recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 16', related_name='day16recipe1',
+                                     null=True, blank=True)
+    day17recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 17', related_name='day17recipe0',
+                                     null=True, blank=True)
+    day17recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 17', related_name='day17recipe1',
+                                     null=True, blank=True)
+    day18recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 18', related_name='day18recipe0',
+                                     null=True, blank=True)
+    day18recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 18', related_name='day18recipe1',
+                                     null=True, blank=True)
+    day19recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 19', related_name='day19recipe0',
+                                     null=True, blank=True)
+    day19recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 19', related_name='day19recipe1',
+                                     null=True, blank=True)
+    day20recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 20', related_name='day20recipe0',
+                                     null=True, blank=True)
+    day20recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 20', related_name='day20recipe1',
+                                     null=True, blank=True)
+    day21recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 21', related_name='day21recipe0',
+                                     null=True, blank=True)
+    day21recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 21', related_name='day21recipe1',
+                                     null=True, blank=True)
+    day22recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 22', related_name='day22recipe0',
+                                     null=True, blank=True)
+    day22recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 22', related_name='day22recipe1',
+                                     null=True, blank=True)
+    day23recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 23', related_name='day23recipe0',
+                                     null=True, blank=True)
+    day23recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 23', related_name='day23recipe1',
+                                     null=True, blank=True)
+    day24recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 24', related_name='day24recipe0',
+                                     null=True, blank=True)
+    day24recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 24', related_name='day24recipe1',
+                                     null=True, blank=True)
+    day25recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 25', related_name='day25recipe0',
+                                     null=True, blank=True)
+    day25recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 25', related_name='day25recipe1',
+                                     null=True, blank=True)
+    day26recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 26', related_name='day26recipe0',
+                                     null=True, blank=True)
+    day26recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 26', related_name='day26recipe1',
+                                     null=True, blank=True)
+    day27recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 27', related_name='day27recipe0',
+                                     null=True, blank=True)
+    day27recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 27', related_name='day27recipe1',
+                                     null=True, blank=True)
+    day28recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 28', related_name='day28recipe0',
+                                     null=True, blank=True)
+    day28recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 28', related_name='day28recipe1',
+                                     null=True, blank=True)
+    day29recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 29', related_name='day29recipe0',
+                                     null=True, blank=True)
+    day29recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 29', related_name='day29recipe1',
+                                     null=True, blank=True)
+    day30recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 30', related_name='day30recipe0',
+                                     null=True, blank=True)
+    day30recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 30', related_name='day30recipe1',
+                                     null=True, blank=True)
+    day31recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 31', related_name='day31recipe0',
+                                     null=True, blank=True)
+    day31recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 31', related_name='day31recipe1',
+                                     null=True, blank=True)
 
     def __str__(self):
         if self.nickname:
@@ -116,36 +146,12 @@ class Calendar(models.Model):
         else:
             return "Unnamed calendar"
 
-    @staticmethod
-    def instantiate_recipes(calendar_day_instance):
-        if not calendar_day_instance.recipe01:
-            r = Recipe()
-            r.save()
-            calendar_day_instance.recipe01 = r
-        if not calendar_day_instance.recipe02:
-            r = Recipe()
-            r.save()
-            calendar_day_instance.recipe02 = r
-        if not calendar_day_instance.recipe03:
-            r = Recipe()
-            r.save()
-            calendar_day_instance.recipe03 = r
-        if not calendar_day_instance.recipe04:
-            r = Recipe()
-            r.save()
-            calendar_day_instance.recipe04 = r
-        calendar_day_instance.save()
-
     def get_monthly_dates(self):
         """
-        Returns monthly data, including date numbers and calendar-day ids for each day, if applicable
+        Returns monthly data, including date numbers and recipe ids for each day, if applicable
         :return: An array of 4 or 5 weeks, each week is an array of 7 days, each day has a date_number key that will be
-        0 or the actual date and a day_key key that will be 0 if no calendar-day is specified or the id
-        of the calendar-day object if it is
+        0 or the actual date and a two recipe ids, that may be None if no recipes are selected
         """
-
-        # There are a lot of bandaids in here for handling blank calendar days, and blank recipes for each day
-        # This should all be tightened up during calendar creation so we can feel better about removing these here
         # need to validate year/month
         c = calendar.Calendar()
         c.setfirstweekday(6)
@@ -156,95 +162,81 @@ class Calendar(models.Model):
             for date in week:
                 this_date = dict()
                 this_date['date_number'] = date
-                day_object = self.get_day_for_date(date)
-                if day_object:
-                    this_date['day_key'] = day_object.id
-                    try:
-                        c = CalendarDay.objects.get(pk=day_object.id)
-                        # self.instantiate_recipes(c)
-                        this_date['calendar_day'] = c
-                    except CalendarDay.DoesNotExist:
-                        c = CalendarDay()
-                        # self.instantiate_recipes(c)
-                        this_date['calendar_day'] = c
-                        this_date['day_key'] = c.id
-                else:
-                    c = CalendarDay()
-                    # self.instantiate_recipes(c)
-                    this_date['calendar_day'] = c
-                    this_date['day_key'] = c.id
+                recipes = self.get_recipes_for_day_of_month(date)
+                this_date['recipe0'] = recipes[0]
+                this_date['recipe1'] = recipes[1]
                 this_week.append(this_date)
             full_date_data.append(this_week)
         return full_date_data
 
-    def get_day_for_date(self, date_num):
+    def get_recipes_for_day_of_month(self, date_num):
         """
-        Returns the foreign key id for the given date num on this calendar instance, if applicable
+        Returns the recipe ids for the given date num on this calendar instance, if applicable
         :param date_num: The date of the month, 1-31
-        :return: The id of the calendar-day foreignkey if available, or None if there isn't a calendar-day
-        or if date_num is out of range
+        :return: List of two ids: [recipe01_id, recipe02_id]; these may be None if no recipes are selected or if
+        date_num is out of range
         """
         if date_num == 1:
-            return self.day01
+            return [self.day01recipe0, self.day01recipe1]
         elif date_num == 2:
-            return self.day02
+            return [self.day02recipe0, self.day02recipe1]
         elif date_num == 3:
-            return self.day03
+            return [self.day03recipe0, self.day03recipe1]
         elif date_num == 4:
-            return self.day04
+            return [self.day04recipe0, self.day04recipe1]
         elif date_num == 5:
-            return self.day05
+            return [self.day05recipe0, self.day05recipe1]
         elif date_num == 6:
-            return self.day06
+            return [self.day06recipe0, self.day06recipe1]
         elif date_num == 7:
-            return self.day07
+            return [self.day07recipe0, self.day07recipe1]
         elif date_num == 8:
-            return self.day08
+            return [self.day08recipe0, self.day08recipe1]
         elif date_num == 9:
-            return self.day09
+            return [self.day09recipe0, self.day09recipe1]
         elif date_num == 10:
-            return self.day10
+            return [self.day10recipe0, self.day10recipe1]
         elif date_num == 11:
-            return self.day11
+            return [self.day11recipe0, self.day11recipe1]
         elif date_num == 12:
-            return self.day12
+            return [self.day12recipe0, self.day12recipe1]
         elif date_num == 13:
-            return self.day13
+            return [self.day13recipe0, self.day13recipe1]
         elif date_num == 14:
-            return self.day14
+            return [self.day14recipe0, self.day14recipe1]
         elif date_num == 15:
-            return self.day15
+            return [self.day15recipe0, self.day15recipe1]
         elif date_num == 16:
-            return self.day16
+            return [self.day16recipe0, self.day16recipe1]
         elif date_num == 17:
-            return self.day17
+            return [self.day17recipe0, self.day17recipe1]
         elif date_num == 18:
-            return self.day18
+            return [self.day18recipe0, self.day18recipe1]
         elif date_num == 19:
-            return self.day19
+            return [self.day19recipe0, self.day19recipe1]
         elif date_num == 20:
-            return self.day20
+            return [self.day20recipe0, self.day20recipe1]
         elif date_num == 21:
-            return self.day21
+            return [self.day21recipe0, self.day21recipe1]
         elif date_num == 22:
-            return self.day22
+            return [self.day22recipe0, self.day22recipe1]
         elif date_num == 23:
-            return self.day23
+            return [self.day23recipe0, self.day23recipe1]
         elif date_num == 24:
-            return self.day24
+            return [self.day24recipe0, self.day24recipe1]
         elif date_num == 25:
-            return self.day25
+            return [self.day25recipe0, self.day25recipe1]
         elif date_num == 26:
-            return self.day26
+            return [self.day26recipe0, self.day26recipe1]
         elif date_num == 27:
-            return self.day27
+            return [self.day27recipe0, self.day27recipe1]
         elif date_num == 28:
-            return self.day28
+            return [self.day28recipe0, self.day28recipe1]
         elif date_num == 29:
-            return self.day29
+            return [self.day29recipe0, self.day29recipe1]
         elif date_num == 30:
-            return self.day30
+            return [self.day30recipe0, self.day30recipe1]
         elif date_num == 31:
-            return self.day31
+            return [self.day31recipe0, self.day31recipe1]
         else:
-            return None  # should consider what to return here
+            return [None, None]  # should consider what to return here

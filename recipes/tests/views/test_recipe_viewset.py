@@ -6,7 +6,6 @@ from recipes.models.recipe import Recipe
 
 
 class TestRecipeListView(TestCase):
-
     def test_url_path(self):
         """
         Test the path directly
@@ -24,7 +23,6 @@ class TestRecipeListView(TestCase):
 
 
 class TestRecipeDetailView(TestCase):
-
     def setUp(self):
         r = Recipe()
         r.save()

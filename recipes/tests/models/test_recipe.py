@@ -5,7 +5,6 @@ from recipes.models.recipe import Recipe, RecipeTypes
 
 
 class RecipeModelConstructionTests(TestCase):
-
     def test_recipe_default_construction(self):
         """
         Makes sure recipe can potentially be empty...do we want this?
@@ -32,7 +31,6 @@ class RecipeModelConstructionTests(TestCase):
 
 
 class RecipeMethodTests(TestCase):
-
     def test_recipe_url(self):
         r = Recipe(title='hello', recipe_type=RecipeTypes.SALAD)
         r.save()

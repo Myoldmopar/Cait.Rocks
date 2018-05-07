@@ -99,6 +99,10 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
         }
     };
 
+    $scope.show_this_week = function (week_num, num_weeks) {
+        return week_num < 4 || week_num === 4 && num_weeks === 5;
+    };
+
     $scope.$on('$typeahead.select', function (event, value, index, elem) {
         // would be nicer to just store the index on the object itself instead
         var meta_data = document.getElementById(elem.$id).dataset;

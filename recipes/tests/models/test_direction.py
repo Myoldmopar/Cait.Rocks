@@ -5,7 +5,6 @@ from recipes.models.direction import Direction
 
 
 class DirectionModelConstructionTests(TestCase):
-
     def test_direction_short_string(self):
         direction = Direction(full_directions='stir')
         self.assertEqual(str(direction), 'stir')

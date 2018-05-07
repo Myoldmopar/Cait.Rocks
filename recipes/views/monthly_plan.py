@@ -7,7 +7,7 @@ from rest_framework.viewsets import ViewSet
 
 class MonthlyPlanViewSet(ViewSet):
     def list(self, request):
-        return render(request, 'recipes/monthly_view.html')
+        return render(request, 'recipes/monthly_view.html')  # TODO: This should become a list of months
 
     @action(methods=['get'], detail=False)
     def planner2(self, request):

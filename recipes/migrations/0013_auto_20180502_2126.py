@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('recipes', '0012_auto_20180502_2124'),
     ]
@@ -15,12 +14,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='calendarday',
             name='nickname',
-            field=models.CharField(default=None, help_text='A brief nickname for this month, usually auto-generated as YY-MMM-DD', max_length=100),
+            field=models.CharField(default=None,
+                                   help_text='A brief nickname for this month, usually auto-generated as YY-MMM-DD',
+                                   max_length=100),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='calendar',
             name='nickname',
-            field=models.CharField(help_text='A brief nickname for this month, usually auto-generated as YY-MMM', max_length=100),
+            field=models.CharField(help_text='A brief nickname for this month, usually auto-generated as YY-MMM',
+                                   max_length=100),
         ),
     ]

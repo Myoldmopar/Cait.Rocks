@@ -5,8 +5,8 @@ from django.contrib import admin
 
 from recipes.models.direction import Direction
 from recipes.models.ingredient import Ingredient
-from recipes.models.recipe import Recipe
 from recipes.models.planning import Calendar
+from recipes.models.recipe import Recipe
 
 admin.site.register(Calendar)
 admin.site.register(Direction)

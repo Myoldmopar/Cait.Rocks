@@ -79,7 +79,7 @@ class Ingredient(models.Model):
                                         help_text="A description of this ingredient, Can include amount "
                                                   "if the portion does not fit in the prescribed parameters")
 
-    recipe = models.ForeignKey(Recipe, help_text="A pointer to an existing recipe to link them together")
+    recipe = models.ForeignKey(Recipe, help_text="A pointer to an existing recipe to link them together", null=True)
 
     def __str__(self):
         return self.item_description

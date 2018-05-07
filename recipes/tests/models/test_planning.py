@@ -5,7 +5,6 @@ from recipes.models.planning import Calendar
 
 
 class CalendarModelConstructionTests(TestCase):
-
     def test_calendar_default_construction(self):
         """
         Makes sure calendar can potentially be empty...do we want this?

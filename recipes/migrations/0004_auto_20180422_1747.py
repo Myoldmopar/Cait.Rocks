@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('recipes', '0003_recipe_recipe_type'),
     ]
@@ -15,6 +14,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recipe',
             name='recipe_type',
-            field=models.CharField(choices=[('10', 'Unknown'), ('20', 'Entire Meal'), ('30', 'Entree'), ('40', 'Soup'), ('50', 'Salad'), ('60', 'Drink'), ('70', 'Dessert')], default='Unknown', max_length=20),
+            field=models.CharField(
+                choices=[('10', 'Unknown'), ('20', 'Entire Meal'), ('30', 'Entree'), ('40', 'Soup'), ('50', 'Salad'),
+                         ('60', 'Drink'), ('70', 'Dessert')], default='Unknown', max_length=20),
         ),
     ]

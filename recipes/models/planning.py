@@ -19,6 +19,26 @@ class CalendarDay(models.Model):
     def __str__(self):
         return "A single calendar day instance, containing up to 4 recipes"
 
+    def get_recipes_for_day(self):
+        results = []
+        if self.recipe01:
+            results.append({'title': self.recipe01.title, 'id': self.recipe01.id})
+        else:
+            results.append({'title': '', 'id': 0})
+        if self.recipe02:
+            results.append({'title': self.recipe02.title, 'id': self.recipe02.id})
+        else:
+            results.append({'title': '', 'id': 0})
+        if self.recipe03:
+            results.append({'title': self.recipe03.title, 'id': self.recipe03.id})
+        else:
+            results.append({'title': '', 'id': 0})
+        if self.recipe04:
+            results.append({'title': self.recipe04.title, 'id': self.recipe04.id})
+        else:
+            results.append({'title': '', 'id': 0})
+        return results
+
 
 class Calendar(models.Model):
     year = models.IntegerField(help_text="The year of this calendar month")
@@ -141,16 +161,16 @@ class Calendar(models.Model):
                     this_date['day_key'] = day_object.id
                     try:
                         c = CalendarDay.objects.get(pk=day_object.id)
-                        self.instantiate_recipes(c)
+                        # self.instantiate_recipes(c)
                         this_date['calendar_day'] = c
                     except CalendarDay.DoesNotExist:
                         c = CalendarDay()
-                        self.instantiate_recipes(c)
+                        # self.instantiate_recipes(c)
                         this_date['calendar_day'] = c
                         this_date['day_key'] = c.id
                 else:
                     c = CalendarDay()
-                    self.instantiate_recipes(c)
+                    # self.instantiate_recipes(c)
                     this_date['calendar_day'] = c
                     this_date['day_key'] = c.id
                 this_week.append(this_date)

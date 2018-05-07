@@ -35,13 +35,14 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
                     date_number = date_data['date_number']
                 day_key = date_data['day_key']
                 full_day = date_data['calendar_day']
+                this_days_recipes = full_day.get_recipes_for_day()
                 date_response["d%s%s" % (week_num, day_num)] = {
                     'day_key': day_key,
                     'date_number': date_number,
-                    'recipe01': {'title': full_day.recipe01.title, 'id': full_day.recipe01.id},
-                    'recipe02': {'title': full_day.recipe02.title, 'id': full_day.recipe02.id},
-                    'recipe03': {'title': full_day.recipe03.title, 'id': full_day.recipe03.id},
-                    'recipe04': {'title': full_day.recipe04.title, 'id': full_day.recipe04.id}
+                    'recipe01': this_days_recipes[0],
+                    'recipe02': this_days_recipes[1],
+                    'recipe03': this_days_recipes[2],
+                    'recipe04': this_days_recipes[3],
                 }
         return JsonResponse({'dates': date_response, 'num_weeks': len(dates)})
 

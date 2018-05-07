@@ -20,6 +20,8 @@
     "jquery": "^3.2.1",
     "bootstrap": "^3.3.7",
     "ubuntu-font": "https://google-fonts.azurewebsites.net/googleFonts/nameOfPackage?family=Ubuntu:regular,bold",
-    "glyphicons-halflings": "*"
+    "glyphicons-halflings": "*",
+    "angular-animate": "^1.6.10",
+    "angular-strap": "^2.3.12"
   }
 }

@@ -61,136 +61,13 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
         :param pk: The primary key of the calendar to modify
         :return:
         """
+        # TODO: ERROR HANDLE EVERY THING HERE!
         date_num = int(request.data['date_num'])  # TODO: ERROR HANDLE
         day_recipe_num = int(request.data['daily_recipe_id'])  # TODO: ERROR HANDLE
         recipe_id = int(request.data['recipe_pk'])  # TODO: ERROR HANDLE
         recipe_to_assign = Recipe.objects.get(pk=recipe_id)
         calendar_to_modify = Calendar.objects.get(pk=pk)
-
-        if date_num == 1 and day_recipe_num == 0:
-            calendar_to_modify.day01recipe0 = recipe_to_assign
-        elif date_num == 2 and day_recipe_num == 0:
-            calendar_to_modify.day02recipe0 = recipe_to_assign
-        elif date_num == 2 and day_recipe_num == 1:
-            calendar_to_modify.day02recipe1 = recipe_to_assign
-        elif date_num == 3 and day_recipe_num == 0:
-            calendar_to_modify.day03recipe0 = recipe_to_assign
-        elif date_num == 3 and day_recipe_num == 1:
-            calendar_to_modify.day03recipe1 = recipe_to_assign
-        elif date_num == 4 and day_recipe_num == 0:
-            calendar_to_modify.day04recipe0 = recipe_to_assign
-        elif date_num == 4 and day_recipe_num == 1:
-            calendar_to_modify.day04recipe1 = recipe_to_assign
-        elif date_num == 5 and day_recipe_num == 0:
-            calendar_to_modify.day05recipe0 = recipe_to_assign
-        elif date_num == 5 and day_recipe_num == 1:
-            calendar_to_modify.day05recipe1 = recipe_to_assign
-        elif date_num == 6 and day_recipe_num == 0:
-            calendar_to_modify.day06recipe0 = recipe_to_assign
-        elif date_num == 6 and day_recipe_num == 1:
-            calendar_to_modify.day06recipe1 = recipe_to_assign
-        elif date_num == 7 and day_recipe_num == 0:
-            calendar_to_modify.day07recipe0 = recipe_to_assign
-        elif date_num == 7 and day_recipe_num == 1:
-            calendar_to_modify.day07recipe1 = recipe_to_assign
-        elif date_num == 8 and day_recipe_num == 0:
-            calendar_to_modify.day08recipe0 = recipe_to_assign
-        elif date_num == 8 and day_recipe_num == 1:
-            calendar_to_modify.day08recipe1 = recipe_to_assign
-        elif date_num == 9 and day_recipe_num == 0:
-            calendar_to_modify.day09recipe0 = recipe_to_assign
-        elif date_num == 9 and day_recipe_num == 1:
-            calendar_to_modify.day09recipe1 = recipe_to_assign
-        elif date_num == 10 and day_recipe_num == 0:
-            calendar_to_modify.day10recipe0 = recipe_to_assign
-        elif date_num == 10 and day_recipe_num == 1:
-            calendar_to_modify.day10recipe1 = recipe_to_assign
-        elif date_num == 11 and day_recipe_num == 0:
-            calendar_to_modify.day11recipe0 = recipe_to_assign
-        elif date_num == 11 and day_recipe_num == 1:
-            calendar_to_modify.day11recipe1 = recipe_to_assign
-        elif date_num == 12 and day_recipe_num == 0:
-            calendar_to_modify.day12recipe0 = recipe_to_assign
-        elif date_num == 12 and day_recipe_num == 1:
-            calendar_to_modify.day12recipe1 = recipe_to_assign
-        elif date_num == 13 and day_recipe_num == 0:
-            calendar_to_modify.day13recipe0 = recipe_to_assign
-        elif date_num == 13 and day_recipe_num == 1:
-            calendar_to_modify.day13recipe1 = recipe_to_assign
-        elif date_num == 14 and day_recipe_num == 0:
-            calendar_to_modify.day14recipe0 = recipe_to_assign
-        elif date_num == 14 and day_recipe_num == 1:
-            calendar_to_modify.day14recipe1 = recipe_to_assign
-        elif date_num == 15 and day_recipe_num == 0:
-            calendar_to_modify.day15recipe0 = recipe_to_assign
-        elif date_num == 15 and day_recipe_num == 1:
-            calendar_to_modify.day15recipe1 = recipe_to_assign
-        elif date_num == 16 and day_recipe_num == 0:
-            calendar_to_modify.day16recipe0 = recipe_to_assign
-        elif date_num == 16 and day_recipe_num == 1:
-            calendar_to_modify.day16recipe1 = recipe_to_assign
-        elif date_num == 17 and day_recipe_num == 0:
-            calendar_to_modify.day17recipe0 = recipe_to_assign
-        elif date_num == 17 and day_recipe_num == 1:
-            calendar_to_modify.day17recipe1 = recipe_to_assign
-        elif date_num == 18 and day_recipe_num == 0:
-            calendar_to_modify.day18recipe0 = recipe_to_assign
-        elif date_num == 18 and day_recipe_num == 1:
-            calendar_to_modify.day18recipe1 = recipe_to_assign
-        elif date_num == 19 and day_recipe_num == 0:
-            calendar_to_modify.day19recipe0 = recipe_to_assign
-        elif date_num == 19 and day_recipe_num == 1:
-            calendar_to_modify.day19recipe1 = recipe_to_assign
-        elif date_num == 20 and day_recipe_num == 0:
-            calendar_to_modify.day20recipe0 = recipe_to_assign
-        elif date_num == 20 and day_recipe_num == 1:
-            calendar_to_modify.day20recipe1 = recipe_to_assign
-        elif date_num == 21 and day_recipe_num == 0:
-            calendar_to_modify.day21recipe0 = recipe_to_assign
-        elif date_num == 21 and day_recipe_num == 1:
-            calendar_to_modify.day21recipe1 = recipe_to_assign
-        elif date_num == 22 and day_recipe_num == 0:
-            calendar_to_modify.day22recipe0 = recipe_to_assign
-        elif date_num == 22 and day_recipe_num == 1:
-            calendar_to_modify.day22recipe1 = recipe_to_assign
-        elif date_num == 23 and day_recipe_num == 0:
-            calendar_to_modify.day23recipe0 = recipe_to_assign
-        elif date_num == 23 and day_recipe_num == 1:
-            calendar_to_modify.day23recipe1 = recipe_to_assign
-        elif date_num == 24 and day_recipe_num == 0:
-            calendar_to_modify.day24recipe0 = recipe_to_assign
-        elif date_num == 24 and day_recipe_num == 1:
-            calendar_to_modify.day24recipe1 = recipe_to_assign
-        elif date_num == 25 and day_recipe_num == 0:
-            calendar_to_modify.day25recipe0 = recipe_to_assign
-        elif date_num == 25 and day_recipe_num == 1:
-            calendar_to_modify.day25recipe1 = recipe_to_assign
-        elif date_num == 26 and day_recipe_num == 0:
-            calendar_to_modify.day26recipe0 = recipe_to_assign
-        elif date_num == 26 and day_recipe_num == 1:
-            calendar_to_modify.day26recipe1 = recipe_to_assign
-        elif date_num == 27 and day_recipe_num == 0:
-            calendar_to_modify.day27recipe0 = recipe_to_assign
-        elif date_num == 27 and day_recipe_num == 1:
-            calendar_to_modify.day27recipe1 = recipe_to_assign
-        elif date_num == 28 and day_recipe_num == 0:
-            calendar_to_modify.day28recipe0 = recipe_to_assign
-        elif date_num == 28 and day_recipe_num == 1:
-            calendar_to_modify.day28recipe1 = recipe_to_assign
-        elif date_num == 29 and day_recipe_num == 0:
-            calendar_to_modify.day29recipe0 = recipe_to_assign
-        elif date_num == 29 and day_recipe_num == 1:
-            calendar_to_modify.day29recipe1 = recipe_to_assign
-        elif date_num == 30 and day_recipe_num == 0:
-            calendar_to_modify.day30recipe0 = recipe_to_assign
-        elif date_num == 30 and day_recipe_num == 1:
-            calendar_to_modify.day30recipe1 = recipe_to_assign
-        elif date_num == 31 and day_recipe_num == 0:
-            calendar_to_modify.day31recipe0 = recipe_to_assign
-        elif date_num == 31 and day_recipe_num == 1:
-            calendar_to_modify.day31recipe1 = recipe_to_assign
-        else:
-            pass  # TODO: ERROR HANDLE
+        day_string = '%02d' % date_num
+        setattr(calendar_to_modify, 'day{0}recipe{1}'.format(day_string, day_recipe_num), recipe_to_assign)
         calendar_to_modify.save()
-
         return JsonResponse({'success': True})

@@ -176,67 +176,8 @@ class Calendar(models.Model):
         :return: List of two ids: [recipe01_id, recipe02_id]; these may be None if no recipes are selected or if
         date_num is out of range
         """
-        if date_num == 1:
-            return [self.day01recipe0, self.day01recipe1]
-        elif date_num == 2:
-            return [self.day02recipe0, self.day02recipe1]
-        elif date_num == 3:
-            return [self.day03recipe0, self.day03recipe1]
-        elif date_num == 4:
-            return [self.day04recipe0, self.day04recipe1]
-        elif date_num == 5:
-            return [self.day05recipe0, self.day05recipe1]
-        elif date_num == 6:
-            return [self.day06recipe0, self.day06recipe1]
-        elif date_num == 7:
-            return [self.day07recipe0, self.day07recipe1]
-        elif date_num == 8:
-            return [self.day08recipe0, self.day08recipe1]
-        elif date_num == 9:
-            return [self.day09recipe0, self.day09recipe1]
-        elif date_num == 10:
-            return [self.day10recipe0, self.day10recipe1]
-        elif date_num == 11:
-            return [self.day11recipe0, self.day11recipe1]
-        elif date_num == 12:
-            return [self.day12recipe0, self.day12recipe1]
-        elif date_num == 13:
-            return [self.day13recipe0, self.day13recipe1]
-        elif date_num == 14:
-            return [self.day14recipe0, self.day14recipe1]
-        elif date_num == 15:
-            return [self.day15recipe0, self.day15recipe1]
-        elif date_num == 16:
-            return [self.day16recipe0, self.day16recipe1]
-        elif date_num == 17:
-            return [self.day17recipe0, self.day17recipe1]
-        elif date_num == 18:
-            return [self.day18recipe0, self.day18recipe1]
-        elif date_num == 19:
-            return [self.day19recipe0, self.day19recipe1]
-        elif date_num == 20:
-            return [self.day20recipe0, self.day20recipe1]
-        elif date_num == 21:
-            return [self.day21recipe0, self.day21recipe1]
-        elif date_num == 22:
-            return [self.day22recipe0, self.day22recipe1]
-        elif date_num == 23:
-            return [self.day23recipe0, self.day23recipe1]
-        elif date_num == 24:
-            return [self.day24recipe0, self.day24recipe1]
-        elif date_num == 25:
-            return [self.day25recipe0, self.day25recipe1]
-        elif date_num == 26:
-            return [self.day26recipe0, self.day26recipe1]
-        elif date_num == 27:
-            return [self.day27recipe0, self.day27recipe1]
-        elif date_num == 28:
-            return [self.day28recipe0, self.day28recipe1]
-        elif date_num == 29:
-            return [self.day29recipe0, self.day29recipe1]
-        elif date_num == 30:
-            return [self.day30recipe0, self.day30recipe1]
-        elif date_num == 31:
-            return [self.day31recipe0, self.day31recipe1]
-        else:
-            return [None, None]  # should consider what to return here
+        if date_num == 0:
+            return [None, None]
+        day_string = '%02d' % date_num
+        return [getattr(self, 'day%srecipe0' % day_string), getattr(self, 'day%srecipe1' % day_string)]
+        # TODO: Error handle all over here

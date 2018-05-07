@@ -27,8 +27,9 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
         """
         c = Calendar.objects.get(pk=pk)
         dates = c.get_monthly_dates()
-        date_response = {}
+        weekly_array_data = []
         for week_num, week_dates in enumerate(dates):
+            daily_array_data = []
             for day_num, date_data in enumerate(week_dates):
                 date_number = '-'
                 if date_data['date_number'] > 0:
@@ -41,12 +42,15 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
                     recipe02id = date_data['recipe1'].id
                 else:
                     recipe02id = None
-                date_response["d%s%s" % (week_num, day_num)] = {
-                    'date_number': date_number,
-                    'recipe01': recipe01id,
-                    'recipe02': recipe02id,
-                }
-        return JsonResponse({'dates': date_response, 'num_weeks': len(dates)})
+                daily_array_data.append(
+                    {
+                        'date_number': date_number,
+                        'recipe01': recipe01id,
+                        'recipe02': recipe02id,
+                    }
+                )
+            weekly_array_data.append(daily_array_data)
+        return JsonResponse({'num_weeks': len(dates), 'array_data': weekly_array_data})
 
     @action(methods=['put'], detail=True)
     def recipe_id(self, request, pk):
@@ -57,9 +61,9 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
         :param pk: The primary key of the calendar to modify
         :return:
         """
-        date_num = request.data['date_num']  # TODO: ERROR HANDLE
-        day_recipe_num = request.data['daily_recipe_id']  # TODO: ERROR HANDLE
-        recipe_id = request.data['recipe_pk']  # TODO: ERROR HANDLE
+        date_num = int(request.data['date_num'])  # TODO: ERROR HANDLE
+        day_recipe_num = int(request.data['daily_recipe_id'])  # TODO: ERROR HANDLE
+        recipe_id = int(request.data['recipe_pk'])  # TODO: ERROR HANDLE
         recipe_to_assign = Recipe.objects.get(pk=recipe_id)
         calendar_to_modify = Calendar.objects.get(pk=pk)
 

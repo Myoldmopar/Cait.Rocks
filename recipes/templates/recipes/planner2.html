@@ -21,29 +21,14 @@
         <tr>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d00.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d00.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day00recipe00" id="day00recipe00input"
+                    <p>{[{ monthly_data.array_data[0][0].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][0].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][0].recipe01" id="day00recipe00input" data-weeknum="0" data-daynum="0" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d00.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day00recipe01" id="day00recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d01.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d01.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day01recipe00" id="day01recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d01.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day01recipe01" id="day01recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][0].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][0].recipe02" id="day00recipe01input" data-weeknum="0" data-daynum="0" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -51,29 +36,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d02.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d02.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day02recipe00" id="day02recipe00input"
+                    <p>{[{ monthly_data.array_data[0][1].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][1].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][1].recipe01" id="day01recipe00input" data-weeknum="0" data-daynum="1" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d02.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day02recipe01" id="day02recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d03.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d03.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day03recipe00" id="day03recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d03.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day03recipe01" id="day03recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][1].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][1].recipe02" id="day01recipe01input" data-weeknum="0" data-daynum="1" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -81,29 +51,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d04.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d04.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day04recipe00" id="day04recipe00input"
+                    <p>{[{ monthly_data.array_data[0][2].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][2].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][2].recipe01" id="day02recipe00input" data-weeknum="0" data-daynum="2" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d04.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day04recipe01" id="day04recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d05.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d05.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day05recipe00" id="day05recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d05.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day05recipe01" id="day05recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][2].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][2].recipe02" id="day02recipe01input" data-weeknum="0" data-daynum="2" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -111,31 +66,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d06.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day06recipe00" id="day06recipe00input"
+                    <p>{[{ monthly_data.array_data[0][3].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][3].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][3].recipe01" id="day03recipe00input" data-weeknum="0" data-daynum="3" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day06recipe01" id="day06recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d10.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day10recipe00" id="day10recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day10recipe01" id="day10recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][3].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][3].recipe02" id="day03recipe01input" data-weeknum="0" data-daynum="3" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -143,29 +81,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d11.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day11recipe00" id="day11recipe00input"
+                    <p>{[{ monthly_data.array_data[0][4].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][4].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][4].recipe01" id="day04recipe00input" data-weeknum="0" data-daynum="4" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day11recipe01" id="day11recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d12.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day12recipe00" id="day12recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day12recipe01" id="day12recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][4].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][4].recipe02" id="day04recipe01input" data-weeknum="0" data-daynum="4" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -173,29 +96,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d13.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day13recipe00" id="day13recipe00input"
+                    <p>{[{ monthly_data.array_data[0][5].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][5].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][5].recipe01" id="day05recipe00input" data-weeknum="0" data-daynum="5" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day13recipe01" id="day13recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d14.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day14recipe00" id="day14recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day14recipe01" id="day14recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[0][5].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][5].recipe02" id="day05recipe01input" data-weeknum="0" data-daynum="5" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -203,29 +111,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d15.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[0][6].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day15recipe00" id="day15recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][6].recipe01" id="day06recipe00input" data-weeknum="0" data-daynum="6" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day15recipe01" id="day15recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d16.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day16recipe00" id="day16recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day16recipe01" id="day16recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[0][6].recipe02" id="day06recipe01input" data-weeknum="0" data-daynum="6" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -235,29 +128,14 @@
         <tr>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d20.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[1][0].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day20recipe00" id="day20recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][0].recipe01" id="day10recipe00input" data-weeknum="1" data-daynum="0" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day20recipe01" id="day20recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d21.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day21recipe00" id="day21recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day21recipe01" id="day21recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][0].recipe02" id="day10recipe01input" data-weeknum="1" data-daynum="0" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -265,29 +143,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d22.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[1][1].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day22recipe00" id="day22recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][1].recipe01" id="day11recipe00input" data-weeknum="1" data-daynum="1" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day22recipe01" id="day22recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d23.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day23recipe00" id="day23recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day23recipe01" id="day23recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][1].recipe02" id="day11recipe01input" data-weeknum="1" data-daynum="1" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -295,29 +158,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d24.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[1][2].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day24recipe00" id="day24recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][2].recipe01" id="day12recipe00input" data-weeknum="1" data-daynum="2" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day24recipe01" id="day24recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d25.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day25recipe00" id="day25recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day25recipe01" id="day25recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][2].recipe02" id="day12recipe01input" data-weeknum="1" data-daynum="2" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -325,14 +173,59 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d26.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[1][3].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day26recipe00" id="day26recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][3].recipe01" id="day13recipe00input" data-weeknum="1" data-daynum="3" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day26recipe01" id="day26recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][3].recipe02" id="day13recipe01input" data-weeknum="1" data-daynum="3" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[1][4].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][4].recipe01" id="day14recipe00input" data-weeknum="1" data-daynum="4" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][4].recipe02" id="day14recipe01input" data-weeknum="1" data-daynum="4" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[1][5].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][5].recipe01" id="day15recipe00input" data-weeknum="1" data-daynum="5" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][5].recipe02" id="day15recipe01input" data-weeknum="1" data-daynum="5" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[1][6].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][6].recipe01" id="day16recipe00input" data-weeknum="1" data-daynum="6" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[1][6].recipe02" id="day16recipe01input" data-weeknum="1" data-daynum="6" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -342,29 +235,14 @@
         <tr>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d30.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[2][0].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day30recipe00" id="day30recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][0].recipe01" id="day20recipe00input" data-weeknum="2" data-daynum="0" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day30recipe01" id="day30recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d31.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day31recipe00" id="day31recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day31recipe01" id="day31recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][0].recipe02" id="day20recipe01input" data-weeknum="2" data-daynum="0" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -372,29 +250,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d32.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[2][1].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day32recipe00" id="day32recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][1].recipe01" id="day21recipe00input" data-weeknum="2" data-daynum="1" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day32recipe01" id="day32recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d33.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day33recipe00" id="day33recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day33recipe01" id="day33recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][1].recipe02" id="day21recipe01input" data-weeknum="2" data-daynum="1" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -402,29 +265,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d34.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[2][2].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day34recipe00" id="day34recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][2].recipe01" id="day22recipe00input" data-weeknum="2" data-daynum="2" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day34recipe01" id="day34recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d35.date_number }]}</p>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day35recipe00" id="day35recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day35recipe01" id="day35recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][2].recipe02" id="day22recipe01input" data-weeknum="2" data-daynum="2" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -432,14 +280,166 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d36.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[2][3].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day36recipe00" id="day36recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][3].recipe01" id="day23recipe00input" data-weeknum="2" data-daynum="3" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day36recipe01" id="day36recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][3].recipe02" id="day23recipe01input" data-weeknum="2" data-daynum="3" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[2][4].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][4].recipe01" id="day24recipe00input" data-weeknum="2" data-daynum="4" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][4].recipe02" id="day24recipe01input" data-weeknum="2" data-daynum="4" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[2][5].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][5].recipe01" id="day25recipe00input" data-weeknum="2" data-daynum="5" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][5].recipe02" id="day25recipe01input" data-weeknum="2" data-daynum="5" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[2][6].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][6].recipe01" id="day26recipe00input" data-weeknum="2" data-daynum="6" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[2][6].recipe02" id="day26recipe01input" data-weeknum="2" data-daynum="6" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][0].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][0].recipe01" id="day30recipe00input" data-weeknum="3" data-daynum="0" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][0].recipe02" id="day30recipe01input" data-weeknum="3" data-daynum="0" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][1].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][1].recipe01" id="day31recipe00input" data-weeknum="3" data-daynum="1" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][1].recipe02" id="day31recipe01input" data-weeknum="3" data-daynum="1" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][2].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][2].recipe01" id="day32recipe00input" data-weeknum="3" data-daynum="2" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][2].recipe02" id="day32recipe01input" data-weeknum="3" data-daynum="2" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][3].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][3].recipe01" id="day33recipe00input" data-weeknum="3" data-daynum="3" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][3].recipe02" id="day33recipe01input" data-weeknum="3" data-daynum="3" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][4].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][4].recipe01" id="day34recipe00input" data-weeknum="3" data-daynum="4" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][4].recipe02" id="day34recipe01input" data-weeknum="3" data-daynum="4" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][5].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][5].recipe01" id="day35recipe00input" data-weeknum="3" data-daynum="5" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][5].recipe02" id="day35recipe01input" data-weeknum="3" data-daynum="5" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[3][6].date_number }]}</p>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][6].recipe01" id="day36recipe00input" data-weeknum="3" data-daynum="6" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[3][6].recipe02" id="day36recipe01input" data-weeknum="3" data-daynum="6" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -449,14 +449,14 @@
         <tr ng-show="num_weeks === 5">
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d40.date_number }]}</p>
+                    <p>{[{ monthly_data.array_data[4][0].date_number }]}</p>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day40recipe00" id="day40recipe00input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][0].recipe01" id="day40recipe00input" data-weeknum="4" data-daynum="0" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
                     <div class="form-group recipe-input-container">
-                        <input type="text" class="form-control recipe-input" ng-model="day40recipe01" id="day40recipe01input"
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][0].recipe02" id="day40recipe01input" data-weeknum="4" data-daynum="0" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -464,29 +464,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d41.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d41.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day41recipe00" id="day41recipe00input"
+                    <p>{[{ monthly_data.array_data[4][1].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][1].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][1].recipe01" id="day41recipe00input" data-weeknum="4" data-daynum="1" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d41.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day41recipe01" id="day41recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d42.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d42.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day42recipe00" id="day42recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d42.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day42recipe01" id="day42recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][1].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][1].recipe02" id="day41recipe01input" data-weeknum="4" data-daynum="1" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -494,29 +479,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d43.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d43.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day43recipe00" id="day43recipe00input"
+                    <p>{[{ monthly_data.array_data[4][2].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][2].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][2].recipe01" id="day42recipe00input" data-weeknum="4" data-daynum="2" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d43.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day43recipe01" id="day43recipe01input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <p>{[{ monthly_data.dates.d44.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d44.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day44recipe00" id="day44recipe00input"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..." bs-typeahead>
-                    </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d44.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day44recipe01" id="day44recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][2].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][2].recipe02" id="day42recipe01input" data-weeknum="4" data-daynum="2" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -524,14 +494,14 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d45.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d45.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day45recipe00" id="day45recipe00input"
+                    <p>{[{ monthly_data.array_data[4][3].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][3].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][3].recipe01" id="day43recipe00input" data-weeknum="4" data-daynum="3" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d45.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day45recipe01" id="day45recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][3].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][3].recipe02" id="day43recipe01input" data-weeknum="4" data-daynum="3" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
@@ -539,14 +509,44 @@
             </td>
             <td>
                 <div>
-                    <p>{[{ monthly_data.dates.d46.date_number }]}</p>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d46.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day46recipe00" id="day46recipe00input"
+                    <p>{[{ monthly_data.array_data[4][4].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][4].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][4].recipe01" id="day44recipe00input" data-weeknum="4" data-daynum="4" data-recipenum="0"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>
-                    <div class="form-group recipe-input-container" ng-show="monthly_data.dates.d46.date_number !== '-'">
-                        <input type="text" class="form-control recipe-input" ng-model="day46recipe01" id="day46recipe01input"
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][4].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][4].recipe02" id="day44recipe01input" data-weeknum="4" data-daynum="4" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[4][5].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][5].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][5].recipe01" id="day45recipe00input" data-weeknum="4" data-daynum="5" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][5].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][5].recipe02" id="day45recipe01input" data-weeknum="4" data-daynum="5" data-recipenum="1"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p>{[{ monthly_data.array_data[4][6].date_number }]}</p>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][6].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][6].recipe01" id="day46recipe00input" data-weeknum="4" data-daynum="6" data-recipenum="0"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..." bs-typeahead>
+                    </div>
+                    <div class="form-group recipe-input-container" ng-show="monthly_data.array_data[4][6].date_number !== '-'">
+                        <input type="text" class="form-control recipe-input" ng-model="monthly_data.array_data[4][6].recipe02" id="day46recipe01input" data-weeknum="4" data-daynum="6" data-recipenum="1"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..." bs-typeahead>
                     </div>

@@ -5,10 +5,10 @@
     <h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
 
     <div class="input-group">
-        <input type="text" class="form-control" ng-model="filterText" ng-init="" ng-change="filterTableRows()"
+        <input type="text" class="form-control" ng-model="filterText" ng-init="" ng-change="filter_table_rows()"
                placeholder="Search by recipe title.."/>
         <span class="input-group-btn">
-            <button class="btn btn-primary" type="button" ng-click="clearFilter()">Clear</button>
+            <button class="btn btn-primary" type="button" ng-click="clear_filter()">Clear</button>
         </span>
     </div>
 

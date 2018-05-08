@@ -11,11 +11,11 @@
             <th>Month</th>
         </tr>
         {% for month in months %}
-        <tr>
-            <td><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
-            <td>{{ month.year }}</td>
-            <td>{{ month.month }}</td>
-        </tr>
+            <tr>
+                <td><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
+                <td>{{ month.year }}</td>
+                <td>{{ month.month }}</td>
+            </tr>
         {% endfor %}
     </table>
 

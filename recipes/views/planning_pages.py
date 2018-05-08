@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render
 from rest_framework.viewsets import ViewSet
 
@@ -16,6 +17,6 @@ class MonthViewSet(ViewSet):
         return render(request, 'recipes/month_detail.html', {'month': month})
 
 
-class PlannerViewSet(ViewSet):
+class PlannerViewSet(LoginRequiredMixin, ViewSet):
     def list(self, request):
         return render(request, 'recipes/planner.html')

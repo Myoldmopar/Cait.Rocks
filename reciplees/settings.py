@@ -135,9 +135,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-# Compressed file storage, for efficiency
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 # Heroku: Update database configuration from $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# Upon logging in, redirect to where?
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'planner:planner-list'

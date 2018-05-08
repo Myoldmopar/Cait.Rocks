@@ -90,13 +90,6 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                     'message': 'Cannot find recipe with pk=%s' % recipe_id},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        except Recipe.MultipleObjectsReturned:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'DB Problem; multiple recipes with pk=%s' % recipe_id},
-                status=status.HTTP_400_BAD_REQUEST
-            )
         try:
             calendar_to_modify = Calendar.objects.get(pk=pk)
         except Calendar.DoesNotExist:
@@ -104,14 +97,6 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 {
                     'success': False,
                     'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        except Calendar.MultipleObjectsReturned:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'DB Problem; multiple calendars with pk=%s' % pk
-                },
                 status=status.HTTP_400_BAD_REQUEST
             )
 

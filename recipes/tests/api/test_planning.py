@@ -119,6 +119,15 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('Could not convert daily_recipe_id', response.content)
 
+        # Numerically out of range recipe PK
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 2}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Cannot find recipe with pk=2', response.content)
+
         response = self.client.put(
             url_path,
             data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 'gamma'}),

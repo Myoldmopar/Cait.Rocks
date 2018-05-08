@@ -1,0 +1,22 @@
+{% extends 'recipes/base.html' %}
+{% block title %}Cait.Rocks Monthly Plans{% endblock %}
+{% block content %}
+
+    <h1>All Months {{ num_months }}</h1>
+
+    <table id="monthListTable" class="table table-striped">
+        <tr>
+            <th>Nickname</th>
+            <th>Year</th>
+            <th>Month</th>
+        </tr>
+        {% for month in months %}
+        <tr>
+            <td><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
+            <td>{{ month.year }}</td>
+            <td>{{ month.month }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

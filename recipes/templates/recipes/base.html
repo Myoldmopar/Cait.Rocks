@@ -21,7 +21,7 @@
 
 {% block navbar %}
     <nav class="navbar navbar-default" style="border-radius: 0;">
-        <a class="navbar-brand" href="{% url 'cookbook:recipes-list' %}">
+        <a class="navbar-brand" href="{% url 'planner:planner-list' %}">
             <b>Cait.Rocks</b>
         </a>
         <div class="container-fluid">
@@ -34,8 +34,9 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'cookbook:recipes-list' %}">Recipe Planning</a></li>
-                    <li><a href="{% url 'cookbook:monthly_plan-list' %}">Monthly Plan</a></li>
+                    <li><a href="{% url 'planner:planner-list' %}">Planner</a></li>
+                    <li><a href="{% url 'planner:recipes-list' %}">Recipes</a></li>
+                    <li><a href="{% url 'planner:months-list' %}">Months</a></li>
                     <li><a href="{% url 'admin:index' %}">Administration</a></li>
                     <li><a href="{% url 'api' %}">API</a></li>
                 </ul>

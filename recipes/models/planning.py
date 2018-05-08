@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import calendar
 
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from recipes.models.recipe import Recipe
@@ -181,3 +182,6 @@ class Calendar(models.Model):
         day_string = '%02d' % date_num
         return [getattr(self, 'day%srecipe0' % day_string), getattr(self, 'day%srecipe1' % day_string)]
         # TODO: Error handle all over here
+
+    def get_absolute_url(self):
+        return reverse('planner:months-detail', kwargs={'pk': self.id})

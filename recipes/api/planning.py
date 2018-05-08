@@ -36,18 +36,24 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 if date_data['date_number'] > 0:
                     date_number = date_data['date_number']
                 if date_data['recipe0']:
-                    recipe01id = date_data['recipe0'].id
+                    recipe0id = date_data['recipe0'].id
+                    recipe0title = date_data['recipe0'].title
                 else:
-                    recipe01id = None
+                    recipe0id = None
+                    recipe0title = ''
                 if date_data['recipe1']:
-                    recipe02id = date_data['recipe1'].id
+                    recipe1id = date_data['recipe1'].id
+                    recipe1title = date_data['recipe1'].title
                 else:
-                    recipe02id = None
+                    recipe1id = None
+                    recipe1title = ''
                 daily_array_data.append(
                     {
                         'date_number': date_number,
-                        'recipe0': recipe01id,
-                        'recipe1': recipe02id,
+                        'recipe0': recipe0id,
+                        'recipe1': recipe1id,
+                        'recipe0title': recipe0title,
+                        'recipe1title': recipe1title,
                     }
                 )
             weekly_array_data.append(daily_array_data)

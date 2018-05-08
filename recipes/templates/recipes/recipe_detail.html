@@ -1,5 +1,5 @@
-{% extends 'recipes/recipe_base.html' %}
-{% block title %}{{ recipe.title }}{% endblock %}
+{% extends 'recipes/base.html' %}
+{% block title %}Cait.Rocks {{ recipe.title }}{% endblock %}
 {% block content %}
     {% if recipe %}
 
@@ -17,7 +17,7 @@
             <p>{{ direction.full_directions | linebreaks }}</p>
         {% endfor %}
 
-        <p><a href="{% url 'cookbook:recipes-list' %}">Back to Cookbook!</a></p>
+        <p><a href="{% url 'planner:recipes-list' %}">Back to Cookbook!</a></p>
 
         <p style="display:none">Add error handling for no recipe</p>
 

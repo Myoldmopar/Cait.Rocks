@@ -88,7 +88,11 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
             function (calendars_response) {
                 $scope.allCalendars = calendars_response.data;
                 if ($scope.allCalendars.length !== 0) {
-                    $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length-1];
+                    if ($scope.initialize_to_calendar) {
+                        $scope.selectedCalendar = $scope.allCalendars.find( function(month) {return month.id === $scope.initialize_to_calendar} );
+                    } else {
+                        $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length - 1];
+                    }
                     $scope.get_month_data();
                 }
             }

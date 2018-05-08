@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
+from django.urls import reverse
+from rest_framework import status
 
 
 class Test404Handler(TestCase):
@@ -17,3 +19,20 @@ class Test404Handler(TestCase):
         """
         response = self.client.get('/gibson/lee')
         self.assertEqual(response.status_code, 404)
+
+
+class TestHome(TestCase):
+    def test_url_path(self):
+        """
+        Test the path directly
+        """
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_reversed_path(self):
+        """
+        Rely on the url reversing
+        """
+        url_path = reverse('home')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

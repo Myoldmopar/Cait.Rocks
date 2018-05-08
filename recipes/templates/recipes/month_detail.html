@@ -19,9 +19,11 @@
                             <form method="get"
                                   action="{[{ '/planner/recipes/' + monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
                                 <button type="submit"
-                                       class="btn-xs form-control"
-                                       ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
-                                    {[{ monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num + 'title'] }]}</button>
+                                        class="btn-xs form-control"
+                                        ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
+                                    {[{ monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num + 'title']
+                                    }]}
+                                </button>
                             </form>
                         </div>
                     </div>

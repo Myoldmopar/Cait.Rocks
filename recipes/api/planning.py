@@ -2,10 +2,10 @@
 from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.mixins import CreateModelMixin
 
 from recipes.models.planning import Calendar, Recipe
 from recipes.serializers.planning import CalendarSerializer
-from rest_framework.mixins import CreateModelMixin
 
 
 class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):

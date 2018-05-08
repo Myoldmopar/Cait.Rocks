@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.http import HttpResponseRedirect
+# from django.http import HttpResponseRedirect
 from rest_framework_swagger.views import get_swagger_view
 from django.contrib.auth import views as auth_views
 from recipes.views.utility_pages import home
@@ -32,9 +32,9 @@ urlpatterns = external_url_patterns + [
     # Administration page for adding recipes, etc.
     url(r'^admin/', admin.site.urls, name="admin"),
 
-    url(r'', home, name="home"),
+    url(r'^$', home, name="home"),
 
-    # When in doubt, redirect to the home page
-    url(r'^$', lambda r: HttpResponseRedirect('')),
+    # # When in doubt, redirect to the home page
+    # url(r'^$', lambda r: HttpResponseRedirect('')),
 
 ]

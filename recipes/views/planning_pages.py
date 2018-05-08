@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, render
 from rest_framework.viewsets import ViewSet
 
 from recipes.models.planning import Calendar

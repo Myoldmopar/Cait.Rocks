@@ -5,7 +5,6 @@ from recipes.models.ingredient import Ingredient, AmountType, MeasurementType
 
 
 class IngredientModelConstructionTests(TestCase):
-
     def test_ingredient_can_be_blank(self):
         """
         Makes sure ingredient can potentially be blank...do we want this?
@@ -27,7 +26,6 @@ class IngredientModelConstructionTests(TestCase):
 
 
 class IngredientFullStringFunctionTests(TestCase):
-
     def create_and_test_ingredient(self, expected_full_string, **kwargs):
         i = Ingredient(**kwargs)
         expected_amount = kwargs.get('amount', '')  # Should this actually expect AmountType.NONE ('0')?

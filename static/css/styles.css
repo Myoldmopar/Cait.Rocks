@@ -1,0 +1,12 @@
+.recipe-input {
+    padding:4px;
+    height:24px;
+}
+
+.recipe-input-container {
+    margin-bottom:4px;
+}
+
+.valid_recipe {
+    background-color:#badfff;
+}

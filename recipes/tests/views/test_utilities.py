@@ -3,7 +3,6 @@ from django.test import TestCase
 
 
 class Test404Handler(TestCase):
-
     def test_404_handler(self):
         """
         Test the 404 handler directly

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
 
+from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 
 
 class MonthlyPlanViewSet(ViewSet):
     def list(self, request):
-        return render(request, 'recipes/monthly_view.html')
+        return render(request, 'recipes/monthly_view.html')  # TODO: This should become a list of months
 
     @action(methods=['get'], detail=False)
     def monthly_plan(self, request):

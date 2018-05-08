@@ -4,7 +4,6 @@ from django.urls import reverse
 
 
 class TestMonthlyPlanView(TestCase):
-
     def test_url_path(self):
         """
         Test the path directly
@@ -22,7 +21,6 @@ class TestMonthlyPlanView(TestCase):
 
 
 class TestCalendarView(TestCase):
-
     def test_url_path(self):
         """
         Test the path directly
@@ -40,7 +38,6 @@ class TestCalendarView(TestCase):
 
 
 class TestGroceryListView(TestCase):
-
     def test_url_path(self):
         """
         Test the path directly

@@ -18,8 +18,8 @@ Code Coverage |covimage|_
 After testing is complete, the code coverage status for those tests are tracked on
 `Coveralls <https://coveralls.io/github/Myoldmopar/Reciplees?branch=master>`__.
 
-.. |tstimage| image:: https://travis-ci.org/Myoldmopar/Reciplees.svg?branch=master
-.. _tstimage: https://travis-ci.org/Myoldmopar/Reciplees
+.. |tstimage| image:: https://travis-ci.org/Myoldmopar/Cait.Rocks.svg?branch=master
+.. _tstimage: https://travis-ci.org/Myoldmopar/Cait.Rocks
 
-.. |covimage| image:: https://coveralls.io/repos/github/Myoldmopar/Reciplees/badge.svg?branch=master
-.. _covimage: https://coveralls.io/github/Myoldmopar/Reciplees?branch=master
+.. |covimage| image:: https://coveralls.io/repos/github/Myoldmopar/Cait.Rocks/badge.svg?branch=master
+.. _covimage: https://coveralls.io/github/Myoldmopar/Cait.Rocks?branch=master

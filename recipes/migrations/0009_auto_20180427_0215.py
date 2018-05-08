@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('recipes', '0008_auto_20180427_0210'),
     ]
@@ -15,6 +14,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ingredient',
             name='amount',
-            field=models.CharField(choices=[('0', ''), ('10', '\u215b'), ('30', '\t\xbc'), ('40', '\u2153'), ('50', '\xbd'), ('55', '\u2154'), ('57', '\xbe'), ('60', '1'), ('70', '2'), ('80', '3'), ('90', '4'), ('100', '5'), ('110', '6'), ('120', '7'), ('130', '8'), ('140', '9'), ('150', '10')], default='', max_length=5),
+            field=models.CharField(
+                choices=[('0', ''), ('10', '\u215b'), ('30', '\t\xbc'), ('40', '\u2153'), ('50', '\xbd'),
+                         ('55', '\u2154'), ('57', '\xbe'), ('60', '1'), ('70', '2'), ('80', '3'), ('90', '4'),
+                         ('100', '5'), ('110', '6'), ('120', '7'), ('130', '8'), ('140', '9'), ('150', '10')],
+                default='', max_length=5),
         ),
     ]

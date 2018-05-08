@@ -6,7 +6,6 @@ from recipes.serializers.recipe import RecipeSerializer
 
 
 class RecipeSerializerTests(TestCase):
-
     def test_recipe_url_method(self):
         recipe_attributes = {
             'title': 'Recipe TITLE',

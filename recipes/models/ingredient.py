@@ -39,7 +39,6 @@ class MeasurementType(object):
 
 
 class Ingredient(models.Model):
-
     AMOUNT_TYPE_CHOICES = (
         (AmountType.NONE, ""),
         (AmountType.ONE_EIGHTH, "⅛"),
@@ -59,7 +58,8 @@ class Ingredient(models.Model):
         (AmountType.NINE, "9"),
         (AmountType.TEN, "10"),
     )
-    amount = models.CharField(max_length=5, choices=AMOUNT_TYPE_CHOICES, default='')
+    amount = models.CharField(max_length=5, choices=AMOUNT_TYPE_CHOICES, default='',
+                              help_text="The numeric part of the amount of this ingredient")
 
     MEASUREMENT_TYPE_CHOICES = (
         (MeasurementType.NONE, ""),
@@ -72,11 +72,14 @@ class Ingredient(models.Model):
         (MeasurementType.LITER, "liter"),
         (MeasurementType.GALLON, "gallon"),
     )
-    measurement = models.CharField(max_length=25, choices=MEASUREMENT_TYPE_CHOICES, default='')
+    measurement = models.CharField(max_length=25, choices=MEASUREMENT_TYPE_CHOICES, default='',
+                                   help_text="The measurement portion of this ingredient")
 
-    item_description = models.CharField(max_length=200, blank=True, default='')
+    item_description = models.CharField(max_length=200, blank=True, default='',
+                                        help_text="A description of this ingredient, Can include amount "
+                                                  "if the portion does not fit in the prescribed parameters")
 
-    recipe = models.ForeignKey(Recipe)
+    recipe = models.ForeignKey(Recipe, help_text="A pointer to an existing recipe to link them together", null=True)
 
     def __str__(self):
         return self.item_description

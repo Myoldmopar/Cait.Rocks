@@ -18,7 +18,7 @@ class RecipeTypes(object):
 
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, help_text="The descriptive title for this recipe")
 
     RECIPE_TYPE_CHOICES = (
         (RecipeTypes.UNKNOWN, "Unknown"),
@@ -31,7 +31,8 @@ class Recipe(models.Model):
         (RecipeTypes.SAUCE_DRESSING, "Sauce/Dressing"),
         (RecipeTypes.SEASONING, "Seasoning"),
     )
-    recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown')
+    recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown',
+                                   help_text="The category for this recipe")
 
     def __str__(self):
         return self.title

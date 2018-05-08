@@ -7,17 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-    replaces = [(b'recipes', '0001_initial'), (b'recipes', '0002_auto_20180422_0148'),
-                (b'recipes', '0003_recipe_recipe_type'), (b'recipes', '0004_auto_20180422_1747'),
-                (b'recipes', '0005_auto_20180422_1750'), (b'recipes', '0006_auto_20180422_1756'),
-                (b'recipes', '0007_auto_20180423_0150'), (b'recipes', '0008_auto_20180427_0210'),
-                (b'recipes', '0009_auto_20180427_0215'), (b'recipes', '0010_auto_20180427_0229'),
-                (b'recipes', '0011_auto_20180427_1356'), (b'recipes', '0012_auto_20180502_2124'),
-                (b'recipes', '0013_auto_20180502_2126'), (b'recipes', '0014_auto_20180503_0534'),
-                (b'recipes', '0015_auto_20180503_0538'), (b'recipes', '0016_auto_20180503_0539'),
-                (b'recipes', '0017_auto_20180505_2048'), (b'recipes', '0018_auto_20180507_1928'),
-                (b'recipes', '0019_auto_20180507_1932')]
-
     initial = True
 
     dependencies = [

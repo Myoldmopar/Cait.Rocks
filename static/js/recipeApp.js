@@ -34,6 +34,12 @@ app.factory('recipeService', ['$http', function ($http) {
     recipe_factory.get_calendars = function () {
         return $http.get('/api/calendars/');
     };
+    recipe_factory.post_calendar = function (year, month, name) {
+        return $http.post(
+            '/api/calendars/',
+            {'nickname': name, 'year': year, 'month': month}
+        )
+    };
     return recipe_factory;
 }]);
 
@@ -82,7 +88,7 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
             function (calendars_response) {
                 $scope.allCalendars = calendars_response.data;
                 if ($scope.allCalendars.length !== 0) {
-                    $scope.selectedCalendar = $scope.allCalendars[0];
+                    $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length-1];
                     $scope.get_month_data();
                 }
             }
@@ -113,6 +119,16 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
             }
         )
     });
+
+    $scope.add_calendar = function () {
+        var this_year = $scope.calendar_year;
+        // TODO: Validate the year/month, make the HTML inputs a choice field
+        var this_month = $scope.calendar_month;
+        var this_name = $scope.calendar_name;
+        recipeService.post_calendar(this_year, this_month, this_name).then(
+            $scope.get_calendars
+        )
+    };
 
     // things to do during page initialization
     $scope.filterText = '';

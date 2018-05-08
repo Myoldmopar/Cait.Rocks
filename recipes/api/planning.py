@@ -5,9 +5,10 @@ from rest_framework.decorators import action
 
 from recipes.models.planning import Calendar, Recipe
 from recipes.serializers.planning import CalendarSerializer
+from rest_framework.mixins import CreateModelMixin
 
 
-class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
+class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 

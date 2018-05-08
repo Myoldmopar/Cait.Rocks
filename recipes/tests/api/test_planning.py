@@ -13,12 +13,74 @@ class TestPlanningAPIMethods(TestCase):
     def test_no_calendar(self):
         pass
 
+    def test_get_empty_directions(self):
+        url_path = reverse('calendar-list')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = json.loads(response.content)
+        self.assertIsInstance(body, list)
+        self.assertEqual(len(body), 0)
+
+    def test_get_populated_directions(self):
+        Calendar.objects.create(nickname="Hey", year=2018, month=4)
+        Calendar.objects.create(nickname="Again", year=2018, month=4)
+        url_path = reverse('calendar-list')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = json.loads(response.content)
+        self.assertIsInstance(body, list)
+        self.assertEqual(len(body), 2)
+
+    def test_get_detail_item_invalid(self):
+        url_path = reverse('calendar-detail', args=[1])
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_get_detail_item_valid(self):
+        description = u'Still more stuff?!?!'
+        Calendar.objects.create(nickname=description, year=2018, month=4)
+        url_path = reverse('calendar-detail', args=[1])
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = json.loads(response.content)
+        self.assertEqual(body['id'], 1)
+        self.assertEqual(body['nickname'], description)
+
+    def test_post_fails(self):
+        url_path = reverse('calendar-list')
+        response = self.client.post(url_path, data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
+                                    content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        data = json.loads(response.content)
+        self.assertEqual(data['nickname'], 'new_name')
+        self.assertEqual(data['year'], 2018)
+        self.assertEqual(data['month'], 4)
+
+    def test_put_fails(self):
+        url_path = reverse('calendar-detail', args=[1])
+        response = self.client.put(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_patch_fails(self):
+        url_path = reverse('calendar-detail', args=[1])
+        response = self.client.patch(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_delete_fails(self):
+        url_path = reverse('calendar-detail', args=[1])
+        response = self.client.delete(url_path)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class TestPlanningAPIMonthlyDatesView(TestCase):
     def test_empty_calendar(self):
         Calendar.objects.create(year=2018, month=5)
         url_path = reverse('calendar-monthly-dates', args=[1])
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+
+class TestPlanningAPIRecipeIDView(TestCase):
     def test_calendar_with_one_day_filled(self):
         c = Calendar(year=2018, month=5)
         r = Recipe(title='temporary')

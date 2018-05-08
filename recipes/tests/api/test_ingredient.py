@@ -41,3 +41,23 @@ class TestIngredientAPIMethods(TestCase):
         body = json.loads(response.content)
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['item_description'], description)
+
+    def test_post_fails(self):
+        url_path = reverse('ingredient-list')
+        response = self.client.post(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_put_fails(self):
+        url_path = reverse('ingredient-detail', args=[1])
+        response = self.client.put(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_patch_fails(self):
+        url_path = reverse('ingredient-detail', args=[1])
+        response = self.client.patch(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_delete_fails(self):
+        url_path = reverse('ingredient-detail', args=[1])
+        response = self.client.delete(url_path)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

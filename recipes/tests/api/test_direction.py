@@ -41,3 +41,23 @@ class TestDirectionAPIMethods(TestCase):
         body = json.loads(response.content)
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['full_directions'], directions)
+
+    def test_post_fails(self):
+        url_path = reverse('direction-list')
+        response = self.client.post(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_put_fails(self):
+        url_path = reverse('direction-detail', args=[1])
+        response = self.client.put(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_patch_fails(self):
+        url_path = reverse('direction-detail', args=[1])
+        response = self.client.patch(url_path, data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_delete_fails(self):
+        url_path = reverse('direction-detail', args=[1])
+        response = self.client.delete(url_path)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

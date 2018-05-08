@@ -1,0 +1,60 @@
+{% extends 'recipes/base.html' %}
+{% block title %}Cait.Rocks Monthly Planning!{% endblock %}
+{% block content %}
+
+    <div class="form-group recipe-input-container">
+        <label>Select a Month: </label>
+        <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars" class="form-control input-sm"
+                ng-change="get_month_data()"></select>
+    </div>
+
+    <form class="form-group row" ng-submit="add_calendar()">
+        <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="calendar_name" placeholder="New Calendar Nickname">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="calendar_year" placeholder="New Calendar Year">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="calendar_month" placeholder="New Calendar Month">
+        </div>
+        <div class="col-md-3">
+            <input class="btn btn-primary form-control" type="submit" value="Add New Month">
+        </div>
+    </form>
+
+    <h1>{[{ selectedCalendar.nickname }]}</h1>
+
+    <table class="table table-bordered" style="table-layout: fixed;">
+        <tr>
+            <th ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']">
+                {[{ day }]}
+            </th>
+        </tr>
+        <tr ng-repeat="week_num in [0, 1, 2, 3, 4]" ng-show="week_num < 4 || week_num === 4 && num_weeks === 5">
+            <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
+                <div>
+                    <p>{[{ monthly_data.array_data[week_num][day_of_week].date_number }]}</p>
+                    <div class="form-group recipe-input-container"
+                         ng-show="monthly_data.array_data[week_num][day_of_week].date_number !== '-'"
+                         ng-repeat="recipe_num in [0, 1]">
+                        <input type="text"
+                               class="form-control recipe-input"
+                               ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num] !== null}"
+                               ng-model="monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num]"
+                               id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"
+                               data-weeknum="{[{ week_num }]}"
+                               data-daynum="{[{ day_of_week }]}"
+                               data-recipenum="{[{ recipe_num }]}"
+                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
+                               placeholder="Enter recipe name..."
+                               bs-typeahead>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    {% include 'recipes/z_snippet_recipe_list.html' %}
+
+{% endblock %}

@@ -11,7 +11,7 @@ class RecipeSerializerTests(TestCase):
             'title': 'Recipe TITLE',
             'recipe_type': RecipeTypes.SALAD
         }
-        #
+
         # self.serializer_data = {
         #     'color': 'black',
         #     'size': 51.23
@@ -20,4 +20,4 @@ class RecipeSerializerTests(TestCase):
         recipe_object = Recipe.objects.create(**recipe_attributes)
         recipe_serializer = RecipeSerializer(instance=recipe_object)
         url = recipe_serializer.get_absolute_url(recipe_object)
-        self.assertEqual(u'/cookbook/recipes/1/', url)
+        self.assertEqual(u'/planner/recipes/1/', url)

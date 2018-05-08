@@ -35,4 +35,4 @@ class RecipeMethodTests(TestCase):
         r = Recipe(title='hello', recipe_type=RecipeTypes.SALAD)
         r.save()
         url = r.get_absolute_url()
-        self.assertEqual(u'/cookbook/recipes/1/', url)
+        self.assertEqual(u'/planner/recipes/1/', url)

@@ -21,3 +21,11 @@ class CalendarModelConstructionTests(TestCase):
         title_string = 'This is a normal calendar; This is a normal calendar'
         titled_calendar = Calendar(nickname=title_string)
         self.assertEqual(str(titled_calendar), 'This is a normal calendar; This is a nor')
+
+
+class RecipeMethodTests(TestCase):
+    def test_recipe_url(self):
+        blank_calendar = Calendar(nickname='hey', year=2018, month=4)
+        blank_calendar.save()
+        url = blank_calendar.get_absolute_url()
+        self.assertEqual(u'/planner/months/1/', url)

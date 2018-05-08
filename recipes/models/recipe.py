@@ -38,4 +38,4 @@ class Recipe(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('cookbook:recipes-detail', kwargs={'pk': self.id})
+        return reverse('planner:recipes-detail', kwargs={'pk': self.id})

@@ -1,0 +1,22 @@
+<h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
+
+<div class="input-group">
+    <input type="text" class="form-control" ng-model="filterText" ng-init="" ng-change="filter_table_rows()"
+           placeholder="Search by recipe title.."/>
+    <span class="input-group-btn">
+        <button class="btn btn-primary" type="button" ng-click="clear_filter()">Clear</button>
+    </span>
+</div>
+
+<div id="recipe_table_container" style="overflow:auto;max-height:450px;">
+    <table id="recipeListTable" class="table table-striped">
+        <tr>
+            <th>Recipe Type</th>
+            <th>Recipe Name</th>
+        </tr>
+        <tr ng-repeat="recipe in recipe_list">
+            <td>{[{ recipe.recipe_type }]}</td>
+            <td><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
+        </tr>
+    </table>
+</div>

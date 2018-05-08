@@ -26,12 +26,12 @@
                          ng-show="monthly_data.array_data[week_num][day_of_week].date_number !== '-'">
                         <input type="text"
                                class="form-control recipe-input"
-                               ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week].recipe0 !== null}"
-                               ng-model="monthly_data.array_data[week_num][day_of_week].recipe0"
-                               id="day{[{ week_num }]}{[{ day_of_week }]}recipe00input"
+                               ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week]['recipe' + '0'] !== null}"
+                               ng-model="monthly_data.array_data[week_num][day_of_week]['recipe' + '0']"
+                               id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ 0 }]}input"
                                data-weeknum="{[{ week_num }]}"
                                data-daynum="{[{ day_of_week }]}"
-                               data-recipenum="0"
+                               data-recipenum="{[{ 0 }]}"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..."
                                bs-typeahead>
@@ -40,12 +40,12 @@
                          ng-show="monthly_data.array_data[week_num][day_of_week].date_number !== '-'">
                         <input type="text"
                                class="form-control recipe-input"
-                               ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week].recipe1 !== null}"
-                               ng-model="monthly_data.array_data[week_num][day_of_week].recipe1"
-                               id="day{[{ week_num }]}{[{ day_of_week }]}recipe01input"
+                               ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week]['recipe' + '1'] !== null}"
+                               ng-model="monthly_data.array_data[week_num][day_of_week]['recipe' + '1']"
+                               id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ 1 }]}input"
                                data-weeknum="{[{ week_num }]}"
                                data-daynum="{[{ day_of_week }]}"
-                               data-recipenum="1"
+                               data-recipenum="{[{ 1 }]}"
                                bs-options="recipe.id as recipe.title for recipe in recipe_list"
                                placeholder="Enter recipe name..."
                                bs-typeahead>

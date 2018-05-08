@@ -15,6 +15,7 @@ class AmountType(object):
     TWO_THIRDS = '55'
     THREE_QUARTER = '57'
     ONE = '60'
+    ONE_ONE_HALF = '65'
     TWO = '70'
     THREE = '80'
     FOUR = '90'
@@ -24,6 +25,8 @@ class AmountType(object):
     EIGHT = '130'
     NINE = '140'
     TEN = '150'
+    FIFTEEN = '160'
+    TWENTY = '170'
 
 
 class MeasurementType(object):
@@ -36,6 +39,8 @@ class MeasurementType(object):
     QUART = '50'
     LITER = '60'
     GALLON = '70'
+    OUNCE = '100'
+    POUND = '110'
 
 
 class Ingredient(models.Model):
@@ -48,6 +53,7 @@ class Ingredient(models.Model):
         (AmountType.TWO_THIRDS, "⅔"),
         (AmountType.THREE_QUARTER, "¾"),
         (AmountType.ONE, "1"),
+        (AmountType.ONE_ONE_HALF, "1 ½"),
         (AmountType.TWO, "2"),
         (AmountType.THREE, "3"),
         (AmountType.FOUR, "4"),
@@ -57,6 +63,8 @@ class Ingredient(models.Model):
         (AmountType.EIGHT, "8"),
         (AmountType.NINE, "9"),
         (AmountType.TEN, "10"),
+        (AmountType.FIFTEEN, "15"),
+        (AmountType.TWENTY, "20"),
     )
     amount = models.CharField(max_length=5, choices=AMOUNT_TYPE_CHOICES, default='',
                               help_text="The numeric part of the amount of this ingredient")
@@ -71,6 +79,8 @@ class Ingredient(models.Model):
         (MeasurementType.QUART, "qt"),
         (MeasurementType.LITER, "liter"),
         (MeasurementType.GALLON, "gallon"),
+        (MeasurementType.OUNCE, "oz"),
+        (MeasurementType.POUND, "lb"),
     )
     measurement = models.CharField(max_length=25, choices=MEASUREMENT_TYPE_CHOICES, default='',
                                    help_text="The measurement portion of this ingredient")

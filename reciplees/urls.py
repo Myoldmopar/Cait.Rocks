@@ -3,11 +3,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from rest_framework_swagger.views import get_swagger_view
+from django.contrib.auth import views as auth_views
+from recipes.views.utility_pages import home
 
 external_url_patterns = [
-
-    # Administration page for adding recipes, etc.
-    url(r'^admin/', admin.site.urls, name="admin"),
 
     # API endpoints live inside here
     url(r'^api/', include('recipes.api.urls')),
@@ -26,7 +25,16 @@ urlpatterns = external_url_patterns + [
     # Main page, listing all the recipes
     url(r'^planner/', include('recipes.urls', namespace='cookbook')),
 
-    # When in doubt, redirect to the main cookbook page
-    url(r'^$', lambda r: HttpResponseRedirect('planner/')),
+    # Authentication pages
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^log_out/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
+
+    # Administration page for adding recipes, etc.
+    url(r'^admin/', admin.site.urls, name="admin"),
+
+    url(r'', home, name="home"),
+
+    # When in doubt, redirect to the home page
+    url(r'^$', lambda r: HttpResponseRedirect('')),
 
 ]

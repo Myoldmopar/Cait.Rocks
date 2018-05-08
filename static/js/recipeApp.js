@@ -57,6 +57,7 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
         table = document.getElementById("recipeListTable");
         tr = table.getElementsByTagName("tr");
 
+        // TODO: Keep recipe title and ingredient list in hidden table column so we can search that column
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[1]; // Change this for a different column, really I just want to search the whole recipe maybe...
@@ -97,10 +98,6 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
                 }
             );
         }
-    };
-
-    $scope.show_this_week = function (week_num, num_weeks) {
-        return week_num < 4 || week_num === 4 && num_weeks === 5;
     };
 
     $scope.$on('$typeahead.select', function (event, value, index, elem) {

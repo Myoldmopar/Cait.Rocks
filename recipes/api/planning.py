@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import JsonResponse
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 
 from recipes.models.planning import Calendar, Recipe
@@ -45,8 +45,8 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
                 daily_array_data.append(
                     {
                         'date_number': date_number,
-                        'recipe01': recipe01id,
-                        'recipe02': recipe02id,
+                        'recipe0': recipe01id,
+                        'recipe1': recipe02id,
                     }
                 )
             weekly_array_data.append(daily_array_data)
@@ -61,13 +61,78 @@ class CalendarViewSet(viewsets.ReadOnlyModelViewSet):
         :param pk: The primary key of the calendar to modify
         :return:
         """
-        # TODO: ERROR HANDLE EVERY THING HERE!
-        date_num = int(request.data['date_num'])  # TODO: ERROR HANDLE
-        day_recipe_num = int(request.data['daily_recipe_id'])  # TODO: ERROR HANDLE
-        recipe_id = int(request.data['recipe_pk'])  # TODO: ERROR HANDLE
-        recipe_to_assign = Recipe.objects.get(pk=recipe_id)
-        calendar_to_modify = Calendar.objects.get(pk=pk)
+        # Validate body first
+        for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
+            if required_key not in request.data:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Missing %s key in recipe_id body' % required_key
+                }, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                int(request.data[required_key])
+            except ValueError:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Could not convert %s to float; value: %s' % (required_key, request.data[required_key])
+                }, status=status.HTTP_400_BAD_REQUEST)
+        date_num = int(request.data['date_num'])
+        day_recipe_num = int(request.data['daily_recipe_id'])
+        recipe_id = int(request.data['recipe_pk'])
+
+        # Now read items off of the database
+        try:
+            recipe_to_assign = Recipe.objects.get(pk=recipe_id)
+        except Recipe.DoesNotExist:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot find recipe with pk=%s' % recipe_id},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Recipe.MultipleObjectsReturned:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'DB Problem; multiple recipes with pk=%s' % recipe_id},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        try:
+            calendar_to_modify = Calendar.objects.get(pk=pk)
+        except Calendar.DoesNotExist:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot find calendar with pk=%s' % pk},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Calendar.MultipleObjectsReturned:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'DB Problem; multiple calendars with pk=%s' % pk
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Now get a two-digit date number so we can lookup a member variable, ...
         day_string = '%02d' % date_num
-        setattr(calendar_to_modify, 'day{0}recipe{1}'.format(day_string, day_recipe_num), recipe_to_assign)
+        variable_name = 'day{0}recipe{1}'.format(day_string, day_recipe_num)
+        # ... and then set that variable using sweet python voodoo
+        if not hasattr(calendar_to_modify, variable_name):
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot locate field %s, maybe date is out of range?' % variable_name
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        setattr(calendar_to_modify, variable_name, recipe_to_assign)
+        # save the calendar
         calendar_to_modify.save()
-        return JsonResponse({'success': True})
+        # and return successfully
+        return JsonResponse(
+            {
+                'success': True,
+                'message': 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
+            }
+        )

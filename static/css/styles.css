@@ -6,3 +6,7 @@
 .recipe-input-container {
     margin-bottom:6px;
 }
+
+.valid_recipe {
+    background-color:lightgreen;
+}

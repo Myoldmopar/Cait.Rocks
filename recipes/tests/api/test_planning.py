@@ -44,6 +44,7 @@ class TestPlanningAPIMethods(TestCase):
         Calendar.objects.create(year=2018, month=5)
         Recipe.objects.create(title='Caits favorite')
         url_path = reverse('calendar-recipe-id', args=[1])
+
         response = self.client.put(
             url_path,
             data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
@@ -52,4 +53,102 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Check output
 
-        # Test out of range dates
+    def test_updating_recipe_id_missing_args(self):
+        url_path = reverse('calendar-recipe-id', args=[1])
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 3}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"daily_recipe_id": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"recipe_pk": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 3, "daily_recipe_id": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"daily_recipe_id": 1, "recipe_pk": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"recipe_pk": 1, "daily_recipe_id": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_updating_recipe_id_invalid_args(self):
+        Calendar.objects.create(year=2018, month=5)
+        Recipe.objects.create(title='Caits favorite')
+        url_path = reverse('calendar-recipe-id', args=[1])
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 'alpha', "daily_recipe_id": 1, "recipe_pk": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Could not convert date_num', response.content)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 3, "daily_recipe_id": 'beta', "recipe_pk": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Could not convert daily_recipe_id', response.content)
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 'gamma'}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Could not convert recipe_pk', response.content)
+
+    def test_updating_recipe_id_invalid_pk(self):
+        Calendar.objects.create(year=2018, month=5)
+        Recipe.objects.create(title='Caits favorite')
+        url_path = reverse('calendar-recipe-id', args=[2])
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 1, "daily_recipe_id": 1, "recipe_pk": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Cannot find calendar with pk=2', response.content)
+
+    def test_updating_recipe_id_out_of_range_date(self):
+        Calendar.objects.create(year=2018, month=5)
+        Recipe.objects.create(title='Caits favorite')
+        url_path = reverse('calendar-recipe-id', args=[1])
+
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 32, "daily_recipe_id": 1, "recipe_pk": 1}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('Cannot locate field day32recipe1', response.content)

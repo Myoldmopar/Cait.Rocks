@@ -37,13 +37,13 @@
                     <li><a href="{% url 'planner:planner-list' %}">Planner</a></li>
                     <li><a href="{% url 'planner:recipes-list' %}">Recipes</a></li>
                     <li><a href="{% url 'planner:months-list' %}">Months</a></li>
-                    <li><a href="{% url 'admin:index' %}">Administration</a></li>
-                    <li><a href="{% url 'api' %}">API</a></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     {% if not request.user.is_authenticated %}
                         <li><a href="{% url 'login' %}">Login</a></li>
                     {% else %}
+                        <li><a href="{% url 'admin:index' %}">Administration</a></li>
+                        <li><a href="{% url 'api' %}">API</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% endif %}
                 </ul>

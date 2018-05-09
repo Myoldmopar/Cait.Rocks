@@ -2,6 +2,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from recipes.models.direction import Direction
 from recipes.models.recipe import Recipe
 
 
@@ -10,13 +11,16 @@ class RecipeSerializer(serializers.ModelSerializer):
     This serializer allows direct serialization for recipe objects, with additional keys as needed
     """
     recipe_type = serializers.CharField(source='get_recipe_type_display')
+
+    ingredients = serializers.StringRelatedField(many=True)  # TODO: Do this more
+    directions = serializers.SerializerMethodField()
+
     absolute_url = serializers.SerializerMethodField()
     creator = serializers.SerializerMethodField()
-    ingredients = serializers.StringRelatedField(many=True)  # This is the most beautiful thing  # TODO: Do this more
 
     class Meta:
         model = Recipe
-        fields = ('title', 'recipe_type', 'creator', 'absolute_url', 'ingredients')
+        fields = ('title', 'recipe_type', 'creator', 'absolute_url', 'ingredients', 'directions')
 
     def get_absolute_url(self, recipe_instance):
         """
@@ -34,3 +38,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             return "%s %s" % (c.first_name, c.last_name)
         except User.DoesNotExist:
             return ""
+
+    def get_directions(self, recipe_instance):
+        return Direction.objects.get(recipe=recipe_instance).full_directions

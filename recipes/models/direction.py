@@ -12,7 +12,7 @@ class Direction(models.Model):
     """
     # TODO: Restrict one direction per recipe, so just make this a text field on the recipe!  Yay!
     full_directions = models.TextField(help_text="A free-form list of directions for making this recipe")
-    recipe = models.ForeignKey(Recipe, related_name="directions",
+    recipe = models.ForeignKey(Recipe, related_name="direction",
                                help_text="A pointer to an existing recipe to link them together", null=True)
 
     def __str__(self):

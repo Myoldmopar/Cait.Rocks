@@ -10,12 +10,13 @@ class RecipeSerializer(serializers.ModelSerializer):
     This serializer allows direct serialization for recipe objects, with additional keys as needed
     """
     recipe_type = serializers.CharField(source='get_recipe_type_display')
-    creator = serializers.SerializerMethodField()
     absolute_url = serializers.SerializerMethodField()
+    creator = serializers.SerializerMethodField()
+    ingredients = serializers.StringRelatedField(many=True)  # This is the most beautiful thing  # TODO: Do this more
 
     class Meta:
         model = Recipe
-        fields = '__all__'
+        fields = ('title', 'recipe_type', 'creator', 'absolute_url', 'ingredients')
 
     def get_absolute_url(self, recipe_instance):
         """
@@ -27,9 +28,9 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_creator(self, recipe_instance):
         if not recipe_instance.creator:
-            return "<No Author>"
+            return ""
         try:
             c = User.objects.get(pk=recipe_instance.creator.pk)
             return "%s %s" % (c.first_name, c.last_name)
         except User.DoesNotExist:
-            return "<No Author>"
+            return ""

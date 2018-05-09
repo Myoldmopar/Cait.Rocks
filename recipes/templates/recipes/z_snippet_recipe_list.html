@@ -15,6 +15,7 @@
             <th>Recipe Type</th>
             <th>Recipe Name</th>
             <th>Creator</th>
+            <th style="display:none">Ingredients-HIDDEN</th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
             <td>{[{ recipe.recipe_type }]}</td>
             <td><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
             <td>{[{ recipe.creator }]}</td>
+            <td style="display:none">{[{ recipe.ingredients }]}</td>
         </tr>
         </tbody>
     </table>

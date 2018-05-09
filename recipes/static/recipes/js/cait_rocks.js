@@ -65,7 +65,7 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
 
     $scope.filter_table_rows = function () {
         // Declare variables
-        var filter, table, tr, td, i, inner_a;
+        var filter, table, tr, td, i, j, inner_a;
         filter = $scope.filterText.toUpperCase();
         table = document.getElementById("recipeListTable");
         tr = table.getElementsByTagName("tr");
@@ -84,28 +84,49 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
 
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 1; i < tr.length; i++) {
+
             // initialize to false and only show if we get a match
             var show_this_row = false;
-            // check the title of the recipe
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                inner_a = td.getElementsByTagName("a")[0]; // Add error handling in case this doesn't have any a elements
-                if (inner_a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    show_this_row = true;
-                }
-            }
-            if (!show_this_row) {
-                // check the author of the recipe
-                td = tr[i].getElementsByTagName("td")[2];
+
+            // we will check each token of the search string
+            var tokens_to_check = filter.split(' ');
+
+            for (j = 0; j < tokens_to_check.length; j++) {
+                var token = tokens_to_check[j];
+                var token_found = false;
+                // check the title of the recipe
+                td = tr[i].getElementsByTagName("td")[1];
                 if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        show_this_row = true;
+                    inner_a = td.getElementsByTagName("a")[0]; // Add error handling in case this doesn't have any a elements
+                    if (inner_a.innerHTML.toUpperCase().indexOf(token) > -1) {
+                        token_found = true;
                     }
                 }
+                // check the author of the recipe
+                if (!token_found) {
+                    td = tr[i].getElementsByTagName("td")[2];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
+                            token_found = true;
+                        }
+                    }
+                }
+                if (!token_found) {
+                    // check the ingredients of the recipe
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
+                            token_found = true;
+                        }
+                    }
+                }
+                tokens_to_check[j] = token_found;
             }
 
             // now turn that one
-            if (!show_this_row) {
+            if (tokens_to_check.every(function(t){return t;})) {
+                // woohoo we have a match! leave it shown
+            } else {
                 tr[i].style.display = "none";
             }
         }

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class RecipeTypes(object):
@@ -33,6 +34,8 @@ class Recipe(models.Model):
     )
     recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown',
                                    help_text="The category for this recipe")
+
+    creator = models.ForeignKey(User, help_text="The user who created this recipe instance")
 
     def __str__(self):
         return self.title

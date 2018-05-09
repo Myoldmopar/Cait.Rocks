@@ -26,8 +26,7 @@ urlpatterns = external_url_patterns + [
     url(r'^planner/', include('recipes.urls', namespace='cookbook')),
 
     # Authentication pages
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^log_out/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
+    url(r'accounts/', include('django.contrib.auth.urls')),
 
     # Administration page for adding recipes, etc.
     url(r'^admin/', admin.site.urls, name="admin"),

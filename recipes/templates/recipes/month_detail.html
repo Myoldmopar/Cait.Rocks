@@ -12,16 +12,16 @@
             <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]" ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
                 <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
                     <div>
-                        <p>{[{ monthly_data.data[week_num][day_of_week].date_number }]}</p>
+                        <p>{[{ month.data[week_num][day_of_week].date_number }]}</p>
                         <div class="form-group"
-                             ng-show="monthly_data.data[week_num][day_of_week].date_number !== '-'"
+                             ng-show="month.data[week_num][day_of_week].date_number !== '-'"
                              ng-repeat="recipe_num in [0, 1]">
                             <form method="get"
-                                  action="{[{ '/planner/recipes/' + monthly_data.data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
+                                  action="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
                                 <button type="submit"
                                         class="btn-xs form-control"
-                                        ng-class="{'valid_recipe': monthly_data.data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
-                                    {[{ monthly_data.data[week_num][day_of_week]['recipe' + recipe_num + 'title']}]}
+                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
+                                    {[{ month.data[week_num][day_of_week]['recipe' + recipe_num + 'title']}]}
                                 </button>
                             </form>
                         </div>

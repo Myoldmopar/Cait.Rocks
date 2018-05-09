@@ -15,9 +15,9 @@ app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
 
-app.factory('recipeService', ['$http', function ($http) {
-    var recipe_factory = {};
-    recipe_factory.update_recipe = function (calendar_id, date_num, daily_recipe_id, recipe_pk) {
+app.factory('calendarService', ['$http', function($http) {
+    var calendar_factory = {};
+    calendar_factory.update_calendar_recipe_id = function (calendar_id, date_num, daily_recipe_id, recipe_pk) {
         return $http.put(
             '/planner/api/calendars/' + calendar_id + '/recipe_id/',
             {date_num: date_num, daily_recipe_id: daily_recipe_id, recipe_pk: recipe_pk}
@@ -25,31 +25,38 @@ app.factory('recipeService', ['$http', function ($http) {
             return response.data;
         });
     };
-    recipe_factory.get_monthly_data = function (calendar_id) {
+    calendar_factory.get_calendar_monthly_data = function (calendar_id) {
         return $http.get('/planner/api/calendars/' + calendar_id + '/monthly_data/');
     };
-    recipe_factory.get_recipes = function () {
-        return $http.get('/planner/api/recipes/');
-    };
-    recipe_factory.get_calendars = function () {
+
+    calendar_factory.get_calendars = function () {
         return $http.get('/planner/api/calendars/');
     };
-    recipe_factory.post_calendar = function (year, month, name) {
+    calendar_factory.post_calendar = function (year, month, name) {
         return $http.post(
             '/planner/api/calendars/',
             {'nickname': name, 'year': year, 'month': month}
         )
     };
+    return calendar_factory;
+}]);
+
+app.factory('recipeService', ['$http', function ($http) {
+    var recipe_factory = {};
+
+    recipe_factory.get_recipes = function () {
+        return $http.get('/planner/api/recipes/');
+    };
     return recipe_factory;
 }]);
 
 // create a controller containing functions and variables made available in the controller's scope
-app.controller('recipeController', ['$scope', '$http', 'recipeService', function ($scope, $http, recipeService) {
+app.controller('recipeController', ['$scope', '$http', 'calendarService', 'recipeService', function ($scope, $http, calendar_service, recipe_service) {
     "use strict";
 
     // Variables and functions for the E+ task section
     $scope.retrieve_recipes = function () {
-        recipeService.get_recipes().then(
+        recipe_service.get_recipes().then(
             function (response) {
                 $scope.recipe_list = response.data;
             }
@@ -84,7 +91,7 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
     };
 
     $scope.get_calendars = function () {
-        recipeService.get_calendars().then(
+        calendar_service.get_calendars().then(
             function (calendars_response) {
                 $scope.allCalendars = calendars_response.data;
                 if ($scope.allCalendars.length !== 0) {
@@ -101,9 +108,9 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
 
     $scope.get_month_data = function () {
         if ($scope.selectedCalendar) {
-            recipeService.get_monthly_data($scope.selectedCalendar.id).then(
+            calendar_service.get_calendar_monthly_data($scope.selectedCalendar.id).then(
                 function (date_response) {
-                    $scope.monthly_data = date_response.data;
+                    $scope.month = date_response.data;
                     $scope.num_weeks = date_response.data.num_weeks;
                 }
             );
@@ -116,8 +123,8 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
         var week_num = meta_data['weeknum'];
         var date_num = meta_data['daynum'];
         var day_recipe_num = meta_data['recipenum'];
-        var date_in_month = $scope.monthly_data.data[week_num][date_num].date_number;
-        recipeService.update_recipe($scope.selectedCalendar.id, date_in_month, day_recipe_num, value).then(
+        var date_in_month = $scope.month.data[week_num][date_num].date_number;
+        calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_in_month, day_recipe_num, value).then(
             function (response) {
                 $scope.get_month_data();
             }
@@ -129,7 +136,7 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
         // TODO: Validate the year/month, make the HTML inputs a choice field
         var this_month = $scope.calendar_month;
         var this_name = $scope.calendar_name;
-        recipeService.post_calendar(this_year, this_month, this_name).then(
+        calendar_service.post_calendar(this_year, this_month, this_name).then(
             $scope.get_calendars
         )
     };

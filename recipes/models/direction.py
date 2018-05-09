@@ -7,10 +7,18 @@ from recipes.models.recipe import Recipe
 
 
 class Direction(models.Model):
-    full_directions = models.TextField(help_text="A freeform list of directions for making this recipe")
+    """
+    This model captures a free-form string description of the directions to make a recipe
+    """
+    # TODO: Restrict one direction per recipe, so just make this a text field on the recipe!  Yay!
+    full_directions = models.TextField(help_text="A free-form list of directions for making this recipe")
     recipe = models.ForeignKey(Recipe, help_text="A pointer to an existing recipe to link them together", null=True)
 
     def __str__(self):
+        """
+        Creates a meaningful string for this object instance
+        :return: string
+        """
         if len(self.full_directions) < 40:
             return self.full_directions
         return self.full_directions[:40]

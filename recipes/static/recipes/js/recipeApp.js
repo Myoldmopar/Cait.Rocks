@@ -19,24 +19,24 @@ app.factory('recipeService', ['$http', function ($http) {
     var recipe_factory = {};
     recipe_factory.update_recipe = function (calendar_id, date_num, daily_recipe_id, recipe_pk) {
         return $http.put(
-            '/api/calendars/' + calendar_id + '/recipe_id/',
+            '/planner/api/calendars/' + calendar_id + '/recipe_id/',
             {date_num: date_num, daily_recipe_id: daily_recipe_id, recipe_pk: recipe_pk}
         ).then(function (response) {
             return response.data;
         });
     };
     recipe_factory.get_monthly_data = function (calendar_id) {
-        return $http.get('/api/calendars/' + calendar_id + '/monthly_dates/');
+        return $http.get('/planner/api/calendars/' + calendar_id + '/monthly_data/');
     };
     recipe_factory.get_recipes = function () {
-        return $http.get('/api/recipes/');
+        return $http.get('/planner/api/recipes/');
     };
     recipe_factory.get_calendars = function () {
-        return $http.get('/api/calendars/');
+        return $http.get('/planner/api/calendars/');
     };
     recipe_factory.post_calendar = function (year, month, name) {
         return $http.post(
-            '/api/calendars/',
+            '/planner/api/calendars/',
             {'nickname': name, 'year': year, 'month': month}
         )
     };
@@ -116,7 +116,7 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
         var week_num = meta_data['weeknum'];
         var date_num = meta_data['daynum'];
         var day_recipe_num = meta_data['recipenum'];
-        var date_in_month = $scope.monthly_data.array_data[week_num][date_num].date_number;
+        var date_in_month = $scope.monthly_data.data[week_num][date_num].date_number;
         recipeService.update_recipe($scope.selectedCalendar.id, date_in_month, day_recipe_num, value).then(
             function (response) {
                 $scope.get_month_data();

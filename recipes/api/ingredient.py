@@ -6,5 +6,8 @@ from recipes.serializers.ingredient import IngredientSerializer
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This class provides the API get and retrieve views for the ingredient objects
+    """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer

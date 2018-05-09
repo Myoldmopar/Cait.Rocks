@@ -44,6 +44,9 @@ class MeasurementType(object):
 
 
 class Ingredient(models.Model):
+    """
+    This class describes a single ingredient, including amount, measurement, and item description
+    """
     AMOUNT_TYPE_CHOICES = (
         (AmountType.NONE, ""),
         (AmountType.ONE_EIGHTH, "⅛"),
@@ -92,9 +95,17 @@ class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, help_text="A pointer to an existing recipe to link them together", null=True)
 
     def __str__(self):
+        """
+        Creates a meaningful string for this object instance
+        :return: string
+        """
         return self.item_description
 
     def full_string(self):
+        """
+        Returns a full string representation of this ingredient, including amount/measurement where applicable
+        :return: string
+        """
         this_ingredient_string = ''
         if self.amount:
             this_ingredient_string += self.get_amount_display() + ' '

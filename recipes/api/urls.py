@@ -7,16 +7,16 @@ from recipes.api.ingredient import IngredientViewSet
 from recipes.api.planning import CalendarViewSet
 from recipes.api.recipe import RecipeViewSet
 
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r'directions', DirectionViewSet)
-router.register(r'ingredients', IngredientViewSet)
-router.register(r'recipes', RecipeViewSet)
-router.register(r'calendars', CalendarViewSet)
+# Create a router and register our API view-sets with it.
+api_router = DefaultRouter()
+api_router.register(r'directions', DirectionViewSet)
+api_router.register(r'ingredients', IngredientViewSet)
+api_router.register(r'recipes', RecipeViewSet)
+api_router.register(r'calendars', CalendarViewSet)
 
 urlpatterns = [
 
     # API endpoints live inside here
-    url(r'^', include(router.urls)),
+    url(r'^', include(api_router.urls)),
 
 ]

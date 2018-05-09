@@ -10,14 +10,14 @@ class TestRecipeListView(TestCase):
         """
         Test the path directly
         """
-        response = self.client.get('/planner/recipes/')
+        response = self.client.get('/planner/recipe_views/')
         self.assertEqual(response.status_code, 200)
 
     def test_reversed_path(self):
         """
         Rely on the url reversing
         """
-        url_path = reverse('planner:recipes-list')
+        url_path = reverse('planner:recipe_views-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, 200)
 
@@ -31,13 +31,13 @@ class TestRecipeDetailView(TestCase):
         """
         Test the path directly
         """
-        response = self.client.get('/planner/recipes/1/')
+        response = self.client.get('/planner/recipe_views/1/')
         self.assertEqual(response.status_code, 200)
 
     def test_reversed_path(self):
         """
         Rely on the url reversing
         """
-        url_path = reverse('planner:recipes-detail', args='1')
+        url_path = reverse('planner:recipe_views-detail', args='1')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, 200)

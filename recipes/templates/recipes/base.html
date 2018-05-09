@@ -1,0 +1,21 @@
+{% extends 'common/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Cait.Rocks Recipes!
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static '/recipes/css/styles.css' %}">
+{% endblock %}
+
+{% block body_ng_declarations %}
+    ng-app="recipeApp" ng-controller="recipeController"
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'recipes/js/recipeApp.js' %}"></script>
+{% endblock %}

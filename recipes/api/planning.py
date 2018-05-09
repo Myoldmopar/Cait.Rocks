@@ -9,28 +9,41 @@ from recipes.serializers.planning import CalendarSerializer
 
 
 class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
+    """
+    This class provides the API get and retrieve views for the calendar month objects, plus two workers:
+    - monthly_data, which is used to get the bulk data for a whole month
+    - recipe_id, which is used to put the id onto a
+    """
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
     @action(methods=['get'], detail=True)
-    def monthly_dates(self, request, pk):
+    def monthly_data(self, request, pk):
         """
-        Creates a custom response on the API for getting monthly data, including date numbers, and calendar-day ids
+        Creates a custom response on the API for getting monthly data, including date numbers, recipes, etc.
         :param request: A full django request object
         :param pk: The primary key for this particular calendar instance
-        :return: A JSONResponse with two keys: dates and num_weeks.  num_weeks returns the number of weeks in this month
-        for convenience, either 4 or 5.  dates is a dictionary, with keys dxy, where x is the week number and y is the
-        day number, both zero based.  d00 represents the top left block of the calendar, which will be the first Sunday
-        if the month starts on that day.  d16 represents the second Saturday of the month.  These keys are paired with
-        values that are dictionaries themselves, containing day_key and date_number.  day_key is the key to the
-        calendar-day database object for that day, if applicable; date_number is the numeric calendar date, or just a
-        hyphen if this day isn't a part of the current month.
+        :return: A JSONResponse with two keys: data and num_weeks.
+        - num_weeks returns the number of weeks in this month for convenience, either 4, 5 or 6
+        - data is an array of 4, 5, or 6 items, with each item being weekly data.  Each weekly data item is an array of
+        7 items, with each item being daily data.  Each daily data item is a dictionary containing keys date_number,
+        recipe0, recipe0title, recipe1, and recipe1title.  The date_number key can be "-" to represent this day doesn't
+        belong in the current month.  The recipe0 and recipe1 keys are ids to recipe objects in the database.  The
+        recipe0title and recipe1title keys are simply the recipe titles for convenience.
         """
-        c = Calendar.objects.get(pk=pk)
-        dates = c.get_monthly_dates()
-        weekly_array_data = []
+        try:
+            c = Calendar.objects.get(pk=pk)
+        except Calendar.DoesNotExist:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot find calendar with pk=%s' % pk},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        dates = c.get_monthly_data()
+        weekly_data = []
         for week_num, week_dates in enumerate(dates):
-            daily_array_data = []
+            daily_data = []
             for day_num, date_data in enumerate(week_dates):
                 date_number = '-'
                 if date_data['date_number'] > 0:
@@ -47,32 +60,32 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 else:
                     recipe1id = None
                     recipe1title = ''
-                daily_array_data.append(
+                daily_data.append(
                     {
                         'date_number': date_number,
                         'recipe0': recipe0id,
                         'recipe1': recipe1id,
                         'recipe0title': recipe0title,
-                        'recipe1title': recipe1title,
+                        'recipe1title': recipe1title,  # TODO: Could add urls here for each recipe
                     }
                 )
-            weekly_array_data.append(daily_array_data)
-        return JsonResponse({'num_weeks': len(dates), 'array_data': weekly_array_data})
+            weekly_data.append(daily_data)
+        return JsonResponse({'num_weeks': len(dates), 'data': weekly_data})
 
     @action(methods=['put'], detail=True)
     def recipe_id(self, request, pk):
         """
         Sets the recipe for this particular calendar date and recipe id
         Expects three parameters on the request body: date_num (1-31), daily_recipe_id (0 or 1), and recipe_pk
-        :param request:
+        :param request: A full django request object
         :param pk: The primary key of the calendar to modify
-        :return:
+        :return: A JSONResponse object with keys success and message.  The status code will also be set accordingly
         """
         # Validate body first
         for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
             if required_key not in request.data:
                 return JsonResponse({
-                    'success': False,
+                    'success': False,  # TODO: Remove success from everywhere, maybe this will lead to serialization
                     'message': 'Missing %s key in recipe_id body' % required_key
                 }, status=status.HTTP_400_BAD_REQUEST)
             try:
@@ -94,7 +107,7 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 {
                     'success': False,
                     'message': 'Cannot find recipe with pk=%s' % recipe_id},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_404_NOT_FOUND
             )
         try:
             calendar_to_modify = Calendar.objects.get(pk=pk)
@@ -103,7 +116,7 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 {
                     'success': False,
                     'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_404_NOT_FOUND
             )
 
         # Now get a two-digit date number so we can lookup a member variable, ...

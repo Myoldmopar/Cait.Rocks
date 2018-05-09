@@ -5,6 +5,9 @@ from recipes.models.direction import Direction
 
 
 class DirectionSerializer(serializers.ModelSerializer):
+    """
+    This serializer allows direct serialization for direction objects
+    """
     class Meta:
         model = Direction
         fields = '__all__'

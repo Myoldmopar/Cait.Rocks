@@ -1,6 +1,6 @@
 // create an angular module to hold everything for this page
 // note to self, if we split things across JS files, calling angular.module with just a name won't create a new app
-var app = angular.module('recipeApp', ['ngAnimate', 'mgcrea.ngStrap']);
+var app = angular.module('caitRocksApp', ['ngAnimate', 'mgcrea.ngStrap']);
 
 // configure the module to use a different template interpolation sequence to avoid conflicting with Django
 app.config(function ($interpolateProvider) {
@@ -15,7 +15,7 @@ app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
 
-app.factory('calendarService', ['$http', function($http) {
+app.factory('calendarService', ['$http', function ($http) {
     var calendar_factory = {};
     calendar_factory.update_calendar_recipe_id = function (calendar_id, date_num, daily_recipe_id, recipe_pk) {
         return $http.put(
@@ -51,7 +51,7 @@ app.factory('recipeService', ['$http', function ($http) {
 }]);
 
 // create a controller containing functions and variables made available in the controller's scope
-app.controller('recipeController', ['$scope', '$http', 'calendarService', 'recipeService', function ($scope, $http, calendar_service, recipe_service) {
+app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 'recipeService', function ($scope, $http, calendar_service, recipe_service) {
     "use strict";
 
     // Variables and functions for the E+ task section
@@ -71,16 +71,42 @@ app.controller('recipeController', ['$scope', '$http', 'calendarService', 'recip
         tr = table.getElementsByTagName("tr");
 
         // TODO: Keep recipe title and ingredient list in hidden table column so we can search that column
-        // Loop through all table rows, and hide those who don't match the search query
+
+        // make sure all rows are shown first
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1]; // Change this for a different column, really I just want to search the whole recipe maybe...
+            tr[i].style.display = "";
+        }
+
+        // leave early with everything shown if the search string is too short
+        if (filter.length < 2) {
+            return;
+        }
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 1; i < tr.length; i++) {
+            // initialize to false and only show if we get a match
+            var show_this_row = false;
+            // check the title of the recipe
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 inner_a = td.getElementsByTagName("a")[0]; // Add error handling in case this doesn't have any a elements
                 if (inner_a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+                    show_this_row = true;
                 }
+            }
+            if (!show_this_row) {
+                // check the author of the recipe
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        show_this_row = true;
+                    }
+                }
+            }
+
+            // now turn that one
+            if (!show_this_row) {
+                tr[i].style.display = "none";
             }
         }
     };
@@ -96,7 +122,9 @@ app.controller('recipeController', ['$scope', '$http', 'calendarService', 'recip
                 $scope.allCalendars = calendars_response.data;
                 if ($scope.allCalendars.length !== 0) {
                     if ($scope.initialize_to_calendar) {
-                        $scope.selectedCalendar = $scope.allCalendars.find( function(month) {return month.id === $scope.initialize_to_calendar} );
+                        $scope.selectedCalendar = $scope.allCalendars.find(function (month) {
+                            return month.id === $scope.initialize_to_calendar
+                        });
                     } else {
                         $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length - 1];
                     }

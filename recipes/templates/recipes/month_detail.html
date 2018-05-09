@@ -2,7 +2,7 @@
 {% block title %}Cait.Rocks Monthly Plan!{% endblock %}
 {% block content %}
     <div ng-init="initialize_to_calendar={{ month.id }} ">
-        <h1>{[{ selectedCalendar.nickname }]}</h1>
+        <h1>{[{ selectedCalendar.nickname }]} <small>({[{ selectedCalendar.creator }]})</small></h1>
         <table class="table table-bordered" style="table-layout: fixed;">
             <tr>
                 <th ng-repeat="day in days_of_week">

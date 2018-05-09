@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from recipes.models.recipe import Recipe
@@ -6,10 +7,15 @@ from recipes.models.recipe import Recipe
 
 class RecipeSerializer(serializers.ModelSerializer):
     """
-    This serializer allows direct serialization for recipe objects, with additional keys for choice fields
+    This serializer allows direct serialization for recipe objects, with additional keys as needed
     """
     recipe_type = serializers.CharField(source='get_recipe_type_display')
+    creator = serializers.SerializerMethodField()
     absolute_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Recipe
+        fields = '__all__'
 
     def get_absolute_url(self, recipe_instance):
         """
@@ -19,6 +25,11 @@ class RecipeSerializer(serializers.ModelSerializer):
         """
         return recipe_instance.get_absolute_url()
 
-    class Meta:
-        model = Recipe
-        fields = '__all__'
+    def get_creator(self, recipe_instance):
+        if not recipe_instance.creator:
+            return "<No Author>"
+        try:
+            c = User.objects.get(pk=recipe_instance.creator.pk)
+            return "%s %s" % (c.first_name, c.last_name)
+        except User.DoesNotExist:
+            return "<No Author>"

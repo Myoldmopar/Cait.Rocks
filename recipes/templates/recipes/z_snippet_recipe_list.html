@@ -10,13 +10,19 @@
 
 <div id="recipe_table_container" style="overflow:auto;max-height:450px;">
     <table id="recipeListTable" class="table table-striped">
+        <thead>
         <tr>
             <th>Recipe Type</th>
             <th>Recipe Name</th>
+            <th>Creator</th>
         </tr>
+        </thead>
+        <tbody>
         <tr ng-repeat="recipe in recipe_list">
             <td>{[{ recipe.recipe_type }]}</td>
             <td><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
+            <td>{[{ recipe.creator }]}</td>
         </tr>
+        </tbody>
     </table>
 </div>

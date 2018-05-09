@@ -35,7 +35,7 @@ class Recipe(models.Model):
     recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown',
                                    help_text="The category for this recipe")
 
-    creator = models.ForeignKey(User, help_text="The user who created this recipe instance")
+    creator = models.ForeignKey(User, help_text="The user who created this recipe instance", null=True)
 
     def __str__(self):
         return self.title

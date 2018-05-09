@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import calendar
 
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -10,6 +11,7 @@ from recipes.models.recipe import Recipe
 
 
 class Calendar(models.Model):
+    creator = models.ForeignKey(User, help_text="The user who created this recipe instance", null=True)
     year = models.IntegerField(help_text="The year of this calendar month")
     month = models.IntegerField(help_text="The month index (1-12) of this calendar month")
     nickname = models.CharField(max_length=100,

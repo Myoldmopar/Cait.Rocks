@@ -69,7 +69,7 @@ class TestPlannerView(TestCase):
         """
         response = self.client.get('/planner/')
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
-        self.assertEqual(response.url, u'/login/?next=/planner/')
+        self.assertEqual(response.url, u'/accounts/login/?next=/planner/')
 
     def test_reversed_path_logged_out(self):
         """
@@ -78,4 +78,4 @@ class TestPlannerView(TestCase):
         url_path = reverse('planner:planner-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
-        self.assertEqual(response.url, u'/login/?next=/planner/')
+        self.assertEqual(response.url, u'/accounts/login/?next=/planner/')

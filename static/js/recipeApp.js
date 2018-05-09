@@ -134,6 +134,9 @@ app.controller('recipeController', ['$scope', '$http', 'recipeService', function
         )
     };
 
+    // some hardcoded values
+    $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
     // things to do during page initialization
     $scope.filterText = '';
     $scope.recipe_list = [];

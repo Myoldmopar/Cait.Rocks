@@ -1,4 +1,4 @@
-{% extends 'recipes/base.html' %}
+{% extends 'common/base.html' %}
 {% block title %}Cait.Rocks Monthly Planning!{% endblock %}
 {% block content %}
 
@@ -27,11 +27,11 @@
 
     <table class="table table-bordered" style="table-layout: fixed;">
         <tr>
-            <th ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']">
+            <th ng-repeat="day in days_of_week">
                 {[{ day }]}
             </th>
         </tr>
-        <tr ng-repeat="week_num in [0, 1, 2, 3, 4]" ng-show="week_num < 4 || week_num === 4 && num_weeks === 5">
+        <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]" ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
             <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
                 <div>
                     <p>{[{ monthly_data.array_data[week_num][day_of_week].date_number }]}</p>

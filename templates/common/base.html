@@ -43,7 +43,7 @@
                         <li><a href="{% url 'login' %}">Login</a></li>
                     {% else %}
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
-                        <li><a href="{% url 'api' %}">API</a></li>
+                        <li><a href="{% url 'swagger' %}">API</a></li>
                         <li><a href="{% url 'logout' %}">Logout-{{ user.username }}</a></li>
                     {% endif %}
                 </ul>

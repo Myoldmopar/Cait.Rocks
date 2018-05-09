@@ -14,7 +14,7 @@ class TestPlanningAPIMethods(TestCase):
         pass
 
     def test_get_empty_directions(self):
-        url_path = reverse('calendar-list')
+        url_path = reverse('api:calendar-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         body = json.loads(response.content)
@@ -24,7 +24,7 @@ class TestPlanningAPIMethods(TestCase):
     def test_get_populated_directions(self):
         Calendar.objects.create(nickname="Hey", year=2018, month=4)
         Calendar.objects.create(nickname="Again", year=2018, month=4)
-        url_path = reverse('calendar-list')
+        url_path = reverse('api:calendar-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         body = json.loads(response.content)
@@ -32,14 +32,14 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(len(body), 2)
 
     def test_get_detail_item_invalid(self):
-        url_path = reverse('calendar-detail', args=[1])
+        url_path = reverse('api:calendar-detail', args=[1])
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_get_detail_item_valid(self):
         description = u'Still more stuff?!?!'
         Calendar.objects.create(nickname=description, year=2018, month=4)
-        url_path = reverse('calendar-detail', args=[1])
+        url_path = reverse('api:calendar-detail', args=[1])
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         body = json.loads(response.content)
@@ -47,7 +47,7 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(body['nickname'], description)
 
     def test_post_fails(self):
-        url_path = reverse('calendar-list')
+        url_path = reverse('api:calendar-list')
         response = self.client.post(url_path, data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -57,17 +57,17 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(data['month'], 4)
 
     def test_put_fails(self):
-        url_path = reverse('calendar-detail', args=[1])
+        url_path = reverse('api:calendar-detail', args=[1])
         response = self.client.put(url_path, data=json.dumps({}), content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_patch_fails(self):
-        url_path = reverse('calendar-detail', args=[1])
+        url_path = reverse('api:calendar-detail', args=[1])
         response = self.client.patch(url_path, data=json.dumps({}), content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_delete_fails(self):
-        url_path = reverse('calendar-detail', args=[1])
+        url_path = reverse('api:calendar-detail', args=[1])
         response = self.client.delete(url_path)
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -75,7 +75,7 @@ class TestPlanningAPIMethods(TestCase):
 class TestPlanningAPIMonthlyDatesView(TestCase):
     def test_empty_calendar(self):
         Calendar.objects.create(year=2018, month=5)
-        url_path = reverse('calendar-monthly-dates', args=[1])
+        url_path = reverse('api:calendar-monthly-dates', args=[1])
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -88,13 +88,13 @@ class TestPlanningAPIRecipeIDView(TestCase):
         c.day01recipe0 = r
         c.day01recipe1 = r
         c.save()
-        url_path = reverse('calendar-monthly-dates', args=[1])
+        url_path = reverse('api:calendar-monthly-dates', args=[1])
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_recipe_id_only_accepts_put(self):
         Calendar.objects.create(year=2018, month=5)
-        url_path = reverse('calendar-recipe-id', args=[1])
+        url_path = reverse('api:calendar-recipe-id', args=[1])
         response = self.client.post(
             url_path,
             data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
@@ -105,7 +105,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
     def test_updating_recipe_id_valid(self):
         Calendar.objects.create(year=2018, month=5)
         Recipe.objects.create(title='Caits favorite')
-        url_path = reverse('calendar-recipe-id', args=[1])
+        url_path = reverse('api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
             url_path,
@@ -116,7 +116,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
         # Check output
 
     def test_updating_recipe_id_missing_args(self):
-        url_path = reverse('calendar-recipe-id', args=[1])
+        url_path = reverse('api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
             url_path,
@@ -163,7 +163,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
     def test_updating_recipe_id_invalid_args(self):
         Calendar.objects.create(year=2018, month=5)
         Recipe.objects.create(title='Caits favorite')
-        url_path = reverse('calendar-recipe-id', args=[1])
+        url_path = reverse('api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
             url_path,
@@ -201,7 +201,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
     def test_updating_recipe_id_invalid_pk(self):
         Calendar.objects.create(year=2018, month=5)
         Recipe.objects.create(title='Caits favorite')
-        url_path = reverse('calendar-recipe-id', args=[2])
+        url_path = reverse('api:calendar-recipe-id', args=[2])
 
         response = self.client.put(
             url_path,
@@ -214,7 +214,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
     def test_updating_recipe_id_out_of_range_date(self):
         Calendar.objects.create(year=2018, month=5)
         Recipe.objects.create(title='Caits favorite')
-        url_path = reverse('calendar-recipe-id', args=[1])
+        url_path = reverse('api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
             url_path,

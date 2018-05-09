@@ -132,7 +132,6 @@ STATIC_URL = '/static/'
 # Additional directories to search for static content when running collectstatic
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "bower_components"),
-    os.path.join(BASE_DIR, "static"),
 ]
 
 # Heroku: Update database configuration from $DATABASE_URL.

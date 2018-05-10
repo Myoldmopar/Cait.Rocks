@@ -18,6 +18,9 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         var filter, table, tr, td, i, j, inner_a;
         filter = $scope.filterText.toUpperCase();
         table = document.getElementById("recipeListTable");
+        if (!table) {
+            return;
+        }
         tr = table.getElementsByTagName("tr");
 
         // make sure all rows are shown first

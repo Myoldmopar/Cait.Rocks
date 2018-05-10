@@ -1,28 +1,33 @@
-
 describe("caitRockController Testing Suite", function () {
     var $scope, mockCalendarService, mockRecipeService;
     beforeEach(module("caitRocksApp"));
 
     // Inject the real caitRockService
-    beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService) {
+    beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService, $q) {
         $scope = $rootScope.$new();
-
-        // Set mockStringService equal to the real service code.
         mockCalendarService = calendarService;
         mockRecipeService = recipeService;
-
-        // Turn the mockStringService into a Jasmine spy and call a fake function that
-        // basically does the same thing as the real one, but now this one is isolated
-        // to just this test.
-        spyOn(mockCalendarService, "addExcitement").and.returnValue("Doesn't matter what this says, we're not testing the result");
-        spyOn(mockRecipeService, "addExcitement").and.returnValue("Doesn't matter what this says, we're not testing the result");
-        $controller("caitRocksController", {$scope: $scope, calendarService: mockCalendarService, recipeService: mockRecipeService});
+        $scope.$q = $q;
+        $controller("caitRocksController", {
+            $scope: $scope,
+            calendarService: mockCalendarService,
+            recipeService: mockRecipeService
+        });
     }));
 
     it("should make a string more exciting", function () {
+        spyOn(mockCalendarService, "addExcitement").and.returnValue({data: 'HEY'});
         $scope.excitement();
-
-        // We only care that the function was called, we don't need to test the value that got returned.
         expect(mockCalendarService.addExcitement).toHaveBeenCalled();
+    });
+
+    it("should get recipes through the recipe API service", function () {
+        var deferredSuccess = $scope.$q.defer();
+        spyOn(mockRecipeService, 'get_recipes').and.returnValue(deferredSuccess.promise);
+        $scope.retrieve_recipes();
+        expect(mockRecipeService.get_recipes).toHaveBeenCalled();
+        deferredSuccess.resolve();
+        //$scope.$digest();           // This makes sure that all callbacks of promises will be called
+        //expect($scope.recipe_list).toBe(null);
     });
 });

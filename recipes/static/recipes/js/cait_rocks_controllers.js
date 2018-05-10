@@ -13,10 +13,6 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         );
     };
 
-    $scope.func_to_test = function () {
-        return 2;
-    };
-
     $scope.filter_table_rows = function () {
         // Declare variables
         var filter, table, tr, td, i, j, inner_a;
@@ -149,6 +145,6 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
     $scope.get_calendars();
 
     $scope.excitement = function () {
-        $scope.resultingString = calendar_service.addExcitement('hey');
+        $scope.excited_string = calendar_service.addExcitement('hey');
     };
 }]);

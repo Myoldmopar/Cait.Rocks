@@ -15,10 +15,6 @@ env:
     - TOX_ENV=structure
     - TOX_ENV=karma
 
-before_install:
-    - export DISPLAY=:99.0
-    - sh -e /etc/init.d/xvfb start
-
 install:
   - pip install tox
   - pip install --upgrade pip

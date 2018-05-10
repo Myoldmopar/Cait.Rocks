@@ -1,7 +1,7 @@
 var app = angular.module('caitRocksApp');
 
 // create a controller containing functions and variables made available in the controller's scope
-app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 'recipeService', function ($scope, $http, calendar_service, recipe_service) {
+app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeService', function ($scope, calendar_service, recipe_service) {
     "use strict";
 
     // Variables and functions for the E+ task section
@@ -32,9 +32,6 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
 
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 1; i < tr.length; i++) {
-
-            // initialize to false and only show if we get a match
-            var show_this_row = false;
 
             // we will check each token of the search string
             var tokens_to_check = filter.split(' ');
@@ -147,4 +144,7 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
     $scope.retrieve_recipes();
     $scope.get_calendars();
 
+    $scope.excitement = function () {
+        $scope.excited_string = calendar_service.addExcitement('hey');
+    };
 }]);

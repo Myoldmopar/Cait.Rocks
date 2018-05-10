@@ -13,13 +13,17 @@ env:
     - TOX_ENV=python
     - TOX_ENV=flake8
     - TOX_ENV=structure
+    - TOX_ENV=karma
 
 install:
   - pip install tox
   - pip install --upgrade pip
   - pip install tox coveralls
+  - pip install codecov
 
 script:
   - tox -e $TOX_ENV
 
-after_success: test $TOX_ENV = "python" && coveralls
+after_success:
+  - test $TOX_ENV = "python" && coveralls
+  - test $TOX_ENV = "karma" && codecov

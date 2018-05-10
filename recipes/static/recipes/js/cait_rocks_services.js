@@ -41,12 +41,3 @@ app.factory('recipeService', ['$http', function ($http) {
     };
     return recipe_factory;
 }]);
-
-//
-
-app.service("caitRockService", function() {
-    "use strict";
-    this.addExcitement = function (str) {
-        return str + "!!!";
-    };
-});

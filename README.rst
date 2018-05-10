@@ -1,6 +1,8 @@
 Cait.Rocks
 ==========
 
+|davidimage|_
+
 This repo holds the Django-backed website for CaitRocks_.
 
 .. _CaitRocks: <https://cait.rocks/>
@@ -23,3 +25,6 @@ After testing is complete, the code coverage status for those tests are tracked 
 
 .. |covimage| image:: https://coveralls.io/repos/github/Myoldmopar/Cait.Rocks/badge.svg?branch=master
 .. _covimage: https://coveralls.io/github/Myoldmopar/Cait.Rocks?branch=master
+
+.. |davidimage| image:: https://david-dm.org/myoldmopar/cait.rocks.svg
+.. _davidimage: https://david-dm.org/myoldmopar/cait.rocks

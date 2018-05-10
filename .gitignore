@@ -4,6 +4,7 @@ bower_components
 node_modules
 staticfiles
 old.db.sqlite3
+karma_coverage
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

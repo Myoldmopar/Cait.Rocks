@@ -25,6 +25,21 @@ class IngredientModelConstructionTests(TestCase):
         self.assertIs(unicode(proper_ingredient), ingredient_string)
 
 
+class TestIngredientStringTests(TestCase):
+    def test_unicode_character_version(self):
+        i = Ingredient(
+            amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
+        )
+        with self.assertRaises(Exception):
+            str(i)
+
+    def test_ascii_compliant_version(self):
+        i = Ingredient(
+            amount=AmountType.ONE, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
+        )
+        str(i)
+
+
 class IngredientFullStringFunctionTests(TestCase):
     def create_and_test_ingredient(self, expected_full_string, **kwargs):
         i = Ingredient(**kwargs)

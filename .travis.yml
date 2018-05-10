@@ -13,6 +13,7 @@ env:
     - TOX_ENV=python
     - TOX_ENV=flake8
     - TOX_ENV=structure
+    - TOX_ENV=karma
 
 before_install:
     - export DISPLAY=:99.0
@@ -22,10 +23,8 @@ install:
   - pip install tox
   - pip install --upgrade pip
   - pip install tox coveralls
-  - npm install
 
 script:
   - tox -e $TOX_ENV
-  - npm test
 
 after_success: test $TOX_ENV = "python" && coveralls

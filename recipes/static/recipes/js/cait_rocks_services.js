@@ -23,6 +23,9 @@ app.factory('calendarService', ['$http', function ($http) {
             {'nickname': name, 'year': year, 'month': month}
         )
     };
+    calendar_factory.addExcitement = function (str) {
+        return str + "!!!";
+    };
     return calendar_factory;
 }]);
 
@@ -32,5 +35,16 @@ app.factory('recipeService', ['$http', function ($http) {
     recipe_factory.get_recipes = function () {
         return $http.get('/planner/api/recipes/');
     };
+    recipe_factory.addExcitement = function (str) {
+        return str + "!!!";
+    };
     return recipe_factory;
 }]);
+
+//
+
+app.service("caitRockService", function() {
+    this.addExcitement = function (str) {
+        return str + "!!!";
+    };
+});

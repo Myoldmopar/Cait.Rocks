@@ -13,6 +13,10 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
         );
     };
 
+    $scope.func_to_test = function () {
+        return 2;
+    };
+
     $scope.filter_table_rows = function () {
         // Declare variables
         var filter, table, tr, td, i, j, inner_a;
@@ -147,4 +151,13 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
     $scope.retrieve_recipes();
     $scope.get_calendars();
 
+}]);
+
+////////
+
+app.controller("caitRockController", ["$scope", 'recipeService', function ($scope, recipeService) {
+    $scope.boringString = "Hello world";
+    $scope.excitement = function (boringString) {
+        $scope.resultingString = recipeService.addExcitement(boringString);
+    };
 }]);

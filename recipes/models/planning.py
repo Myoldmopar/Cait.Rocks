@@ -3,13 +3,17 @@ from __future__ import unicode_literals
 
 import calendar
 
-from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.db import models
 
 from recipes.models.recipe import Recipe
 
 
 class Calendar(models.Model):
+    """
+    This class describes a full month of data, including the calendar year/month as well as two recipes per day each day
+    """
+    creator = models.ForeignKey(User, help_text="The user who created this recipe instance", null=True)
     year = models.IntegerField(help_text="The year of this calendar month")
     month = models.IntegerField(help_text="The month index (1-12) of this calendar month")
     nickname = models.CharField(max_length=100,
@@ -140,6 +144,10 @@ class Calendar(models.Model):
                                      null=True, blank=True)
 
     def __str__(self):
+        """
+        Creates a meaningful string for this object instance
+        :return: string
+        """
         if self.nickname:
             if len(self.nickname) < 40:
                 return self.nickname
@@ -147,11 +155,12 @@ class Calendar(models.Model):
         else:
             return "Unnamed calendar"
 
-    def get_monthly_dates(self):
+    def get_monthly_data(self):
         """
         Returns monthly data, including date numbers and recipe ids for each day, if applicable
-        :return: An array of 4 or 5 weeks, each week is an array of 7 days, each day has a date_number key that will be
-        0 or the actual date and a two recipe ids, that may be None if no recipes are selected
+        :return: An array of 4, 5, or 6 weeks, each week is an array of 7 days, each day is a dictionary that has a
+        date_number key that is the actual date or 0, and recipe0 and recipe1 ids, which point to the recipe objects
+        in the database (recipe ids may be None if no recipes are selected)
         """
         # need to validate year/month
         c = calendar.Calendar()
@@ -179,9 +188,16 @@ class Calendar(models.Model):
         """
         if date_num == 0:
             return [None, None]
-        day_string = '%02d' % date_num
-        return [getattr(self, 'day%srecipe0' % day_string), getattr(self, 'day%srecipe1' % day_string)]
-        # TODO: Error handle all over here
-
-    def get_absolute_url(self):
-        return reverse('planner:months-detail', kwargs={'pk': self.id})
+        try:
+            day_string = '%02d' % date_num
+        except TypeError:
+            return [None, None]  # couldn't convert date_num to numeric representation
+        if len(day_string) != 2:
+            # Something went way awry, should consider raising exception here
+            return [None, None]
+        try:
+            recipe0 = getattr(self, 'day%srecipe0' % day_string)
+            recipe1 = getattr(self, 'day%srecipe1' % day_string)
+        except Exception:  # Yeah, I know, a broad exception, but I don't know what all can go wrong with getattr...
+            return [None, None]
+        return [recipe0, recipe1]

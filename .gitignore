@@ -3,6 +3,7 @@
 bower_components
 node_modules
 staticfiles
+old.db.sqlite3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

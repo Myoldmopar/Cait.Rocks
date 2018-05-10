@@ -2,27 +2,26 @@
 {% block title %}Cait.Rocks Monthly Plan!{% endblock %}
 {% block content %}
     <div ng-init="initialize_to_calendar={{ month.id }} ">
-        <h1>{[{ selectedCalendar.nickname }]}</h1>
+        <h1>{[{ selectedCalendar.nickname }]} <small>({[{ selectedCalendar.creator }]})</small></h1>
         <table class="table table-bordered" style="table-layout: fixed;">
             <tr>
-                <th ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']">
+                <th ng-repeat="day in days_of_week">
                     {[{ day }]}
                 </th>
             </tr>
-            <tr ng-repeat="week_num in [0, 1, 2, 3, 4]" ng-show="week_num < 4 || week_num === 4 && num_weeks === 5">
+            <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]" ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
                 <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
                     <div>
-                        <p>{[{ monthly_data.array_data[week_num][day_of_week].date_number }]}</p>
+                        <p>{[{ month.data[week_num][day_of_week].date_number }]}</p>
                         <div class="form-group"
-                             ng-show="monthly_data.array_data[week_num][day_of_week].date_number !== '-'"
+                             ng-show="month.data[week_num][day_of_week].date_number !== '-'"
                              ng-repeat="recipe_num in [0, 1]">
                             <form method="get"
-                                  action="{[{ '/planner/recipes/' + monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
+                                  action="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
                                 <button type="submit"
                                         class="btn-xs form-control"
-                                        ng-class="{'valid_recipe': monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
-                                    {[{ monthly_data.array_data[week_num][day_of_week]['recipe' + recipe_num + 'title']
-                                    }]}
+                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
+                                    {[{ month.data[week_num][day_of_week]['recipe' + recipe_num + 'title']}]}
                                 </button>
                             </form>
                         </div>

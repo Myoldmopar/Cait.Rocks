@@ -10,19 +10,34 @@ class IngredientModelConstructionTests(TestCase):
         Makes sure ingredient can potentially be blank...do we want this?
         """
         blank_ingredient = Ingredient(item_description='')
-        self.assertIs(str(blank_ingredient), '')
+        self.assertIs(unicode(blank_ingredient), u'')
 
     def test_ingredient_default_construction(self):
         """
         Makes sure ingredient can potentially be blank...do we want this?
         """
         blank_ingredient = Ingredient()
-        self.assertIs(str(blank_ingredient), '')
+        self.assertIs(unicode(blank_ingredient), u'')
 
     def test_ingredient_normal_construction(self):
-        ingredient_string = 'This is a normal ingredient'
-        blank_ingredient = Ingredient(item_description=ingredient_string)
-        self.assertIs(str(blank_ingredient), ingredient_string)
+        ingredient_string = u'This is a normal ingredient'
+        proper_ingredient = Ingredient(item_description=ingredient_string)
+        self.assertIs(unicode(proper_ingredient), ingredient_string)
+
+
+class TestIngredientStringTests(TestCase):
+    def test_unicode_character_version(self):
+        i = Ingredient(
+            amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
+        )
+        with self.assertRaises(Exception):
+            str(i)
+
+    def test_ascii_compliant_version(self):
+        i = Ingredient(
+            amount=AmountType.ONE, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
+        )
+        str(i)
 
 
 class IngredientFullStringFunctionTests(TestCase):
@@ -34,7 +49,7 @@ class IngredientFullStringFunctionTests(TestCase):
         self.assertEqual(i.measurement, expected_measurement)
         expected_description = kwargs.get('item_description', '')
         self.assertEqual(i.item_description, expected_description)
-        self.assertEqual(i.full_string(), expected_full_string)
+        self.assertEqual(unicode(i), expected_full_string)
 
     def test_full_string_combinations(self):
         """

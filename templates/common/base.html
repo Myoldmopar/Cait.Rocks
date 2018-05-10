@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}Cait.Rocks!{% endblock %}
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'ubuntu-font/ubuntu.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body style="font-family: Ubuntu, sans-serif;" {% block body_ng_declarations %}{% endblock %}>
+
+{% block navbar %}
+    <nav class="navbar navbar-default" style="border-radius: 0;">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <b>Cait.Rocks</b>
+        </a>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'planner:planner-list' %}">Planner</a></li>
+                    <li><a href="{% url 'planner:recipe_views-list' %}">Recipes</a></li>
+                    <li><a href="{% url 'planner:months-list' %}">Months</a></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% else %}
+                        <li><a href="{% url 'admin:index' %}">Administration</a></li>
+                        <li><a href="{% url 'planner:swagger' %}">API</a></li>
+                        <li><a href="{% url 'logout' %}">Logout-{{ user.username }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-12">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'angular/angular.min.js' %}"></script>
+<script src="{% static 'angular-animate/angular-animate.min.js' %}"></script>
+<script src="{% static 'angular-strap/dist/angular-strap.min.js' %}"></script>
+<script src="{% static 'angular-strap/dist/angular-strap.tpl.min.js' %}"></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

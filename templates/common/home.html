@@ -1,4 +1,4 @@
-{% extends 'recipes/base.html' %}
+{% extends 'common/base.html' %}
 
 {% block title %}Cait.Rocks!{% endblock %}
 
@@ -12,8 +12,8 @@
                     progress, and has only been alive for 2 weeks, but it's coming around fast!</p>
 
                 <h1>What can I do here?</h1>
-                <p>For now, you can check out Cait's handy work. You can look at the <a
-                        href="{% url 'planner:recipes-list' %}">list of recipes</a>, which is currently only a modest
+                <p>If you have an account, go to your <a href="{% url 'planner:planner-list' %}">planner</a>.  If not, you can check out Cait's handy work. You can look at the <a
+                        href="{% url 'planner:recipe_views-list' %}">list of recipes</a>, which is currently only a modest
                     few, but will grow to the whole library.</p>
 
                 <h1>Anything else?</h1>

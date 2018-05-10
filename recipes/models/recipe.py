@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class RecipeTypes(object):
@@ -34,8 +35,21 @@ class Recipe(models.Model):
     recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown',
                                    help_text="The category for this recipe")
 
+    directions = models.TextField(help_text="A free-form set of text instructions for making this recipe", null=True)
+
+    creator = models.ForeignKey(User, related_name="recipes",
+                                help_text="The user who created this recipe instance", null=True)
+
     def __str__(self):
+        """
+        Creates a meaningful string for this object instance
+        :return: string
+        """
         return self.title
 
     def get_absolute_url(self):
-        return reverse('planner:recipes-detail', kwargs={'pk': self.id})
+        """
+        Gets the URL path to this recipe's nice view page, not the API url!
+        :return: string
+        """
+        return reverse('planner:recipe_views-detail', kwargs={'pk': self.id})

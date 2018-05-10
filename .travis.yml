@@ -26,6 +26,6 @@ install:
 
 script:
   - tox -e $TOX_ENV
-  - node_modules/karma/bin/karma start my.conf.js --single-run
+  - node_modules/karma/bin/karma start karma.conf.js --single-run
 
 after_success: test $TOX_ENV = "python" && coveralls

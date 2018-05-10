@@ -1,6 +1,7 @@
 var app = angular.module('caitRocksApp');
 
 app.factory('calendarService', ['$http', function ($http) {
+    "use strict";
     var calendar_factory = {};
     calendar_factory.update_calendar_recipe_id = function (calendar_id, date_num, daily_recipe_id, recipe_pk) {
         return $http.put(
@@ -30,8 +31,8 @@ app.factory('calendarService', ['$http', function ($http) {
 }]);
 
 app.factory('recipeService', ['$http', function ($http) {
+    "use strict";
     var recipe_factory = {};
-
     recipe_factory.get_recipes = function () {
         return $http.get('/planner/api/recipes/');
     };
@@ -44,6 +45,7 @@ app.factory('recipeService', ['$http', function ($http) {
 //
 
 app.service("caitRockService", function() {
+    "use strict";
     this.addExcitement = function (str) {
         return str + "!!!";
     };

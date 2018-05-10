@@ -155,7 +155,7 @@ app.controller('caitRocksController', ['$scope', '$http', 'calendarService', 're
 
 ////////
 
-app.controller("caitRockController", ["$scope", 'calendarService', function ($scope, calendarService) {
+app.controller("caitRockController", ["$scope", 'calendarService', 'recipeService', function ($scope, calendarService, recipeService) {
     $scope.boringString = "Hello world";
     $scope.excitement = function (boringString) {
         $scope.resultingString = calendarService.addExcitement(boringString);

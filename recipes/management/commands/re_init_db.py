@@ -11,6 +11,7 @@ class Command(BaseCommand):
     help = 'Re-initializes a few recipes and stuff on the DB'
 
     def handle(self, *args, **options):
+        # Note I didn't use a fixture here because I need to access the User model which isn't available from dump-data
         u = User.objects.create_user(
             username="TestUser",
             password="TestPass",
@@ -21,7 +22,10 @@ class Command(BaseCommand):
             username="TestUser2",
             password="TestPass2",
             first_name="Edwin",
-            last_name="Lee"
+            last_name="Lee",
+            is_superuser=True,
+            is_staff=True,
+            is_active=True
         )
         r1 = Recipe.objects.create(
             title="Sauce recipe",
@@ -75,5 +79,7 @@ class Command(BaseCommand):
             nickname="This Month",
             year=2018,
             month=5,
-            creator=u
+            creator=u,
+            day01recipe0=r1,
+            day02recipe1=r2
         )

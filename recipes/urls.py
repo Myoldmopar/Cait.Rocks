@@ -3,7 +3,6 @@ from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_swagger.views import get_swagger_view
 
-from recipes.api.direction import DirectionViewSet
 from recipes.api.ingredient import IngredientViewSet
 from recipes.api.planning import CalendarViewSet
 from recipes.api.recipe import RecipeViewSet
@@ -15,7 +14,6 @@ app_name = 'planner'
 
 # Create a router and register our API view-sets
 api_router = DefaultRouter()
-api_router.register(r'directions', DirectionViewSet)
 api_router.register(r'ingredients', IngredientViewSet)
 api_router.register(r'recipes', RecipeViewSet)
 api_router.register(r'calendars', CalendarViewSet)

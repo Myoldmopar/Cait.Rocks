@@ -7,9 +7,6 @@ from reciplees import urls
 class Command(BaseCommand):
     help = 'Lists all the currently found URL patterns in the project'
 
-    def __init__(self, *args, **kwargs):
-        super(Command, self).__init__(*args, **kwargs)
-
     def show_urls(self, urllist, depth=0):
         for entry in urllist:
             print("  " * depth, entry.regex.pattern)

@@ -3,13 +3,11 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from recipes.models.direction import Direction
 from recipes.models.ingredient import Ingredient
 from recipes.models.planning import Calendar
 from recipes.models.recipe import Recipe
 
 admin.site.register(Calendar)
-admin.site.register(Direction)
 admin.site.register(Ingredient)
 
 
@@ -18,14 +16,9 @@ class IngredientInline(admin.TabularInline):
     extra = 0
 
 
-class DirectionInline(admin.StackedInline):
-    model = Direction
-    max_num = 1
-
-
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
-    inlines = [IngredientInline, DirectionInline]
+    inlines = [IngredientInline]
     list_display = ('title', 'recipe_type')
     search_fields = ('title',)
 

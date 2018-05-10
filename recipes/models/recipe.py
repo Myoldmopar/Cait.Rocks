@@ -35,6 +35,8 @@ class Recipe(models.Model):
     recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown',
                                    help_text="The category for this recipe")
 
+    directions = models.TextField(help_text="A free-form set of text instructions for making this recipe", null=True)
+
     creator = models.ForeignKey(User, related_name="recipes",
                                 help_text="The user who created this recipe instance", null=True)
 

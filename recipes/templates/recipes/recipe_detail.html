@@ -13,7 +13,7 @@
         </ul>
 
         <h2>Directions</h2>
-        <p>{{ directions | linebreaks }}</p>
+        <p>{{ recipe.directions | linebreaks }}</p>
 
         <p><a href="{% url 'planner:recipe_views-list' %}">Back to Cookbook!</a></p>
 

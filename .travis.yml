@@ -26,6 +26,6 @@ install:
 
 script:
   - tox -e $TOX_ENV
-  - node_modules/karma/bin/karma start karma.travis.js --single-run
+  - npm test
 
 after_success: test $TOX_ENV = "python" && coveralls

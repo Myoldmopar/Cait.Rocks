@@ -6,7 +6,8 @@
     "bower": ">=1.2.6"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "test": "./node_modules/.bin/karma start --single-run --browsers Firefox"
   },
   "devDependencies": {
     "jasmine-core": "^3.1.0",

@@ -5,6 +5,7 @@ Django==1.11.12
 djangorestframework==3.8.2
 django-rest-swagger==2.1.2
 tox==3.0.0
+codecov==2.0.15
 
 # For deployment on Heroku
 dj-database-url==0.5.0  # Django database configuration

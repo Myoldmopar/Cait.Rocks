@@ -23,4 +23,6 @@ install:
 script:
   - tox -e $TOX_ENV
 
-after_success: test $TOX_ENV = "python" && coveralls
+after_success:
+  - test $TOX_ENV = "python" && coveralls
+  - test $TOX_ENV = "karma" && codecov

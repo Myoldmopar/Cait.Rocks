@@ -79,8 +79,11 @@ module.exports = function (config) {
         // optionally, configure the reporter
         coverageReporter: {
             type: 'html',
-            dir: 'karma_coverage/'
-        }
+            dir: 'coverage/'
+        },
 
+        plugins: [
+            'karma-coverage'
+        ]
     });
 };

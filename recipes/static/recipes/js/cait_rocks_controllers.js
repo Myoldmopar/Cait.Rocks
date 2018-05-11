@@ -85,7 +85,7 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
     $scope.get_calendars = function () {
         calendar_service.get_calendars().then(
             function (calendars_response) {
-                if (calendars_response.length !== 0) {
+                if (calendars_response.data.length === 0) {
                     return;
                 }
                 $scope.allCalendars = calendars_response.data;
@@ -138,11 +138,13 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
 
     // some hardcoded values
     $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    // things to do during page initialization
     $scope.filterText = '';
     $scope.recipe_list = [];
-    $scope.retrieve_recipes();
-    $scope.get_calendars();
+
+    // this must be called by ng-init
+    $scope.controllerInitialize = function () {
+        $scope.retrieve_recipes();
+        $scope.get_calendars();
+    }
 
 }]);

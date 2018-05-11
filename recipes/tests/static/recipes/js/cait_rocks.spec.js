@@ -5,15 +5,9 @@ describe("caitRockController Testing Suite", function () {
 
     // Inject the real caitRockService
     beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService, $httpBackend, $q) {
-        // I don't necessary like having to spy on these things up here before I call controller,
-        // but since I have init code at the bottom of the controller, I have to mock things ahead of time
-        // Sometime maybe I'll switch to using ng-init better and avoid the init calls
         $scope = $rootScope.$new();
         mockCalendarService = calendarService;
-        spyOn(mockCalendarService, 'get_calendars').and.returnValue($q.when({'data': []}));
-        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($q.when({'data': {'num_weeks': 5}}));
         mockRecipeService = recipeService;
-        spyOn(mockRecipeService, 'get_recipes').and.returnValue($q.when({'data': ['recipes']}));
         httpBackend = $httpBackend;
         $scope.$q = $q;
         $controller("caitRocksController", {
@@ -50,7 +44,18 @@ describe("caitRockController Testing Suite", function () {
         document.body.removeChild(document.getElementById('recipeListTable'));
     });
 
+    it("should initialize the controller using a specific list of method calls", function () {
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        spyOn(mockRecipeService, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        $scope.controllerInitialize();
+        expect(mockRecipeService.get_recipes).toHaveBeenCalled();
+        expect(mockCalendarService.get_calendars).toHaveBeenCalled();
+        $scope.$digest();
+        expect($scope.recipe_list).toEqual(['recipes']);
+    });
+
     it("should get recipes through the recipe API service", function () {
+        spyOn(mockRecipeService, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
         $scope.retrieve_recipes();
         expect(mockRecipeService.get_recipes).toHaveBeenCalled();
         $scope.$digest();
@@ -58,6 +63,7 @@ describe("caitRockController Testing Suite", function () {
     });
 
     it("should get month data for the current calendar through the calendar API service", function () {
+        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.selectedCalendar = {'id': 1};
         $scope.get_month_data();
         expect(mockCalendarService.get_calendar_monthly_data).toHaveBeenCalled();

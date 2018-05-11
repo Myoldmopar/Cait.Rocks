@@ -85,6 +85,9 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
     $scope.get_calendars = function () {
         calendar_service.get_calendars().then(
             function (calendars_response) {
+                if (calendars_response.length !== 0) {
+                    return;
+                }
                 $scope.allCalendars = calendars_response.data;
                 if ($scope.allCalendars.length !== 0) {
                     if ($scope.initialize_to_calendar) {

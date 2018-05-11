@@ -1,12 +1,19 @@
 describe("caitRockController Testing Suite", function () {
     var $scope, mockCalendarService, mockRecipeService, httpBackend;
+
     beforeEach(module("caitRocksApp"));
 
     // Inject the real caitRockService
     beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService, $httpBackend, $q) {
+        // I don't necessary like having to spy on these things up here before I call controller,
+        // but since I have init code at the bottom of the controller, I have to mock things ahead of time
+        // Sometime maybe I'll switch to using ng-init better and avoid the init calls
         $scope = $rootScope.$new();
         mockCalendarService = calendarService;
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($q.when({'data': []}));
+        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($q.when({'data': {'num_weeks': 5}}));
         mockRecipeService = recipeService;
+        spyOn(mockRecipeService, 'get_recipes').and.returnValue($q.when({'data': ['recipes']}));
         httpBackend = $httpBackend;
         $scope.$q = $q;
         $controller("caitRocksController", {
@@ -44,13 +51,19 @@ describe("caitRockController Testing Suite", function () {
     });
 
     it("should get recipes through the recipe API service", function () {
-        var deferredSuccess = $scope.$q.defer();
-        spyOn(mockRecipeService, 'get_recipes').and.returnValue(deferredSuccess.promise);
         $scope.retrieve_recipes();
         expect(mockRecipeService.get_recipes).toHaveBeenCalled();
-        deferredSuccess.resolve('somethings');
-        //$scope.$digest();           // This makes sure that all callbacks of promises will be called
-        //expect($scope.recipe_list).toBe(null);
+        $scope.$digest();
+        expect($scope.recipe_list).toEqual(['recipes']);
+    });
+
+    it("should get month data for the current calendar through the calendar API service", function () {
+        $scope.selectedCalendar = {'id': 1};
+        $scope.get_month_data();
+        expect(mockCalendarService.get_calendar_monthly_data).toHaveBeenCalled();
+        $scope.$digest();
+        expect($scope.month).toEqual({'num_weeks': 5});
+        expect($scope.num_weeks).toEqual(5);
     });
 
     it("should clear the filter variable", function () {

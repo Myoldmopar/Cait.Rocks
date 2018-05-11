@@ -26,21 +26,34 @@ Development |ubuntuimage|_
 To run this site locally:
 
 - Clone this repository:
+
   - `git clone https://github.com/Myoldmopar/Cait.Rocks`
+
 - Optional, but highly recommended: Create and activate a Python virtual environment:
+
   - `pyenv virtualenv 2.7.14 caitrocks`
   - `pyenv activate caitrocks`
+
 - Install Python dependencies:
+
   - `pip install -r requirements.txt`
+
 - Install Node.js which will enable easy installation of JavaScript stuff:
+
   - (from https://nodesource.com/blog/installing-node-js-tutorial-ubuntu/)
   - `curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -`
   - `sudo apt-get install -y nodejs`
+
 - Install JavaScript dependencies:
+
   - `npm install`
+
 - Create your initial database:
+
   - `python manage.py migrate`
+
 - Run the server and open the website:
+
   - `python manage.py runserver`
   - https://localhost:8000
 

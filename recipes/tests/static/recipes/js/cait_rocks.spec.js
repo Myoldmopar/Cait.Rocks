@@ -34,10 +34,10 @@ describe("caitRockController Testing Suite", function () {
             '<td>CreatorB</td>' +
             '<td>IngredientB</td>' +
             '</table>';
+        document.body.insertAdjacentHTML('afterbegin', recipeTable);
 
-        document.body.insertAdjacentHTML(
-            'afterbegin',
-            recipeTable);
+        var datasetBasedItem = '<div id="someSpecialID" data-weeknum="0" data-daynum="0" data-recipenum="0"></div>';
+        document.body.insertAdjacentHTML('afterbegin', datasetBasedItem);
     });
 
     afterEach(function () {
@@ -48,28 +48,75 @@ describe("caitRockController Testing Suite", function () {
         spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
         spyOn(mockRecipeService, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
         $scope.controllerInitialize();
+        $scope.$digest();
         expect(mockRecipeService.get_recipes).toHaveBeenCalled();
         expect(mockCalendarService.get_calendars).toHaveBeenCalled();
-        $scope.$digest();
         expect($scope.recipe_list).toEqual(['recipes']);
     });
 
     it("should get recipes through the recipe API service", function () {
         spyOn(mockRecipeService, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
         $scope.retrieve_recipes();
-        expect(mockRecipeService.get_recipes).toHaveBeenCalled();
         $scope.$digest();
+        expect(mockRecipeService.get_recipes).toHaveBeenCalled();
         expect($scope.recipe_list).toEqual(['recipes']);
+    });
+
+    it("should get month data when there isn't a currently selected calendar", function () {
+        $scope.selectedCalendar = undefined;
+        $scope.get_month_data();
+        // nothing should happen, this process should just complete successfully
     });
 
     it("should get month data for the current calendar through the calendar API service", function () {
         spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.selectedCalendar = {'id': 1};
         $scope.get_month_data();
-        expect(mockCalendarService.get_calendar_monthly_data).toHaveBeenCalled();
         $scope.$digest();
+        expect(mockCalendarService.get_calendar_monthly_data).toHaveBeenCalled();
         expect($scope.month).toEqual({'num_weeks': 5});
         expect($scope.num_weeks).toEqual(5);
+    });
+
+    it("should get calendars through the calendar API service without a target id", function () {
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
+        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        $scope.initialize_to_calendar = undefined;
+        $scope.get_calendars();
+        $scope.$digest();
+        expect(mockCalendarService.get_calendars).toHaveBeenCalled();
+        expect($scope.selectedCalendar.id).toEqual(2);
+    });
+
+    it("should get calendars through the calendar API service with a target id", function () {
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
+        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        $scope.initialize_to_calendar = 1;
+        $scope.get_calendars();
+        $scope.$digest();
+        expect(mockCalendarService.get_calendars).toHaveBeenCalled();
+        expect($scope.selectedCalendar.id).toEqual(1);
+    });
+
+    it("should update the recipe id as if a selection was committed through typeahead", function () {
+        spyOn(mockCalendarService, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
+        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        $scope.selectedCalendar = {'id': 1};
+        $scope.month = {'data': [[{date_number: 1}], [{date_number: 2}]]};
+        $scope.select_recipe_id('', '', '', {$id: "someSpecialID"});
+        expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalled();
+        expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalledWith(1, 1, '0', '');
+    });
+
+    it("should add a new calendar based on $scope variables which are usually models on user inputs", function () {
+        spyOn(mockCalendarService, 'post_calendar').and.returnValue($scope.$q.when({}));
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        $scope.calendar_year = 2018;
+        $scope.calendar_month = 5;
+        $scope.calendar_name = "Hey";
+        $scope.add_calendar();
+        expect(mockCalendarService.post_calendar).toHaveBeenCalled();
+        expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, "Hey");
     });
 
     it("should clear the filter variable", function () {

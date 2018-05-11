@@ -1,10 +1,10 @@
 {
-  "name": "reciplees",
-  "homepage": "https://github.com/Myoldmopar/reciplees",
+  "name": "caitrocks",
+  "homepage": "https://github.com/Myoldmopar/Cait.Rocks",
   "authors": [
     "Edwin Lee <leeed2001@gmail.com>"
   ],
-  "description": "Django-backed website for RecipLees",
+  "description": "Django-backed website for Cait.Rocks",
   "main": "",
   "license": "MIT",
   "private": true,

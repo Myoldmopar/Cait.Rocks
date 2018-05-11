@@ -1,12 +1,13 @@
 describe("caitRockController Testing Suite", function () {
-    var $scope, mockCalendarService, mockRecipeService;
+    var $scope, mockCalendarService, mockRecipeService, httpBackend;
     beforeEach(module("caitRocksApp"));
 
     // Inject the real caitRockService
-    beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService, $q) {
+    beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService, $httpBackend, $q) {
         $scope = $rootScope.$new();
         mockCalendarService = calendarService;
         mockRecipeService = recipeService;
+        httpBackend = $httpBackend;
         $scope.$q = $q;
         $controller("caitRocksController", {
             $scope: $scope,
@@ -38,7 +39,6 @@ describe("caitRockController Testing Suite", function () {
             recipeTable);
     });
 
-    // remove the html fixture from the DOM
     afterEach(function () {
         document.body.removeChild(document.getElementById('recipeListTable'));
     });
@@ -183,4 +183,64 @@ describe("caitRockController Testing Suite", function () {
         expect(row2.style.display).toEqual('none');
     });
 
+});
+
+describe("calendarService Testing Suite", function () {
+    var calendarService, httpBackend;
+    beforeEach(module("caitRocksApp"));
+
+    beforeEach(inject(function (_calendarService_, $httpBackend) {
+        calendarService = _calendarService_;
+        httpBackend = $httpBackend;
+    }));
+
+    it("should get calendars and return exactly what comes back from api on data member", function () {
+        httpBackend.when("GET", "/planner/api/calendars/").respond("stuff");
+        calendarService.get_calendars().then(function (response) {
+            expect(response.data).toEqual("stuff");
+        });
+        httpBackend.flush();
+    });
+
+    it("should get one calendar and return exactly what comes back from api on data member", function () {
+        httpBackend.when("GET", "/planner/api/calendars/1/monthly_data/").respond("stuff1");
+        calendarService.get_calendar_monthly_data(1).then(function (response) {
+            expect(response.data).toEqual("stuff1");
+        });
+        httpBackend.flush();
+    });
+
+    it("should create a new calendar and return exactly what comes back from api on data member", function () {
+        httpBackend.when("POST", "/planner/api/calendars/").respond("whatever_server_responds");
+        calendarService.post_calendar(2018, 1, "name").then(function (response) {
+            expect(response.data).toEqual("whatever_server_responds");
+        });
+        httpBackend.flush();
+    });
+
+    it("should get one calendar and return exactly what comes back from api on data member", function () {
+        httpBackend.when("PUT", '/planner/api/calendars/1/recipe_id/').respond("updated");
+        calendarService.update_calendar_recipe_id(1, 25, 0, 1).then(function (response) {
+            expect(response.data).toEqual("updated");
+        });
+        httpBackend.flush();
+    });
+});
+
+describe("recipeService Testing Suite", function () {
+    var recipeService, httpBackend;
+    beforeEach(module("caitRocksApp"));
+
+    beforeEach(inject(function (_recipeService_, $httpBackend) {
+        recipeService = _recipeService_;
+        httpBackend = $httpBackend;
+    }));
+
+    it("should get recipes and return exactly what comes back from api on data member", function () {
+        httpBackend.when("GET", "/planner/api/recipes/").respond("yummy recipes");
+        recipeService.get_recipes().then(function (response) {
+            expect(response.data).toEqual("yummy recipes");
+        });
+        httpBackend.flush();
+    });
 });

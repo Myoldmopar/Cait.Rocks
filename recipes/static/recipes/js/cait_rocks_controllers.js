@@ -119,9 +119,7 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         var day_recipe_num = meta_data['recipenum'];
         var date_in_month = $scope.month.data[week_num][date_num].date_number;
         calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_in_month, day_recipe_num, value).then(
-            function (response) {
-                $scope.get_month_data();
-            }
+            $scope.get_month_data
         )
     });
 

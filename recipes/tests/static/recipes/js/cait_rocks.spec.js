@@ -15,10 +15,32 @@ describe("caitRockController Testing Suite", function () {
         });
     }));
 
-    it("should make a string more exciting", function () {
-        spyOn(mockCalendarService, "addExcitement").and.returnValue({data: 'HEY'});
-        $scope.excitement();
-        expect(mockCalendarService.addExcitement).toHaveBeenCalled();
+    beforeEach(function () {
+        var recipeTable =
+            '<table id="recipeListTable">' +
+            '<tr>' +
+            '<th></th><th></th><th></th><th></th>' +
+            '</tr>' +
+            '<tr id="row1">' +
+            '<td>TypeA</td>' +
+            '<td><a href="#">TitleA</a></td>' +
+            '<td>CreatorA</td>' +
+            '<td>IngredientA</td>' +
+            '<tr id="row2">' +
+            '<td>TypeB</td>' +
+            '<td><a href="#">TitleB</a></td>' +
+            '<td>CreatorB</td>' +
+            '<td>IngredientB</td>' +
+            '</table>';
+
+        document.body.insertAdjacentHTML(
+            'afterbegin',
+            recipeTable);
+    });
+
+    // remove the html fixture from the DOM
+    afterEach(function () {
+        document.body.removeChild(document.getElementById('recipeListTable'));
     });
 
     it("should get recipes through the recipe API service", function () {
@@ -26,7 +48,7 @@ describe("caitRockController Testing Suite", function () {
         spyOn(mockRecipeService, 'get_recipes').and.returnValue(deferredSuccess.promise);
         $scope.retrieve_recipes();
         expect(mockRecipeService.get_recipes).toHaveBeenCalled();
-        deferredSuccess.resolve();
+        deferredSuccess.resolve('somethings');
         //$scope.$digest();           // This makes sure that all callbacks of promises will be called
         //expect($scope.recipe_list).toBe(null);
     });
@@ -37,23 +59,128 @@ describe("caitRockController Testing Suite", function () {
         expect($scope.filterText).toEqual('');
     });
 
-    it("should re-show all table rows for a blank filter", function () {
-        var t = document.createElement('table');
-        t.id = 'recipeListTable';
-        var tr_header = document.createElement('tr');
-        t.append(tr_header);
-        var tr_row_a = document.createElement('tr');
-        tr_row_a.style.display = 'none';
-        t.append(tr_row_a);
-        var tr_row_b = document.createElement('tr');
-        tr_row_b.style.display = 'none';
-        t.append(tr_row_b);
-        $(document.body).append(t);
-
+    it("should ignore if it cant find a table", function () {
         $scope.filterText = '';
         $scope.filter_table_rows();
-        expect(tr_row_a.style.display).toEqual('');
-        expect(tr_row_b.style.display).toEqual('');
-    })
+    });
+
+    it("should re-show all table rows for a blank filter", function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = '';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it("should hide all table rows for a non-matching filter", function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+        row1.style.display = '';
+        row2.style.display = '';
+        $scope.filterText = 'abc';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('none');
+    });
+
+    it("should show based on title", function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Title';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'TitleA';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'TitleB';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it("should show based on creator", function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Creator';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'CreatorA';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'CreatorB';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it("should show based on ingredients", function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Ingredient';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'IngredientA';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'IngredientB';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it("should match on multi-part search", function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Ingredient Creator';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'IngredientA Creator';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+    });
 
 });

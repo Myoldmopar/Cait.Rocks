@@ -7,9 +7,7 @@ app.factory('calendarService', ['$http', function ($http) {
         return $http.put(
             '/planner/api/calendars/' + calendar_id + '/recipe_id/',
             {date_num: date_num, daily_recipe_id: daily_recipe_id, recipe_pk: recipe_pk}
-        ).then(function (response) {
-            return response.data;
-        });
+        );
     };
     calendar_factory.get_calendar_monthly_data = function (calendar_id) {
         return $http.get('/planner/api/calendars/' + calendar_id + '/monthly_data/');
@@ -24,9 +22,6 @@ app.factory('calendarService', ['$http', function ($http) {
             {'nickname': name, 'year': year, 'month': month}
         )
     };
-    calendar_factory.addExcitement = function (str) {
-        return str + "!!!";
-    };
     return calendar_factory;
 }]);
 
@@ -35,9 +30,6 @@ app.factory('recipeService', ['$http', function ($http) {
     var recipe_factory = {};
     recipe_factory.get_recipes = function () {
         return $http.get('/planner/api/recipes/');
-    };
-    recipe_factory.addExcitement = function (str) {
-        return str + "!!!";
     };
     return recipe_factory;
 }]);

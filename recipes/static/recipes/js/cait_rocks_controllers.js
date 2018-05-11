@@ -41,35 +41,31 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
                 var token_found = false;
                 // check the title of the recipe
                 td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    inner_a = td.getElementsByTagName("a")[0];
-                    if (inner_a.innerHTML.toUpperCase().indexOf(token) > -1) {
-                        token_found = true;
-                    }
+                inner_a = td.getElementsByTagName("a")[0];
+                if (inner_a.innerHTML.toUpperCase().indexOf(token) > -1) {
+                    token_found = true;
                 }
                 // check the author of the recipe
                 if (!token_found) {
                     td = tr[i].getElementsByTagName("td")[2];
-                    if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
-                            token_found = true;
-                        }
+                    if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
+                        token_found = true;
                     }
                 }
                 if (!token_found) {
                     // check the ingredients of the recipe
                     td = tr[i].getElementsByTagName("td")[3];
-                    if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
-                            token_found = true;
-                        }
+                    if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
+                        token_found = true;
                     }
                 }
                 tokens_to_check[j] = token_found;
             }
 
             // now turn that one
-            if (tokens_to_check.every(function(t){return t;})) {
+            if (tokens_to_check.every(function (t) {
+                    return t;
+                })) {
                 // woohoo we have a match! leave it shown
             } else {
                 tr[i].style.display = "none";
@@ -85,17 +81,18 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
     $scope.get_calendars = function () {
         calendar_service.get_calendars().then(
             function (calendars_response) {
-                $scope.allCalendars = calendars_response.data;
-                if ($scope.allCalendars.length !== 0) {
-                    if ($scope.initialize_to_calendar) {
-                        $scope.selectedCalendar = $scope.allCalendars.find(function (month) {
-                            return month.id === $scope.initialize_to_calendar
-                        });
-                    } else {
-                        $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length - 1];
-                    }
-                    $scope.get_month_data();
+                if (calendars_response.data.length === 0) {
+                    return;
                 }
+                $scope.allCalendars = calendars_response.data;
+                if ($scope.initialize_to_calendar) {
+                    $scope.selectedCalendar = $scope.allCalendars.find(function (month) {
+                        return month.id === $scope.initialize_to_calendar
+                    });
+                } else {
+                    $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length - 1];
+                }
+                $scope.get_month_data();
             }
         );
     };
@@ -108,10 +105,12 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
                     $scope.num_weeks = date_response.data.num_weeks;
                 }
             );
+        } else {
+            // nothing should really happen; I guess we could null out $scope variables
         }
     };
 
-    $scope.$on('$typeahead.select', function (event, value, index, elem) {
+    $scope.select_recipe_id = function (event, value, index, elem) {
         // would be nicer to just store the index on the object itself instead
         var meta_data = document.getElementById(elem.$id).dataset;
         var week_num = meta_data['weeknum'];
@@ -119,11 +118,11 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         var day_recipe_num = meta_data['recipenum'];
         var date_in_month = $scope.month.data[week_num][date_num].date_number;
         calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_in_month, day_recipe_num, value).then(
-            function (response) {
-                $scope.get_month_data();
-            }
+            $scope.get_month_data
         )
-    });
+    };
+
+    $scope.$on('$typeahead.select', $scope.select_recipe_id);
 
     $scope.add_calendar = function () {
         var this_year = $scope.calendar_year;
@@ -137,14 +136,13 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
 
     // some hardcoded values
     $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    // things to do during page initialization
     $scope.filterText = '';
     $scope.recipe_list = [];
-    $scope.retrieve_recipes();
-    $scope.get_calendars();
 
-    $scope.excitement = function () {
-        $scope.excited_string = calendar_service.addExcitement('hey');
-    };
+    // this must be called by ng-init
+    $scope.controllerInitialize = function () {
+        $scope.retrieve_recipes();
+        $scope.get_calendars();
+    }
+
 }]);

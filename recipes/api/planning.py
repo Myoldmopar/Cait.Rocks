@@ -6,6 +6,7 @@ from rest_framework.mixins import CreateModelMixin
 
 from recipes.models.planning import Calendar, Recipe
 from recipes.serializers.planning import CalendarSerializer
+from recipes.serializers.recipe import RecipeSerializer
 
 
 class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
@@ -49,24 +50,20 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 if date_data['date_number'] > 0:
                     date_number = date_data['date_number']
                 if date_data['recipe0']:
-                    recipe0id = date_data['recipe0'].id
-                    recipe0title = date_data['recipe0'].title
+                    recipe_serializer = RecipeSerializer(instance=date_data['recipe0'])
+                    recipe0 = recipe_serializer.data
                 else:
-                    recipe0id = None
-                    recipe0title = ''
+                    recipe0 = None
                 if date_data['recipe1']:
-                    recipe1id = date_data['recipe1'].id
-                    recipe1title = date_data['recipe1'].title
+                    recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
+                    recipe1 = recipe_serializer.data
                 else:
-                    recipe1id = None
-                    recipe1title = ''
+                    recipe1 = None
                 daily_data.append(
                     {
                         'date_number': date_number,
-                        'recipe0': recipe0id,
-                        'recipe1': recipe1id,
-                        'recipe0title': recipe0title,
-                        'recipe1title': recipe1title,  # TODO: Could add urls here for each recipe
+                        'recipe0': recipe0,
+                        'recipe1': recipe1,
                     }
                 )
             weekly_data.append(daily_data)
@@ -90,7 +87,7 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 }, status=status.HTTP_400_BAD_REQUEST)
             try:
                 int(request.data[required_key])
-            except ValueError:
+            except (ValueError, TypeError):
                 return JsonResponse({
                     'success': False,
                     'message': 'Could not convert %s to float; value: %s' % (required_key, request.data[required_key])

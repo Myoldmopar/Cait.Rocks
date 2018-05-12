@@ -17,11 +17,11 @@
                              ng-show="month.data[week_num][day_of_week].date_number !== '-'"
                              ng-repeat="recipe_num in [0, 1]">
                             <form method="get"
-                                  action="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
+                                  action="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num].id + '/' }]}">
                                 <button type="submit"
                                         class="btn-xs form-control"
                                         ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
-                                    {[{ month.data[week_num][day_of_week]['recipe' + recipe_num + 'title']}]}
+                                    {[{ month.data[week_num][day_of_week]['recipe' + recipe_num]['title']}]}
                                 </button>
                             </form>
                         </div>

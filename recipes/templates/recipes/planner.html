@@ -31,24 +31,43 @@
                 {[{ day }]}
             </th>
         </tr>
-        <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]" ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
+        <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
+            ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
             <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
                 <div>
                     <p>{[{ month.data[week_num][day_of_week].date_number }]}</p>
                     <div class="form-group recipe-input-container"
-                         ng-show="month.data[week_num][day_of_week].date_number !== '-'"
-                         ng-repeat="recipe_num in [0, 1]">
-                        <input type="text"
-                               class="form-control recipe-input"
-                               ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe' + recipe_num] !== null}"
-                               ng-model="month.data[week_num][day_of_week]['recipe' + recipe_num]"
-                               id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"
-                               data-weeknum="{[{ week_num }]}"
-                               data-daynum="{[{ day_of_week }]}"
-                               data-recipenum="{[{ recipe_num }]}"
-                               bs-options="recipe.id as recipe.title for recipe in recipe_list"
-                               placeholder="Enter recipe name..."
-                               bs-typeahead>
+                         ng-show="month.data[week_num][day_of_week].date_number !== '-'">
+                        <form>
+                            <div class="form-group">
+                                <select
+                                        id="day{[{ week_num }]}{[{ day_of_week }]}recipe00input"
+                                        class="form-control recipe-input"
+                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe0'] !== null}"
+                                        ng-model="month.data[week_num][day_of_week]['recipe0'].id"
+                                        ng-change="select_recipe_id(week_num, day_of_week, 0, month.data[week_num][day_of_week].date_number)">
+                                    <option
+                                        ng-selected="month.data[week_num][day_of_week]['recipe0'].id == recipe.id"
+                                        ng-repeat="recipe in recipe_list"
+                                        ng-value="recipe.id">
+                                        {[{ recipe.title }]}
+                                    </option>
+                                </select>
+                                <select
+                                        id="day{[{ week_num }]}{[{ day_of_week }]}recipe01input"
+                                        class="form-control recipe-input"
+                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe1'] !== null}"
+                                        ng-model="month.data[week_num][day_of_week]['recipe1'].id"
+                                        ng-change="select_recipe_id(week_num, day_of_week, 1, month.data[week_num][day_of_week].date_number)">
+                                    <option
+                                        ng-selected="month.data[week_num][day_of_week]['recipe1'].id == recipe.id"
+                                        ng-repeat="recipe in recipe_list"
+                                        ng-value="recipe.id">
+                                        {[{ recipe.title }]}
+                                    </option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </td>

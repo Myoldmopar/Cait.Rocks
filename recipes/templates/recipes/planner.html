@@ -41,26 +41,14 @@
                         <form>
                             <div class="form-group">
                                 <select
-                                        id="day{[{ week_num }]}{[{ day_of_week }]}recipe00input"
+                                        ng-repeat="recipe_num in [0, 1]"
+                                        id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"
                                         class="form-control recipe-input"
-                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe0'] !== null}"
-                                        ng-model="month.data[week_num][day_of_week]['recipe0'].id"
-                                        ng-change="select_recipe_id(week_num, day_of_week, 0, month.data[week_num][day_of_week].date_number)">
+                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week][recipe_num] !== null}"
+                                        ng-model="month.data[week_num][day_of_week]['recipe' + recipe_num].id"
+                                        ng-change="select_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
                                     <option
-                                        ng-selected="month.data[week_num][day_of_week]['recipe0'].id == recipe.id"
-                                        ng-repeat="recipe in recipe_list"
-                                        ng-value="recipe.id">
-                                        {[{ recipe.title }]}
-                                    </option>
-                                </select>
-                                <select
-                                        id="day{[{ week_num }]}{[{ day_of_week }]}recipe01input"
-                                        class="form-control recipe-input"
-                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe1'] !== null}"
-                                        ng-model="month.data[week_num][day_of_week]['recipe1'].id"
-                                        ng-change="select_recipe_id(week_num, day_of_week, 1, month.data[week_num][day_of_week].date_number)">
-                                    <option
-                                        ng-selected="month.data[week_num][day_of_week]['recipe1'].id == recipe.id"
+                                        ng-selected="month.data[week_num][day_of_week]['recipe' + recipe_num].id == recipe.id"
                                         ng-repeat="recipe in recipe_list"
                                         ng-value="recipe.id">
                                         {[{ recipe.title }]}

@@ -1,12 +1,12 @@
-.recipe-input {
-    padding:4px;
-    height:24px;
-}
 
 .recipe-input-container {
-    margin-bottom:4px;
+    margin-bottom: 4px;
 }
 
 .valid_recipe {
-    background-color:#badfff;
+    background-color: #badfff;
+}
+
+.recipe-clear-button {
+    width: auto;
 }

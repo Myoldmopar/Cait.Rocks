@@ -74,6 +74,7 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         """
         Sets the recipe for this particular calendar date and recipe id
         Expects three parameters on the request body: date_num (1-31), daily_recipe_id (0 or 1), and recipe_pk
+        If recipe_pk is 0, that indicates this recipe item should be cleared
         :param request: A full django request object
         :param pk: The primary key of the calendar to modify
         :return: A JSONResponse object with keys success and message.  The status code will also be set accordingly
@@ -97,15 +98,18 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         recipe_id = int(request.data['recipe_pk'])
 
         # Now read items off of the database
-        try:
-            recipe_to_assign = Recipe.objects.get(pk=recipe_id)
-        except Recipe.DoesNotExist:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find recipe with pk=%s' % recipe_id},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        if recipe_id == 0:
+            recipe_to_assign = None
+        else:
+            try:
+                recipe_to_assign = Recipe.objects.get(pk=recipe_id)
+            except Recipe.DoesNotExist:
+                return JsonResponse(
+                    {
+                        'success': False,
+                        'message': 'Cannot find recipe with pk=%s' % recipe_id},
+                    status=status.HTTP_404_NOT_FOUND
+                )
         try:
             calendar_to_modify = Calendar.objects.get(pk=pk)
         except Calendar.DoesNotExist:
@@ -132,9 +136,13 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         # save the calendar
         calendar_to_modify.save()
         # and return successfully
+        if recipe_id == 0:
+            message = 'Cleared recipe for %s' % variable_name
+        else:
+            message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
         return JsonResponse(
             {
                 'success': True,
-                'message': 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
+                'message': message
             }
         )

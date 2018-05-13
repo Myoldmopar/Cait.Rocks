@@ -15,7 +15,7 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual('/planner/api/calendars/', url_path)
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 0)
 
@@ -25,7 +25,7 @@ class TestPlanningAPIMethods(TestCase):
         url_path = reverse('planner:api:calendar-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 2)
 
@@ -41,7 +41,7 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual('/planner/api/calendars/1/', url_path)
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['nickname'], description)
 
@@ -50,7 +50,7 @@ class TestPlanningAPIMethods(TestCase):
         response = self.client.post(url_path, data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        data = json.loads(response.content)
+        data = response.json()
         self.assertEqual(data['nickname'], 'new_name')
         self.assertEqual(data['year'], 2018)
         self.assertEqual(data['month'], 4)

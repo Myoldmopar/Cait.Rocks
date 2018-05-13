@@ -62,7 +62,10 @@ class IngredientFullStringFunctionTests(TestCase):
         self.assertEqual(i.measurement, expected_measurement)
         expected_description = kwargs.get('item_description', '')
         self.assertEqual(i.item_description, expected_description)
-        self.assertEqual(unicode(i), expected_full_string)
+        if six.PY2:
+            self.assertEqual(unicode(i), expected_full_string)
+        elif six.PY3:
+            self.assertEqual(str(i), expected_full_string)
 
     def test_full_string_combinations(self):
         """

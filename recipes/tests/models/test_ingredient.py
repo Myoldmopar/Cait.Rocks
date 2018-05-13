@@ -44,7 +44,7 @@ class TestIngredientStringTests(TestCase):
             with self.assertRaises(Exception):
                 str(i)
         elif six.PY3:
-            str(i)
+            self.assertEqual(str(i), u"u'½ tsp Foodstuff")
 
     def test_ascii_compliant_version(self):
         i = Ingredient(
@@ -63,7 +63,7 @@ class IngredientFullStringFunctionTests(TestCase):
         expected_description = kwargs.get('item_description', '')
         self.assertEqual(i.item_description, expected_description)
         if six.PY2:
-            self.assertEqual(unicode(i), expected_full_string)
+            self.assertEqual(unicode(i), expected_full_string)  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:
             self.assertEqual(str(i), expected_full_string)
 

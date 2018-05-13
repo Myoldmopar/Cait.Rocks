@@ -44,7 +44,7 @@ class TestIngredientStringTests(TestCase):
             with self.assertRaises(Exception):
                 str(i)
         elif six.PY3:
-            self.assertEqual(str(i), u"u'½ tsp Foodstuff")
+            self.assertEqual(str(i), u'½ tsp Foodstuff')
 
     def test_ascii_compliant_version(self):
         i = Ingredient(

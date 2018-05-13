@@ -7,8 +7,9 @@ else
   # Travis is set, need to set up the headless stuff, make sure we install npm dependencies, and then run tests
   export DISPLAY=:99.0
   sh -e /etc/init.d/xvfb start
-  npm install
+
 fi
 
+npm install
 npm test
 exit $?

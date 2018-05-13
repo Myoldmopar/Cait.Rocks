@@ -119,8 +119,8 @@ class TestPlanningAPIRecipeIDView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_updating_recipe_id_valid(self):
-        Calendar.objects.create(year=2018, month=5)
-        Recipe.objects.create(title='Caits favorite')
+        c = Calendar.objects.create(year=2018, month=5)
+        r = Recipe.objects.create(title='Caits favorite')
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
@@ -128,8 +128,9 @@ class TestPlanningAPIRecipeIDView(TestCase):
             data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
             content_type='application/json'
         )
+        c.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # Check output
+        self.assertEqual(c.day03recipe1.id, r.id)
 
     def test_updating_recipe_id_missing_args(self):
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
@@ -239,3 +240,18 @@ class TestPlanningAPIRecipeIDView(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn('Cannot locate field day32recipe1', response.content)
+
+    def test_clearing_recipe_id(self):
+        c = Calendar.objects.create(year=2018, month=5, nickname="My Calendar")
+        r = Recipe.objects.create(title='Caits favorite')
+        c.day01recipe1 = r
+        c.save()
+        url_path = reverse('planner:api:calendar-recipe-id', args=[c.pk])
+        response = self.client.put(
+            url_path,
+            data=json.dumps({"date_num": 1, "daily_recipe_id": 1, "recipe_pk": 0}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        c.refresh_from_db()
+        self.assertIsNone(c.day01recipe1)

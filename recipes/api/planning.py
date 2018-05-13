@@ -6,6 +6,7 @@ from rest_framework.mixins import CreateModelMixin
 
 from recipes.models.planning import Calendar, Recipe
 from recipes.serializers.planning import CalendarSerializer
+from recipes.serializers.recipe import RecipeSerializer
 
 
 class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
@@ -49,24 +50,20 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 if date_data['date_number'] > 0:
                     date_number = date_data['date_number']
                 if date_data['recipe0']:
-                    recipe0id = date_data['recipe0'].id
-                    recipe0title = date_data['recipe0'].title
+                    recipe_serializer = RecipeSerializer(instance=date_data['recipe0'])
+                    recipe0 = recipe_serializer.data
                 else:
-                    recipe0id = None
-                    recipe0title = ''
+                    recipe0 = None
                 if date_data['recipe1']:
-                    recipe1id = date_data['recipe1'].id
-                    recipe1title = date_data['recipe1'].title
+                    recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
+                    recipe1 = recipe_serializer.data
                 else:
-                    recipe1id = None
-                    recipe1title = ''
+                    recipe1 = None
                 daily_data.append(
                     {
                         'date_number': date_number,
-                        'recipe0': recipe0id,
-                        'recipe1': recipe1id,
-                        'recipe0title': recipe0title,
-                        'recipe1title': recipe1title,  # TODO: Could add urls here for each recipe
+                        'recipe0': recipe0,
+                        'recipe1': recipe1,
                     }
                 )
             weekly_data.append(daily_data)
@@ -77,6 +74,7 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         """
         Sets the recipe for this particular calendar date and recipe id
         Expects three parameters on the request body: date_num (1-31), daily_recipe_id (0 or 1), and recipe_pk
+        If recipe_pk is 0, that indicates this recipe item should be cleared
         :param request: A full django request object
         :param pk: The primary key of the calendar to modify
         :return: A JSONResponse object with keys success and message.  The status code will also be set accordingly
@@ -90,7 +88,7 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
                 }, status=status.HTTP_400_BAD_REQUEST)
             try:
                 int(request.data[required_key])
-            except ValueError:
+            except (ValueError, TypeError):
                 return JsonResponse({
                     'success': False,
                     'message': 'Could not convert %s to float; value: %s' % (required_key, request.data[required_key])
@@ -100,15 +98,18 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         recipe_id = int(request.data['recipe_pk'])
 
         # Now read items off of the database
-        try:
-            recipe_to_assign = Recipe.objects.get(pk=recipe_id)
-        except Recipe.DoesNotExist:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find recipe with pk=%s' % recipe_id},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        if recipe_id == 0:
+            recipe_to_assign = None
+        else:
+            try:
+                recipe_to_assign = Recipe.objects.get(pk=recipe_id)
+            except Recipe.DoesNotExist:
+                return JsonResponse(
+                    {
+                        'success': False,
+                        'message': 'Cannot find recipe with pk=%s' % recipe_id},
+                    status=status.HTTP_404_NOT_FOUND
+                )
         try:
             calendar_to_modify = Calendar.objects.get(pk=pk)
         except Calendar.DoesNotExist:
@@ -135,9 +136,13 @@ class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         # save the calendar
         calendar_to_modify.save()
         # and return successfully
+        if recipe_id == 0:
+            message = 'Cleared recipe for %s' % variable_name
+        else:
+            message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
         return JsonResponse(
             {
                 'success': True,
-                'message': 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
+                'message': message
             }
         )

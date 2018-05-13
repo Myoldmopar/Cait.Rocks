@@ -110,19 +110,22 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         }
     };
 
-    $scope.select_recipe_id = function (event, value, index, elem) {
-        // would be nicer to just store the index on the object itself instead
-        var meta_data = document.getElementById(elem.$id).dataset;
-        var week_num = meta_data['weeknum'];
-        var date_num = meta_data['daynum'];
-        var day_recipe_num = meta_data['recipenum'];
-        var date_in_month = $scope.month.data[week_num][date_num].date_number;
-        calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_in_month, day_recipe_num, value).then(
-            $scope.get_month_data
+    $scope.select_recipe_id = function (week_num, day_num, recipe_num, date_num) {
+        var recipe_db_index = $scope.month.data[week_num][day_num]['recipe' + parseInt(recipe_num)].id;
+        calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_num, recipe_num, recipe_db_index).then(
+            function (response) {
+                $scope.get_month_data();
+            }
         )
     };
 
-    $scope.$on('$typeahead.select', $scope.select_recipe_id);
+    $scope.clear_recipe_id = function (week_num, day_num, recipe_num, date_num) {
+        calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_num, recipe_num, 0).then(
+            function (response) {
+                $scope.get_month_data();
+            }
+        )
+    };
 
     $scope.add_calendar = function () {
         var this_year = $scope.calendar_year;

@@ -119,8 +119,8 @@ class TestPlanningAPIRecipeIDView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_updating_recipe_id_valid(self):
-        Calendar.objects.create(year=2018, month=5)
-        Recipe.objects.create(title='Caits favorite')
+        c = Calendar.objects.create(year=2018, month=5)
+        r = Recipe.objects.create(title='Caits favorite')
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
@@ -128,8 +128,9 @@ class TestPlanningAPIRecipeIDView(TestCase):
             data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
             content_type='application/json'
         )
+        c.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # TODO: Check output
+        self.assertEqual(c.day03recipe1.id, r.id)
 
     def test_updating_recipe_id_missing_args(self):
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
@@ -252,4 +253,5 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # self.assertIsNone(c.day01recipe1)  # TODO: Why the heck doesn't this come back as None?
+        c.refresh_from_db()
+        self.assertIsNone(c.day01recipe1)

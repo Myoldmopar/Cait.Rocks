@@ -7,7 +7,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "test": "./node_modules/.bin/karma start --single-run --browsers Firefox"
+    "test": "./node_modules/.bin/karma start --single-run"
   },
   "devDependencies": {
     "codecov.io": "^0.1.6",

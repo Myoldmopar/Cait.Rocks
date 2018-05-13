@@ -12,7 +12,7 @@ class IngredientModelConstructionTests(TestCase):
         """
         blank_ingredient = Ingredient(item_description='')
         if six.PY2:
-            self.assertEqual(unicode(blank_ingredient), u'')
+            self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:
             self.assertEqual(str(blank_ingredient), u'')
 
@@ -22,7 +22,7 @@ class IngredientModelConstructionTests(TestCase):
         """
         blank_ingredient = Ingredient()
         if six.PY2:
-            self.assertEqual(unicode(blank_ingredient), u'')
+            self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:
             self.assertEqual(str(blank_ingredient), u'')
 
@@ -30,7 +30,7 @@ class IngredientModelConstructionTests(TestCase):
         ingredient_string = u'This is a normal ingredient'
         proper_ingredient = Ingredient(item_description=ingredient_string)
         if six.PY2:
-            self.assertEqual(unicode(proper_ingredient), ingredient_string)
+            self.assertEqual(unicode(proper_ingredient), ingredient_string)  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:
             self.assertEqual(str(proper_ingredient), ingredient_string)
 

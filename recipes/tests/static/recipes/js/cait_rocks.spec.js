@@ -98,14 +98,28 @@ describe("caitRockController Testing Suite", function () {
         expect($scope.selectedCalendar.id).toEqual(1);
     });
 
-    it("should update the recipe id as if a selection was committed through typeahead", function () {
+    it("should update the recipe id as if a drop-down was selected", function () {
         spyOn(mockCalendarService, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
         spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.selectedCalendar = {'id': 1};
-        $scope.month = {'data': [[{date_number: 1}], [{date_number: 2}]]};
-        $scope.select_recipe_id('', '', '', {$id: "someSpecialID"});
+        $scope.month = {'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{recipe0: {id: 2}, recipe1: {id: 3}, date_number: 2}]]};
+        $scope.select_recipe_id(0, 0, 0, 1);
+        $scope.$digest();
         expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalled();
-        expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalledWith(1, 1, '0', '');
+        expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalledWith(1, 1, 0, 0);
+    });
+
+    it("should clear the recipe id as if a clear button was pressed", function () {
+        spyOn(mockCalendarService, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
+        spyOn(mockCalendarService, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        $scope.selectedCalendar = {'id': 1};
+        $scope.month = {'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{recipe0: {id: 2}, recipe1: {id: 3}, date_number: 2}]]};
+        $scope.clear_recipe_id(0, 1, 0, 2);
+        $scope.$digest();
+        expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalled();
+        expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalledWith(1, 2, 0, 0);
+        console.log($scope.month.data);
+        //expect($scope.month.data[0][1].recipe0).toBeNull();  // TODO: Better testing here; also test actual DOM events like dropdown selections
     });
 
     it("should add a new calendar based on $scope variables which are usually models on user inputs", function () {

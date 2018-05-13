@@ -111,37 +111,18 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
     };
 
     $scope.select_recipe_id = function (week_num, day_num, recipe_num, date_num) {
-        console.log("Looks like I'm changing this days recipe:", $scope.month.data[week_num][day_num]);
-        var recipe_db_index = $scope.month.data[week_num][day_num]['recipe' + recipe_num].id;
-        console.log("Updating recipe id", {
-            week: week_num,
-            day: day_num,
-            recipe_num: recipe_num,
-            date_num: date_num,
-            recipe_db_index: recipe_db_index
-        });
+        var recipe_db_index = $scope.month.data[week_num][day_num]['recipe' + parseInt(recipe_num)].id;
         calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_num, recipe_num, recipe_db_index).then(
             function (response) {
-                console.log("Updated calendar id in db, getting month data");
                 $scope.get_month_data();
-                console.log("Got updated month data, maybe I shouldn't need to?", $scope.month)
             }
         )
     };
 
     $scope.clear_recipe_id = function (week_num, day_num, recipe_num, date_num) {
-        console.log("Looks like I'm clearing this days recipe:", $scope.month.data[week_num][day_num]);
-        console.log("Updating recipe id", {
-            week: week_num,
-            day: day_num,
-            recipe_num: recipe_num,
-            date_num: date_num
-        });
         calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_num, recipe_num, 0).then(
             function (response) {
-                console.log("Updated calendar id in db, getting month data");
                 $scope.get_month_data();
-                console.log("Got updated month data, maybe I shouldn't need to?", $scope.month)
             }
         )
     };

@@ -5,16 +5,22 @@ python:
   - 3.5
 
 cache:
-    pip: true
-    directories:
+  pip: true
+  directories:
     - .tox
 
 env:
-  matrix:
-    - TOX_ENV=python
-    - TOX_ENV=flake8
-    - TOX_ENV=structure
-    - TOX_ENV=karma
+  - TOX_ENV=python
+  - TOX_ENV=flake8
+  - TOX_ENV=structure
+  - TOX_ENV=karma
+
+matrix:
+  exclude:
+    - python: 3.5
+      env: TOX_ENV=structure
+    - python: 3.5
+      env: TOX_ENV=karma
 
 install:
   - pip install tox

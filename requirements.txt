@@ -4,6 +4,7 @@ coveralls==1.1
 Django==1.11.12
 djangorestframework==3.8.2
 django-rest-swagger==2.1.2
+six==1.11.0
 tox==3.0.0
 
 # For deployment on Heroku

@@ -14,7 +14,7 @@ class TestIngredientAPIMethods(TestCase):
         self.assertEqual('/planner/api/ingredients/', url_path)
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 0)
 
@@ -24,7 +24,7 @@ class TestIngredientAPIMethods(TestCase):
         url_path = reverse('planner:api:ingredient-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 2)
 
@@ -40,7 +40,7 @@ class TestIngredientAPIMethods(TestCase):
         self.assertEqual('/planner/api/ingredients/1/', url_path)
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['item_description'], description)
 

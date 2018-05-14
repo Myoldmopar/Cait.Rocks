@@ -15,7 +15,7 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual('/planner/api/calendars/', url_path)
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 0)
 
@@ -25,7 +25,7 @@ class TestPlanningAPIMethods(TestCase):
         url_path = reverse('planner:api:calendar-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 2)
 
@@ -41,7 +41,7 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual('/planner/api/calendars/1/', url_path)
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        body = json.loads(response.content)
+        body = response.json()
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['nickname'], description)
 
@@ -50,7 +50,7 @@ class TestPlanningAPIMethods(TestCase):
         response = self.client.post(url_path, data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        data = json.loads(response.content)
+        data = response.json()
         self.assertEqual(data['nickname'], 'new_name')
         self.assertEqual(data['year'], 2018)
         self.assertEqual(data['month'], 4)
@@ -188,7 +188,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('Could not convert date_num', response.content)
+        self.assertIn(b'Could not convert date_num', response.content)
 
         response = self.client.put(
             url_path,
@@ -196,7 +196,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('Could not convert daily_recipe_id', response.content)
+        self.assertIn(b'Could not convert daily_recipe_id', response.content)
 
         # Numerically out of range recipe PK
         response = self.client.put(
@@ -205,7 +205,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertIn('Cannot find recipe with pk=2', response.content)
+        self.assertIn(b'Cannot find recipe with pk=2', response.content)
 
         response = self.client.put(
             url_path,
@@ -213,7 +213,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('Could not convert recipe_pk', response.content)
+        self.assertIn(b'Could not convert recipe_pk', response.content)
 
     def test_updating_recipe_id_invalid_pk(self):
         Calendar.objects.create(year=2018, month=5)
@@ -226,7 +226,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertIn('Cannot find calendar with pk=2', response.content)
+        self.assertIn(b'Cannot find calendar with pk=2', response.content)
 
     def test_updating_recipe_id_out_of_range_date(self):
         Calendar.objects.create(year=2018, month=5)
@@ -239,7 +239,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('Cannot locate field day32recipe1', response.content)
+        self.assertIn(b'Cannot locate field day32recipe1', response.content)
 
     def test_clearing_recipe_id(self):
         c = Calendar.objects.create(year=2018, month=5, nickname="My Calendar")

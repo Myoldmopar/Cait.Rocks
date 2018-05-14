@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
+import six
 
 from recipes.models.ingredient import Ingredient, AmountType, MeasurementType
 
@@ -10,19 +11,28 @@ class IngredientModelConstructionTests(TestCase):
         Makes sure ingredient can potentially be blank...do we want this?
         """
         blank_ingredient = Ingredient(item_description='')
-        self.assertIs(unicode(blank_ingredient), u'')
+        if six.PY2:
+            self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
+        elif six.PY3:  # pragma: no cover
+            self.assertEqual(str(blank_ingredient), u'')
 
     def test_ingredient_default_construction(self):
         """
         Makes sure ingredient can potentially be blank...do we want this?
         """
         blank_ingredient = Ingredient()
-        self.assertIs(unicode(blank_ingredient), u'')
+        if six.PY2:
+            self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
+        elif six.PY3:  # pragma: no cover
+            self.assertEqual(str(blank_ingredient), u'')
 
     def test_ingredient_normal_construction(self):
         ingredient_string = u'This is a normal ingredient'
         proper_ingredient = Ingredient(item_description=ingredient_string)
-        self.assertIs(unicode(proper_ingredient), ingredient_string)
+        if six.PY2:
+            self.assertEqual(unicode(proper_ingredient), ingredient_string)  # noqa: F821  (unicode not defined in Py3)
+        elif six.PY3:  # pragma: no cover
+            self.assertEqual(str(proper_ingredient), ingredient_string)
 
 
 class TestIngredientStringTests(TestCase):
@@ -30,14 +40,17 @@ class TestIngredientStringTests(TestCase):
         i = Ingredient(
             amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
         )
-        with self.assertRaises(Exception):
-            str(i)
+        if six.PY2:
+            with self.assertRaises(Exception):
+                str(i)
+        elif six.PY3:  # pragma: no cover
+            self.assertEqual(str(i), u'½ tsp Foodstuff')
 
     def test_ascii_compliant_version(self):
         i = Ingredient(
             amount=AmountType.ONE, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
         )
-        str(i)
+        self.assertEqual(str(i), "1 tsp Foodstuff")
 
 
 class IngredientFullStringFunctionTests(TestCase):
@@ -49,7 +62,10 @@ class IngredientFullStringFunctionTests(TestCase):
         self.assertEqual(i.measurement, expected_measurement)
         expected_description = kwargs.get('item_description', '')
         self.assertEqual(i.item_description, expected_description)
-        self.assertEqual(unicode(i), expected_full_string)
+        if six.PY2:
+            self.assertEqual(unicode(i), expected_full_string)  # noqa: F821  (unicode not defined in Py3)
+        elif six.PY3:  # pragma: no cover
+            self.assertEqual(str(i), expected_full_string)
 
     def test_full_string_combinations(self):
         """

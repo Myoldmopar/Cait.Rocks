@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^planner/', include('recipes.urls')),
 
     # Root home page
-    url(r'^$', TemplateView.as_view(template_name='common/home.html', content_type="text/html"),  name="home")
+    url(r'^$', TemplateView.as_view(template_name='common/home.html', content_type="text/html"), name="home")
 
 ]

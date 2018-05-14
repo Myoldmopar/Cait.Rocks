@@ -13,7 +13,7 @@ class IngredientModelConstructionTests(TestCase):
         blank_ingredient = Ingredient(item_description='')
         if six.PY2:
             self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
-        elif six.PY3:
+        elif six.PY3:  # pragma: no cover
             self.assertEqual(str(blank_ingredient), u'')
 
     def test_ingredient_default_construction(self):
@@ -23,7 +23,7 @@ class IngredientModelConstructionTests(TestCase):
         blank_ingredient = Ingredient()
         if six.PY2:
             self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
-        elif six.PY3:
+        elif six.PY3:  # pragma: no cover
             self.assertEqual(str(blank_ingredient), u'')
 
     def test_ingredient_normal_construction(self):
@@ -31,7 +31,7 @@ class IngredientModelConstructionTests(TestCase):
         proper_ingredient = Ingredient(item_description=ingredient_string)
         if six.PY2:
             self.assertEqual(unicode(proper_ingredient), ingredient_string)  # noqa: F821  (unicode not defined in Py3)
-        elif six.PY3:
+        elif six.PY3:  # pragma: no cover
             self.assertEqual(str(proper_ingredient), ingredient_string)
 
 
@@ -43,7 +43,7 @@ class TestIngredientStringTests(TestCase):
         if six.PY2:
             with self.assertRaises(Exception):
                 str(i)
-        elif six.PY3:
+        elif six.PY3:  # pragma: no cover
             self.assertEqual(str(i), u'½ tsp Foodstuff')
 
     def test_ascii_compliant_version(self):
@@ -64,7 +64,7 @@ class IngredientFullStringFunctionTests(TestCase):
         self.assertEqual(i.item_description, expected_description)
         if six.PY2:
             self.assertEqual(unicode(i), expected_full_string)  # noqa: F821  (unicode not defined in Py3)
-        elif six.PY3:
+        elif six.PY3:  # pragma: no cover
             self.assertEqual(str(i), expected_full_string)
 
     def test_full_string_combinations(self):

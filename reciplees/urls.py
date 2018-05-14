@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import include, url
 from django.contrib import admin
-
-from recipes.views.utility_pages import home
+from django.views.generic import TemplateView
 
 handler404 = 'recipes.views.utility_pages.handle404'
 
@@ -18,6 +17,6 @@ urlpatterns = [
     url(r'^planner/', include('recipes.urls')),
 
     # Root home page
-    url(r'^$', home, name="home"),
+    url(r'^$', TemplateView.as_view(template_name='common/home.html', content_type="text/html"), name="home")
 
 ]

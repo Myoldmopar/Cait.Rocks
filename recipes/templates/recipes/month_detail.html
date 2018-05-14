@@ -2,29 +2,31 @@
 {% block title %}Cait.Rocks Monthly Plan!{% endblock %}
 {% block content %}
     <div ng-init="initialize_to_calendar={{ month.id }} ">
-        <h1>{[{ selectedCalendar.nickname }]} <small>({[{ selectedCalendar.creator }]})</small></h1>
+        <h1>{[{ selectedCalendar.nickname }]}
+            <small>({[{ selectedCalendar.creator }]})</small>
+        </h1>
         <table class="table table-bordered" style="table-layout: fixed;">
             <tr>
                 <th ng-repeat="day in days_of_week">
                     {[{ day }]}
                 </th>
             </tr>
-            <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]" ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
+            <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
+                ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
                 <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
                     <div>
                         <p>{[{ month.data[week_num][day_of_week].date_number }]}</p>
-                        <div class="form-group"
-                             ng-show="month.data[week_num][day_of_week].date_number !== '-'"
-                             ng-repeat="recipe_num in [0, 1]">
-                            <form method="get"
-                                  action="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num].id + '/' }]}">
-                                <button type="submit"
-                                        class="btn-xs form-control"
-                                        ng-class="{'valid_recipe': month.data[week_num][day_of_week]['recipe' + recipe_num] !== null}">
-                                    {[{ month.data[week_num][day_of_week]['recipe' + recipe_num]['title']}]}
-                                </button>
-                            </form>
+                        <div class="list-group"
+                             ng-show="month.data[week_num][day_of_week].date_number !== '-'">
+                            <a class="list-group-item list-group-item-action"
+                               style="background-color: #badfff;"
+                               ng-repeat="recipe_num in [0, 1]"
+                               ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
+                               href="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num] + '/' }]}">
+                                {[{ month.data[week_num][day_of_week]['recipe' + recipe_num + 'title']}]}
+                            </a>
                         </div>
+
                     </div>
                 </td>
             </tr>

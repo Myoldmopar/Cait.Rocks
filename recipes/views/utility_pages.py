@@ -5,7 +5,3 @@ from rest_framework import status
 
 def handle404(request):
     return render(request, 'common/404.html', status=status.HTTP_404_NOT_FOUND)
-
-
-def home(request):
-    return render(request, 'common/home.html')

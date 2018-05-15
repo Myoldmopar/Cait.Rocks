@@ -2,7 +2,7 @@ var app = angular.module('caitRocksApp');
 
 // configure the module to use a different template interpolation sequence to avoid conflicting with Django
 app.config(function ($interpolateProvider) {
-    "use strict";
+    'use strict';
     $interpolateProvider.startSymbol('{[{');
     $interpolateProvider.endSymbol('}]}');
 });

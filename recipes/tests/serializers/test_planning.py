@@ -20,7 +20,7 @@ class PlanningSerializerTests(TestCase):
         self.assertEqual(creator, '')
 
     def test_planning_creator_method_valid(self):
-        u = User.objects.create_user(username="dummy", password="pass", first_name="A", last_name="B")
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
         calendar_attributes = {
             'nickname': 'Month TITLE',
             'year': 2018,
@@ -33,7 +33,7 @@ class PlanningSerializerTests(TestCase):
         self.assertEqual(creator, 'A B')
 
     def test_planning_creator_method_not_in_db(self):
-        u = User.objects.create_user(username="dummy", password="pass", first_name="A", last_name="B")
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
         calendar_attributes = {
             'nickname': 'Month TITLE',
             'year': 2018,

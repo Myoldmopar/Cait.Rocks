@@ -1,7 +1,7 @@
 var app = angular.module('caitRocksApp');
 
 app.service('calendarService', ['$http', function ($http) {
-    "use strict";
+    'use strict';
     this.update_calendar_recipe_id = function (calendar_id, date_num, daily_recipe_id, recipe_pk) {
         return $http.put(
             '/planner/api/calendars/' + calendar_id + '/recipe_id/',
@@ -30,7 +30,7 @@ app.service('calendarService', ['$http', function ($http) {
 }]);
 
 app.service('recipeService', ['$http', function ($http) {
-    "use strict";
+    'use strict';
     this.get_recipes = function () {
         return $http.get('/planner/api/recipes/');
     };

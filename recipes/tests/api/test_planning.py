@@ -20,8 +20,8 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(len(body), 0)
 
     def test_get_populated_calendars(self):
-        Calendar.objects.create(nickname="Hey", year=2018, month=4)
-        Calendar.objects.create(nickname="Again", year=2018, month=4)
+        Calendar.objects.create(nickname='Hey', year=2018, month=4)
+        Calendar.objects.create(nickname='Again', year=2018, month=4)
         url_path = reverse('planner:api:calendar-list')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -104,7 +104,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
         response = self.client.post(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
@@ -114,7 +114,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
         response = self.client.post(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
@@ -126,7 +126,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         c.refresh_from_db()
@@ -138,42 +138,42 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 3}),
+            data=json.dumps({'date_num': 3}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"daily_recipe_id": 1}),
+            data=json.dumps({'daily_recipe_id': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"recipe_pk": 1}),
+            data=json.dumps({'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 1}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"recipe_pk": 1, "daily_recipe_id": 1}),
+            data=json.dumps({'recipe_pk': 1, 'daily_recipe_id': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -185,7 +185,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 'alpha', "daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'date_num': 'alpha', 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -193,7 +193,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 'beta', "recipe_pk": 1}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 'beta', 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -202,7 +202,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
         # Numerically out of range recipe PK
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 2}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 2}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -210,7 +210,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 3, "daily_recipe_id": 1, "recipe_pk": 'gamma'}),
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 'gamma'}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -223,7 +223,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 1, "daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'date_num': 1, 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -236,21 +236,21 @@ class TestPlanningAPIRecipeIDView(TestCase):
 
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 32, "daily_recipe_id": 1, "recipe_pk": 1}),
+            data=json.dumps({'date_num': 32, 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn(b'Cannot locate field day32recipe1', response.content)
 
     def test_clearing_recipe_id(self):
-        c = Calendar.objects.create(year=2018, month=5, nickname="My Calendar")
+        c = Calendar.objects.create(year=2018, month=5, nickname='My Calendar')
         r = Recipe.objects.create(title='Caits favorite')
         c.day01recipe1 = r
         c.save()
         url_path = reverse('planner:api:calendar-recipe-id', args=[c.pk])
         response = self.client.put(
             url_path,
-            data=json.dumps({"date_num": 1, "daily_recipe_id": 1, "recipe_pk": 0}),
+            data=json.dumps({'date_num': 1, 'daily_recipe_id': 1, 'recipe_pk': 0}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)

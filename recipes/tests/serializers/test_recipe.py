@@ -28,7 +28,7 @@ class RecipeSerializerTests(TestCase):
         self.assertEqual(creator, '')
 
     def test_recipe_creator_method_valid(self):
-        u = User.objects.create_user(username="dummy", password="pass", first_name="A", last_name="B")
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
         recipe_attributes = {
             'title': 'Recipe TITLE',
             'recipe_type': RecipeTypes.SALAD,
@@ -40,7 +40,7 @@ class RecipeSerializerTests(TestCase):
         self.assertEqual(creator, 'A B')
 
     def test_recipe_creator_method_not_in_db(self):
-        u = User.objects.create_user(username="dummy", password="pass", first_name="A", last_name="B")
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
         recipe_attributes = {
             'title': 'Recipe TITLE',
             'recipe_type': RecipeTypes.SALAD,

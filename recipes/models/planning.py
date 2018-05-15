@@ -13,11 +13,11 @@ class Calendar(models.Model):
     """
     This class describes a full month of data, including the calendar year/month as well as two recipes per day each day
     """
-    creator = models.ForeignKey(User, help_text="The user who created this recipe instance", null=True)
-    year = models.IntegerField(help_text="The year of this calendar month")
-    month = models.IntegerField(help_text="The month index (1-12) of this calendar month")
+    creator = models.ForeignKey(User, help_text='The user who created this recipe instance', null=True)
+    year = models.IntegerField(help_text='The year of this calendar month')
+    month = models.IntegerField(help_text='The month index (1-12) of this calendar month')
     nickname = models.CharField(max_length=100,
-                                help_text="A brief nickname for this month, usually auto-generated as YY-MMM")
+                                help_text='A brief nickname for this month, usually auto-generated as YY-MMM')
     day01recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 01', related_name='day01recipe0',
                                      null=True, blank=True)
     day01recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 01', related_name='day01recipe1',
@@ -153,7 +153,7 @@ class Calendar(models.Model):
                 return self.nickname
             return self.nickname[:40]
         else:
-            return "Unnamed calendar"
+            return 'Unnamed calendar'
 
     def get_monthly_data(self):
         """

@@ -50,7 +50,7 @@ class TestIngredientStringTests(TestCase):
         i = Ingredient(
             amount=AmountType.ONE, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
         )
-        self.assertEqual(str(i), "1 tsp Foodstuff")
+        self.assertEqual(str(i), '1 tsp Foodstuff')
 
 
 class IngredientFullStringFunctionTests(TestCase):

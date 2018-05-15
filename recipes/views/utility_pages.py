@@ -15,7 +15,7 @@ def server_version_data(request):
 
     # get the current Git sha
     try:
-        git_sha = check_output(["git", "rev-parse", "HEAD"]).strip()
+        git_sha = check_output(['git', 'rev-parse', 'HEAD']).strip()
         # git_sha = git_sha[0:10]
     except CalledProcessError:  # pragma: no cover
         # This would be crazy to try to test...

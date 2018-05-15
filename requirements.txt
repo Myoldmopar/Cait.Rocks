@@ -10,5 +10,5 @@ tox==3.0.0
 # For deployment on Heroku
 dj-database-url==0.5.0  # Django database configuration
 gunicorn==19.7.1  # Web server
-psycopg2==2.7.4  # Postgres interaction
+psycopg2-binary==2.7.4  # Postgres interaction
 whitenoise==3.3.1  # Static asset server

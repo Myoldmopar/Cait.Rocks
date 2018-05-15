@@ -27,29 +27,15 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
             return None
 
     @staticmethod
-    def _get_calendar_by_pk(pk):
+    def _get_object_by_pk(model_class, pk):
         try:
-            c = Calendar.objects.get(pk=pk)
-            return {'success': True, 'calendar': c}
-        except Calendar.DoesNotExist:
+            c = model_class.objects.get(pk=pk)
+            return {'success': True, 'object': c}
+        except model_class.DoesNotExist:
             return_body = JsonResponse(
                 {
                     'success': False,
-                    'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_404_NOT_FOUND
-            )
-            return {'success': False, 'response': return_body}
-
-    @staticmethod
-    def _get_recipe_by_pk(pk):
-        try:
-            r = Recipe.objects.get(pk=pk)
-            return {'success': True, 'recipe': r}
-        except Recipe.DoesNotExist:
-            return_body = JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find recipe with pk=%s' % pk},
+                    'message': 'Cannot find object with pk=%s' % pk},
                 status=status.HTTP_404_NOT_FOUND
             )
             return {'success': False, 'response': return_body}
@@ -68,10 +54,10 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         belong in the current month.  The recipe0 and recipe1 keys are ids to recipe objects in the database.  The
         recipe0title and recipe1title keys are simply the recipe titles for convenience.
         """
-        data = self._get_calendar_by_pk(pk)
+        data = self._get_object_by_pk(Calendar, pk)
         if not data['success']:
             return data['response']
-        c = data['calendar']
+        c = data['object']
         dates = c.get_monthly_data()
         weekly_data = []
         for week_num, week_dates in enumerate(dates):
@@ -122,14 +108,14 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         if recipe_id == 0:
             recipe_to_assign = None
         else:
-            recipe_query = self._get_recipe_by_pk(recipe_id)
+            recipe_query = self._get_object_by_pk(Recipe, recipe_id)
             if not recipe_query['success']:
                 return recipe_query['response']
-            recipe_to_assign = recipe_query['recipe']
-        calendar_query = self._get_calendar_by_pk(pk)
+            recipe_to_assign = recipe_query['object']
+        calendar_query = self._get_object_by_pk(Calendar, pk)
         if not calendar_query['success']:
             return calendar_query['response']
-        calendar_to_modify = calendar_query['calendar']
+        calendar_to_modify = calendar_query['object']
 
         # Now get a two-digit date number so we can lookup a member variable, and set that variable using Python voodoo
         day_string = '%02d' % date_num

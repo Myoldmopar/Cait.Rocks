@@ -1,5 +1,5 @@
-Cait.Rocks |versionimage|_
-==========================
+Cait.Rocks |versionimage|_ |climateimage|_
+==========================================
 
 This repo holds the Django-backed and Angular-fronted website for CaitRocks_.
 
@@ -68,6 +68,9 @@ Follow these steps to get a development version up and running:
 
 .. |versionimage| image:: https://img.shields.io/github/release/Myoldmopar/Cait.Rocks.svg
 .. _versionimage: https://github.com/Myoldmopar/Cait.Rocks/releases/latest
+
+.. |climateimage| image:: https://api.codeclimate.com/v1/badges/ac06f5e99192cac7abbf/maintainability
+.. _climateimage: https://codeclimate.com/github/Myoldmopar/Cait.Rocks/maintainability
 
 .. |tstimage| image:: https://travis-ci.org/Myoldmopar/Cait.Rocks.svg?branch=master
 .. _tstimage: https://travis-ci.org/Myoldmopar/Cait.Rocks

@@ -128,14 +128,15 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         day_string = '%02d' % date_num
         variable_name = 'day{0}recipe{1}'.format(day_string, day_recipe_num)
         if not hasattr(calendar_to_modify, variable_name):
-            return JsonResponse({
-                'success': False,
-                'message': 'Cannot locate field %s, maybe date is out of range?' % variable_name
-            }, status=status.HTTP_400_BAD_REQUEST)
-        setattr(calendar_to_modify, variable_name, recipe_to_assign)
-        calendar_to_modify.save()
-        if recipe_id == 0:
-            message = 'Cleared recipe for %s' % variable_name
+            return_dict = {'success': False, 'message': 'Cannot locate field %s, date out of range?' % variable_name}
+            return_status = status.HTTP_400_BAD_REQUEST
         else:
-            message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
-        return JsonResponse({'success': True, 'message': message})
+            setattr(calendar_to_modify, variable_name, recipe_to_assign)
+            calendar_to_modify.save()
+            if recipe_id == 0:
+                message = 'Cleared recipe for %s' % variable_name
+            else:
+                message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
+            return_dict = {'success': True, 'message': message}
+            return_status = status.HTTP_200_OK
+        return JsonResponse(return_dict, status=return_status)

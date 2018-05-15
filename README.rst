@@ -55,7 +55,7 @@ Follow these steps to get a development version up and running:
 
 - Install JavaScript dependencies:
 
-  - `npm install`
+  - `yarn install`
 
 - Create your initial database:
 

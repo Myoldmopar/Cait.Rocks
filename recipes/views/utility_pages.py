@@ -22,7 +22,7 @@ def server_version_data(request):
         git_sha = '<Could not get current git sha, are we not running from a repo?>'
 
     # get a flag for whether there are local uncommitted changes
-    working_dir_clean_message = 'Working directory clean'
+    working_dir_clean_message = 'Clean'
     try:
         local_diff_status = check_output(['git', 'status', '--porcelain'])
         if local_diff_status != u'':  # pragma: no cover

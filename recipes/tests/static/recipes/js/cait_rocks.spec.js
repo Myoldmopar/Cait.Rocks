@@ -133,6 +133,15 @@ describe("caitRockController Testing Suite", function () {
         expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, "Hey");
     });
 
+    it("should eventually delete the current calendar", function () {
+        // spyOn(mockCalendarService, 'post_calendar').and.returnValue($scope.$q.when({}));
+        // spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        $scope.selectedCalendar = {nickname: 'Jo month', year: 2017, month: 3};
+        $scope.delete_calendar();
+        // expect(mockCalendarService.post_calendar).toHaveBeenCalled();
+        // expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, "Hey");
+    });
+
     it("should clear the filter variable", function () {
         $scope.filterText = 'abc';
         $scope.clear_filter();

@@ -15,11 +15,16 @@
 
     <div class="collapse recipe-input-container" id="collapseManageMonths">
         <div class="card card-body" style="padding:10px">
-            <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars"
-                    class="form-control input-sm"
-                    style="margin-bottom:10px;"
-                    ng-change="get_month_data()">
-            </select>
+            <div class="input-group" style="margin-bottom:0;">
+                <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars"
+                        class="form-control input-sm"
+                        style="margin-bottom:10px;"
+                        ng-change="get_month_data()">
+                </select>
+                <span class="input-group-btn">
+                    <button class="btn btn-danger form-control" type="submit" ng-click="delete_calendar()" disabled>¡Delete Current Month!</button>
+                </span>
+            </div>
             <form class="form-group row" style="margin-bottom:0px;" ng-submit="add_calendar()">
                 <div class="col-md-3">
                     <input type="text" class="form-control" ng-model="calendar_name"
@@ -47,7 +52,7 @@
         <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
             ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
             <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]"
-                style="padding:4px;background-color:#ededed;border:1px solid black">
+                style="padding:4px;background-color:#f2f2f2;border:1px solid black">
                 <div>
                     <p style="margin-bottom:4px;">{[{ month.data[week_num][day_of_week].date_number }]}</p>
                     <div class="form-group"

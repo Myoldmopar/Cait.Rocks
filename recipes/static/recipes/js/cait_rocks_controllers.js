@@ -137,6 +137,11 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         )
     };
 
+    $scope.delete_calendar = function () {
+        // check to make sure a calendar is selected
+        console.log("I would be trying to delete calendar: ", $scope.selectedCalendar);
+    };
+
     // some hardcoded values
     $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $scope.filterText = '';

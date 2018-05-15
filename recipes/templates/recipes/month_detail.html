@@ -13,7 +13,7 @@
             </tr>
             <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
                 ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
-                <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" style="padding:4px;background-color:#ededed;border:1px solid black">
+                <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" style="padding:4px;background-color:#f2f2f2;border:1px solid black">
                     <div>
                         <p style="margin-bottom:4px;">{[{ month.data[week_num][day_of_week].date_number }]}</p>
                         <div class="list-group"

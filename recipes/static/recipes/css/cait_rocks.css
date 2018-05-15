@@ -3,12 +3,6 @@
     margin-bottom: 4px;
 }
 
-.valid_recipe {
-    background-color: #badfff;
-}
-
 .recipe-clear-button {
     width: auto;
 }
-
-#mainBodyContainer { padding-top: 30px; }

@@ -25,7 +25,7 @@ def server_version_data(request):
     working_dir_clean_message = 'Working directory clean'
     try:
         local_diff_status = check_output(['git', 'status', '--porcelain'])
-        dirty_files = local_diff_status.split('\n')
+        dirty_files = local_diff_status.split(b'\n')
         if len(dirty_files) > 0:  # pragma: no cover
             working_dir_clean_message = 'Local uncommitted changes!'
     except CalledProcessError:  # pragma: no cover

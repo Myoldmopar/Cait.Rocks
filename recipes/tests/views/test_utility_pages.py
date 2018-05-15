@@ -36,3 +36,21 @@ class TestHome(TestCase):
         url_path = reverse('home')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestAbout(TestCase):
+    def test_url_path(self):
+        """
+        Test the path directly
+        """
+        response = self.client.get('/about/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn(b'Git SHA:', response.content)
+
+    def test_reversed_path(self):
+        """
+        Rely on the url reversing
+        """
+        url_path = reverse('about')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

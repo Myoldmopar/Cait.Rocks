@@ -62,7 +62,7 @@ describe('caitRockController Testing Suite', function () {
         expect($scope.recipe_list).toEqual(['recipes']);
     });
 
-    it('should get month data when there isn't a currently selected calendar', function () {
+    it('should get month data when there isn\'t a currently selected calendar', function () {
         $scope.selectedCalendar = undefined;
         $scope.get_month_data();
         // nothing should happen, this process should just complete successfully
@@ -134,7 +134,7 @@ describe('caitRockController Testing Suite', function () {
         expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey');
     });
 
-    it('should try to delete the current calendar but it doesn't exist', function () {
+    it('should try to delete the current calendar but it doesn\'t exist', function () {
         $scope.selectedCalendar = null;
         $scope.remove_calendar();
         $scope.$digest();
@@ -328,6 +328,25 @@ describe('calendarService Testing Suite', function () {
         httpBackend.when('PUT', '/planner/api/calendars/1/recipe_id/').respond('updated');
         calendarService.update_calendar_recipe_id(1, 25, 0, 1).then(function (response) {
             expect(response.data).toEqual('updated');
+        });
+        httpBackend.flush();
+    });
+
+    it('should get positive delete confirmation from the user', function () {
+        spyOn(window, 'confirm').and.returnValue(true);
+        expect(calendarService.confirm_calendar_delete()).toEqual(true);
+    });
+
+    it('should get negative delete confirmation from the user', function () {
+        spyOn(window, 'confirm').and.returnValue(false);
+        expect(calendarService.confirm_calendar_delete()).toEqual(false);
+    });
+
+    it('should delete one calendar and return exactly what comes back from api on data member', function () {
+        spyOn(window, 'confirm').and.returnValue(true);
+        httpBackend.when('DELETE', '/planner/api/calendars/1/').respond('deleted');
+        calendarService.delete_calendar(1).then(function (response) {
+            expect(response.data).toEqual('deleted');
         });
         httpBackend.flush();
     });

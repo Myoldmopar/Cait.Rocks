@@ -18,6 +18,28 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
+    @staticmethod
+    def _get_recipe_data_or_none(date_data, recipe_string):
+        if date_data[recipe_string]:
+            recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
+            return recipe_serializer.data
+        else:
+            return None
+
+    @staticmethod
+    def _get_object_by_pk(model_class, pk):
+        try:
+            c = model_class.objects.get(pk=pk)
+            return {'success': True, 'object': c}
+        except model_class.DoesNotExist:
+            return_body = JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot find object with pk=%s' % pk},
+                status=status.HTTP_404_NOT_FOUND
+            )
+            return {'success': False, 'response': return_body}
+
     @action(methods=['get'], detail=True)
     def monthly_data(self, request, pk):
         """
@@ -32,15 +54,10 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         belong in the current month.  The recipe0 and recipe1 keys are ids to recipe objects in the database.  The
         recipe0title and recipe1title keys are simply the recipe titles for convenience.
         """
-        try:
-            c = Calendar.objects.get(pk=pk)
-        except Calendar.DoesNotExist:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        data = self._get_object_by_pk(Calendar, pk)
+        if not data['success']:
+            return data['response']
+        c = data['object']
         dates = c.get_monthly_data()
         weekly_data = []
         for week_num, week_dates in enumerate(dates):
@@ -49,25 +66,33 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
                 date_number = '-'
                 if date_data['date_number'] > 0:
                     date_number = date_data['date_number']
-                if date_data['recipe0']:
-                    recipe_serializer = RecipeSerializer(instance=date_data['recipe0'])
-                    recipe0 = recipe_serializer.data
-                else:
-                    recipe0 = None
-                if date_data['recipe1']:
-                    recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
-                    recipe1 = recipe_serializer.data
-                else:
-                    recipe1 = None
                 daily_data.append(
                     {
                         'date_number': date_number,
-                        'recipe0': recipe0,
-                        'recipe1': recipe1,
+                        'recipe0': self._get_recipe_data_or_none(date_data, 'recipe0'),
+                        'recipe1': self._get_recipe_data_or_none(date_data, 'recipe1'),
                     }
                 )
             weekly_data.append(daily_data)
         return JsonResponse({'num_weeks': len(dates), 'data': weekly_data})
+
+    @staticmethod
+    def _validate_recipe_id_request_body(request_data):
+        # Validate body first
+        for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
+            if required_key not in request_data:
+                return {'success': False, 'response': JsonResponse({
+                    'success': False,
+                    'message': 'Missing %s key in recipe_id body' % required_key
+                }, status=status.HTTP_400_BAD_REQUEST)}
+            try:
+                int(request_data[required_key])
+            except (ValueError, TypeError):
+                return {'success': False, 'response': JsonResponse({
+                    'success': False,
+                    'message': 'Could not convert %s to float; value: %s' % (required_key, request_data[required_key])
+                }, status=status.HTTP_400_BAD_REQUEST)}
+        return {'success': True}
 
     @action(methods=['put'], detail=True)
     def recipe_id(self, request, pk):
@@ -79,20 +104,9 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         :param pk: The primary key of the calendar to modify
         :return: A JSONResponse object with keys success and message.  The status code will also be set accordingly
         """
-        # Validate body first
-        for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
-            if required_key not in request.data:
-                return JsonResponse({
-                    'success': False,  # TODO: Remove success from everywhere, maybe this will lead to serialization
-                    'message': 'Missing %s key in recipe_id body' % required_key
-                }, status=status.HTTP_400_BAD_REQUEST)
-            try:
-                int(request.data[required_key])
-            except (ValueError, TypeError):
-                return JsonResponse({
-                    'success': False,
-                    'message': 'Could not convert %s to float; value: %s' % (required_key, request.data[required_key])
-                }, status=status.HTTP_400_BAD_REQUEST)
+        validate_query = self._validate_recipe_id_request_body(request.data)
+        if not validate_query['success']:
+            return validate_query['response']
         date_num = int(request.data['date_num'])
         day_recipe_num = int(request.data['daily_recipe_id'])
         recipe_id = int(request.data['recipe_pk'])
@@ -101,48 +115,28 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         if recipe_id == 0:
             recipe_to_assign = None
         else:
-            try:
-                recipe_to_assign = Recipe.objects.get(pk=recipe_id)
-            except Recipe.DoesNotExist:
-                return JsonResponse(
-                    {
-                        'success': False,
-                        'message': 'Cannot find recipe with pk=%s' % recipe_id},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-        try:
-            calendar_to_modify = Calendar.objects.get(pk=pk)
-        except Calendar.DoesNotExist:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            recipe_query = self._get_object_by_pk(Recipe, recipe_id)
+            if not recipe_query['success']:
+                return recipe_query['response']
+            recipe_to_assign = recipe_query['object']
+        calendar_query = self._get_object_by_pk(Calendar, pk)
+        if not calendar_query['success']:
+            return calendar_query['response']
+        calendar_to_modify = calendar_query['object']
 
-        # Now get a two-digit date number so we can lookup a member variable, ...
+        # Now get a two-digit date number so we can lookup a member variable, and set that variable using Python voodoo
         day_string = '%02d' % date_num
         variable_name = 'day{0}recipe{1}'.format(day_string, day_recipe_num)
-        # ... and then set that variable using sweet python voodoo
         if not hasattr(calendar_to_modify, variable_name):
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot locate field %s, maybe date is out of range?' % variable_name
-                },
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        setattr(calendar_to_modify, variable_name, recipe_to_assign)
-        # save the calendar
-        calendar_to_modify.save()
-        # and return successfully
-        if recipe_id == 0:
-            message = 'Cleared recipe for %s' % variable_name
+            return_dict = {'success': False, 'message': 'Cannot locate field %s, date out of range?' % variable_name}
+            return_status = status.HTTP_400_BAD_REQUEST
         else:
-            message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
-        return JsonResponse(
-            {
-                'success': True,
-                'message': message
-            }
-        )
+            setattr(calendar_to_modify, variable_name, recipe_to_assign)
+            calendar_to_modify.save()
+            if recipe_id == 0:
+                message = 'Cleared recipe for %s' % variable_name
+            else:
+                message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
+            return_dict = {'success': True, 'message': message}
+            return_status = status.HTTP_200_OK
+        return JsonResponse(return_dict, status=return_status)

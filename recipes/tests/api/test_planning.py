@@ -206,7 +206,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertIn(b'Cannot find recipe with pk=2', response.content)
+        self.assertIn(b'Cannot find object with pk=2', response.content)
 
         response = self.client.put(
             url_path,
@@ -227,7 +227,7 @@ class TestPlanningAPIRecipeIDView(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertIn(b'Cannot find calendar with pk=2', response.content)
+        self.assertIn(b'Cannot find object with pk=2', response.content)
 
     def test_updating_recipe_id_out_of_range_date(self):
         Calendar.objects.create(year=2018, month=5)

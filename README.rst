@@ -1,5 +1,5 @@
-Cait.Rocks
-==========
+Cait.Rocks |versionimage|_
+==========================
 
 This repo holds the Django-backed and Angular-fronted website for CaitRocks_.
 
@@ -65,6 +65,9 @@ Follow these steps to get a development version up and running:
 
   - `python manage.py runserver`
   - https://localhost:8000
+
+.. |versionimage| image:: https://img.shields.io/github/release/Myoldmopar/Cait.Rocks.svg
+.. _versionimage: https://github.com/Myoldmopar/Cait.Rocks/releases/latest
 
 .. |tstimage| image:: https://travis-ci.org/Myoldmopar/Cait.Rocks.svg?branch=master
 .. _tstimage: https://travis-ci.org/Myoldmopar/Cait.Rocks

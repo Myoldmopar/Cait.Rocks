@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
+
 from rest_framework import serializers
 
 from recipes.models.planning import Calendar
+from recipes.serializers.utilities import get_creator_from_object
 
 
 class CalendarSerializer(serializers.ModelSerializer):
@@ -16,10 +17,4 @@ class CalendarSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_creator(self, calendar_instance):
-        if not calendar_instance.creator:
-            return ''
-        try:
-            c = User.objects.get(pk=calendar_instance.creator.pk)
-            return '%s %s' % (c.first_name, c.last_name)
-        except User.DoesNotExist:
-            return ''
+        return get_creator_from_object(calendar_instance)

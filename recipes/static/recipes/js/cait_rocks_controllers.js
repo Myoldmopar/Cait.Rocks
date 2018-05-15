@@ -66,7 +66,7 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
             if (tokens_to_check.every(function (t) {
                     return t;
                 })) {
-                // woohoo we have a match! leave it shown
+                // woo-hoo we have a match! leave it shown
             } else {
                 tr[i].style.display = "none";
             }
@@ -139,7 +139,20 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
 
     $scope.delete_calendar = function () {
         // check to make sure a calendar is selected
-        console.log("I would be trying to delete calendar: ", $scope.selectedCalendar);
+        if (!$scope.selectedCalendar) {
+            return;
+        }
+        if(calendar_service.confirm_calendar_delete()) {
+            calendar_service.delete_calendar($scope.selectedCalendar.id).then(
+                function (response) {
+                    $scope.selectedCalendar = null;
+                    $scope.get_calendars();
+                }
+            );
+        } else {
+            // nothing should happen
+        }
+        // console.log("I would be trying to delete calendar: ", $scope.selectedCalendar);
     };
 
     // some hardcoded values

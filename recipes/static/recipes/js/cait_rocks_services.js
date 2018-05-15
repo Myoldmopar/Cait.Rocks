@@ -22,6 +22,12 @@ app.factory('calendarService', ['$http', function ($http) {
             {'nickname': name, 'year': year, 'month': month}
         )
     };
+    calendar_factory.confirm_calendar_delete = function () {
+        return confirm('Are you super sure you want to delete this calendar?  This is permanent!');
+    };
+    calendar_factory.delete_calendar = function (calendar_id) {
+        return $http.delete('/planner/api/calendars/' + calendar_id + '/');
+    };
     return calendar_factory;
 }]);
 

@@ -65,10 +65,11 @@ class TestPlanningAPIMethods(TestCase):
         response = self.client.patch(url_path, data=json.dumps({}), content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_delete_fails(self):
-        url_path = reverse('planner:api:calendar-detail', args=[1])
+    def test_delete_succeeds(self):
+        c = Calendar.objects.create(nickname='ToBeDeleted', year=2019, month=1)
+        url_path = reverse('planner:api:calendar-detail', args=[c.pk])
         response = self.client.delete(url_path)
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class TestPlanningAPIMonthlyDatesView(TestCase):

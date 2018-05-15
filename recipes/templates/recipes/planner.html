@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="form-group recipe-input-container">
-        <label>Select a Month: </label>
+        <h1>Select a Month </h1>
         <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars" class="form-control input-sm"
                 ng-change="get_month_data()"></select>
     </div>

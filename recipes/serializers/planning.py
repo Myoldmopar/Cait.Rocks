@@ -17,9 +17,9 @@ class CalendarSerializer(serializers.ModelSerializer):
 
     def get_creator(self, calendar_instance):
         if not calendar_instance.creator:
-            return ""
+            return ''
         try:
             c = User.objects.get(pk=calendar_instance.creator.pk)
-            return "%s %s" % (c.first_name, c.last_name)
+            return '%s %s' % (c.first_name, c.last_name)
         except User.DoesNotExist:
-            return ""
+            return ''

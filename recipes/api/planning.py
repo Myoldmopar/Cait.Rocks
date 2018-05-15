@@ -2,14 +2,14 @@
 from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin
 
 from recipes.models.planning import Calendar, Recipe
 from recipes.serializers.planning import CalendarSerializer
 from recipes.serializers.recipe import RecipeSerializer
 
 
-class CalendarViewSet(CreateModelMixin, viewsets.ReadOnlyModelViewSet):
+class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyModelViewSet):
     """
     This class provides the API get and retrieve views for the calendar month objects, plus two workers:
     - monthly_data, which is used to get the bulk data for a whole month

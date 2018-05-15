@@ -3,78 +3,70 @@
 {% block title %}About Cait.Rocks!{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="col-md-12">
+    <h1>About this Website!</h1>
+    <p>
+        This website began development in 2018 as a way to accomplish three goals: have a single place to
+        storeour family recipes that Cait develops and adapts, have a way to plan out monthly meals and
+        share these plans with anyone interested, and finally develop a codebase into which my kids can
+        contribute.  This last reason was the driving force behind creating our own website instead of using
+        one of the existing recipe/meal planning sites (though with those we'd be on a free plan and have to
+        deal with limited functionality or ads...).
+    </p>
+    <p>
+        I have had people ask if they can have their own accounts on here, and while I look forward
+        to allowing that, it is still a little ways from that capability. Maybe in a few months we
+        can do that for a few people, but the code will need lots of exercise before that can happen.
+    </p>
+    <p>
+        If you find a bug in the site, good job!  If you are visiting this site, you are likely a friend of
+        ours, so just let us know personally.  If you don't know us personally, glad you are here! Please
+        use a Github account to file an issue on the repository listed below!
+    </p>
 
-                <h1>About this Website!</h1>
-                <p>
-                    This website began development in 2018 as a way to accomplish three goals: have a single place to
-                    storeour family recipes that Cait develops and adapts, have a way to plan out monthly meals and
-                    share these plans with anyone interested, and finally develop a codebase into which my kids can
-                    contribute.  This last reason was the driving force behind creating our own website instead of using
-                    one of the existing recipe/meal planning sites (though with those we'd be on a free plan and have to
-                    deal with limited functionality or ads...).
-                </p>
-                <p>
-                    I have had people ask if they can have their own accounts on here, and while I look forward
-                    to allowing that, it is still a little ways from that capability. Maybe in a few months we
-                    can do that for a few people, but the code will need lots of exercise before that can happen.
-                </p>
-                <p>
-                    If you find a bug in the site, good job!  If you are visiting this site, you are likely a friend of
-                    ours, so just let us know personally.  If you don't know us personally, glad you are here! Please
-                    use a Github account to file an issue on the repository listed below!
-                </p>
+    <h1>Interesting Links</h1>
+    <ul class="list-group" style="margin-bottom:16px;">
+        <li class="list-group-item">Source code hosted on <a href="https://github.com/Myoldmopar/Cait.Rocks">Github</a></li>
+        <li class="list-group-item">Back-end server is developed using <a href="https://www.djangoproject.com/">Django</a></li>
+        <li class="list-group-item">Front-end site is based on <a href="https://angular.io/">Angular</a></li>
+        <li class="list-group-item">Server is running on a <a href="https://heroku.com/">Heroku</a> Instance</li>
+    </ul>
 
-                <h1>Interesting Links</h1>
-                <ul class="list-group">
-                    <li class="list-group-item">Source code hosted on <a href="https://github.com/Myoldmopar/Cait.Rocks">Github</a></li>
-                    <li class="list-group-item">Back-end server is developed using <a href="https://www.djangoproject.com/">Django</a></li>
-                    <li class="list-group-item">Front-end site is based on <a href="https://angular.io/">Angular</a></li>
-                    <li class="list-group-item">Server is running on a <a href="https://heroku.com/">Heroku</a> Instance</li>
-                </ul>
+    <h1>Current Server Information</h1>
+    <table class="table table-striped">
+        <thead>
+        <th>Key</th>
+        <th>Value</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Version:</td>
+            <td>{{ version }}</td>
+        </tr>
+        <tr>
+            <td>Git SHA:</td>
+            <td>{{ git_sha }}</td>
+        </tr>
+        <tr>
+            <td>Working Dir:</td>
+            <td>{{ dirty_message }}</td>
+        </tr>
+        </tbody>
+    </table>
 
-                <h1>Current Server Information</h1>
-                <table class="table table-striped">
-                    <thead>
-                    <th>Key</th>
-                    <th>Value</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Version:</td>
-                        <td>{{ version }}</td>
-                    </tr>
-                    <tr>
-                        <td>Git SHA:</td>
-                        <td>{{ git_sha }}</td>
-                    </tr>
-                    <tr>
-                        <td>Working Dir:</td>
-                        <td>{{ dirty_message }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <h1>Other Information</h1>
-                <p>
-                    In my opinion, recipes are a freeform expression of taste and creativity. There can be a million
-                    people making the same recipe and make it different each time, putting their own influence on it.
-                    That said, there are people who make a living out of coming up with, or providing, recipes. We have
-                    zero interest in interfering with that venture. This website is not a money making venture...at all.
-                    If you notice a recipe on this site that you own, and you feel it is your intellectual property,
-                    just let us know, and we'll take it down, and maybe keep it in our beautiful recipe box in our
-                    kitchen drawer, and we can even change the ingredients/directions to instead be a link to your page
-                    where you provide the recipe! But just remember, the same recipe for boiled eggs can be found on
-                    about a million websites right now, so the recipe on this page could have been simply a creative
-                    coincidence!
-                </p>
-                <p>
-                    And finally, thanks for visiting!!
-                </p>
-
-            </div>
-        </div>
-    </div>
+    <h1>Other Information</h1>
+    <p>
+        In my opinion, recipes are a freeform expression of taste and creativity. There can be a million
+        people making the same recipe and make it different each time, putting their own influence on it.
+        That said, there are people who make a living out of coming up with, or providing, recipes. We have
+        zero interest in interfering with that venture. This website is not a money making venture...at all.
+        If you notice a recipe on this site that you own, and you feel it is your intellectual property,
+        just let us know, and we'll take it down, and maybe keep it in our beautiful recipe box in our
+        kitchen drawer, and we can even change the ingredients/directions to instead be a link to your page
+        where you provide the recipe! But just remember, the same recipe for boiled eggs can be found on
+        about a million websites right now, so the recipe on this page could have been simply a creative
+        coincidence!
+    </p>
+    <blockquote class="blockquote text-center">
+        And finally, thanks for visiting!!
+    </blockquote>
 {% endblock %}

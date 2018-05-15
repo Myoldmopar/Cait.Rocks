@@ -13,70 +13,70 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Note I didn't use a fixture here because I need to access the User model which isn't available from dump-data
         u = User.objects.create_user(
-            username="TestUser",
-            password="TestPass",
-            first_name="Caitlin",
-            last_name="Lee"
+            username='TestUser',
+            password='TestPass',
+            first_name='Caitlin',
+            last_name='Lee'
         )
         u2 = User.objects.create_user(
-            username="TestUser2",
-            password="TestPass2",
-            first_name="Edwin",
-            last_name="Lee",
+            username='TestUser2',
+            password='TestPass2',
+            first_name='Edwin',
+            last_name='Lee',
             is_superuser=True,
             is_staff=True,
             is_active=True
         )
         r1 = Recipe.objects.create(
-            title="Sauce recipe",
+            title='Sauce recipe',
             recipe_type=RecipeTypes.SAUCE_DRESSING,
             creator=u,
-            directions="Do some stuff\nThen do more"
+            directions='Do some stuff\nThen do more'
         )
         r2 = Recipe.objects.create(
-            title="Chicken recipe",
+            title='Chicken recipe',
             recipe_type=RecipeTypes.ENTREE,
             creator=u,
-            directions="Make all the things\nPrep it\nCook it\nEat it\nSit back and enjoy"
+            directions='Make all the things\nPrep it\nCook it\nEat it\nSit back and enjoy'
         )
         r3 = Recipe.objects.create(
-            title="Beef recipe",
+            title='Beef recipe',
             recipe_type=RecipeTypes.ENTREE,
             creator=u2,
-            directions="Make all the things\nPrep it\nCook it\nEat it\nSit back and enjoy"
+            directions='Make all the things\nPrep it\nCook it\nEat it\nSit back and enjoy'
         )
         Ingredient.objects.create(
             amount=AmountType.ONE_HALF,
             measurement=MeasurementType.TEASPOON,
-            item_description="Sauce",
+            item_description='Sauce',
             recipe=r1
         )
         Ingredient.objects.create(
             amount=AmountType.ONE_HALF,
             measurement=MeasurementType.TEASPOON,
-            item_description="Sauce",
+            item_description='Sauce',
             recipe=r2
         )
         Ingredient.objects.create(
             amount=AmountType.ONE_HALF,
             measurement=MeasurementType.TEASPOON,
-            item_description="Sauce",
+            item_description='Sauce',
             recipe=r3
         )
         Ingredient.objects.create(
             amount=2,
             measurement=MeasurementType.NONE,
-            item_description="Chicken breasts",
+            item_description='Chicken breasts',
             recipe=r2
         )
         Ingredient.objects.create(
             amount=2,
             measurement=MeasurementType.POUND,
-            item_description="Hamburger",
+            item_description='Hamburger',
             recipe=r3
         )
         Calendar.objects.create(
-            nickname="This Month",
+            nickname='This Month',
             year=2018,
             month=5,
             creator=u,

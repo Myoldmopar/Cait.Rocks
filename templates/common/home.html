@@ -7,14 +7,15 @@
         <div class="row-fluid">
             <div class="col-md-12">
 
-                <h1>Welcome!</h1>
+                <h1 id="welcome">Welcome!</h1>
                 <p>This is a website where we keep our recipes and organize our meal planning. It is very much a work in
                     progress, and has only been alive for 2 weeks, but it's coming around fast!</p>
 
                 <h1>What can I do here?</h1>
-                <p>If you have an account, go to your <a href="{% url 'planner:planner-list' %}">planner</a>.  If not, you can check out Cait's handy work. You can look at the <a
-                        href="{% url 'planner:recipe_views-list' %}">list of recipes</a>, which is currently only a modest
-                    few, but will grow to the whole library.</p>
+                <p>If you have an account, go to your <a href="{% url 'planner:planner-list' %}">planner</a>. If not,
+                    you can check out Cait's handy work. You can look at the
+                    <a href="{% url 'planner:recipe_views-list' %}">list of recipes</a>, which is currently only a
+                    modest few, but will grow to the whole library.</p>
 
                 <h1>Anything else?</h1>
                 <p>You can also look at the <a href="{% url 'planner:months-list' %}">monthly plans</a> she has made! Be

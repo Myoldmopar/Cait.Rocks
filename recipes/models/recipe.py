@@ -19,26 +19,26 @@ class RecipeTypes(object):
 
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=100, help_text="The descriptive title for this recipe")
+    title = models.CharField(max_length=100, help_text='The descriptive title for this recipe')
 
     RECIPE_TYPE_CHOICES = (
-        (RecipeTypes.UNKNOWN, "Unknown"),
-        (RecipeTypes.ENTREE, "Entree"),
-        (RecipeTypes.SOUP, "Soup"),
-        (RecipeTypes.SALAD, "Salad"),
-        (RecipeTypes.DRINK, "Drink"),
-        (RecipeTypes.DESSERT, "Dessert"),
-        (RecipeTypes.SIDE_DISH, "Side Dish"),
-        (RecipeTypes.SAUCE_DRESSING, "Sauce/Dressing"),
-        (RecipeTypes.SEASONING, "Seasoning"),
+        (RecipeTypes.UNKNOWN, 'Unknown'),
+        (RecipeTypes.ENTREE, 'Entree'),
+        (RecipeTypes.SOUP, 'Soup'),
+        (RecipeTypes.SALAD, 'Salad'),
+        (RecipeTypes.DRINK, 'Drink'),
+        (RecipeTypes.DESSERT, 'Dessert'),
+        (RecipeTypes.SIDE_DISH, 'Side Dish'),
+        (RecipeTypes.SAUCE_DRESSING, 'Sauce/Dressing'),
+        (RecipeTypes.SEASONING, 'Seasoning'),
     )
     recipe_type = models.CharField(max_length=20, choices=RECIPE_TYPE_CHOICES, default='Unknown',
-                                   help_text="The category for this recipe")
+                                   help_text='The category for this recipe')
 
-    directions = models.TextField(help_text="A free-form set of text instructions for making this recipe", null=True)
+    directions = models.TextField(help_text='A free-form set of text instructions for making this recipe', null=True)
 
-    creator = models.ForeignKey(User, related_name="recipes",
-                                help_text="The user who created this recipe instance", null=True)
+    creator = models.ForeignKey(User, related_name='recipes',
+                                help_text='The user who created this recipe instance', null=True)
 
     def __str__(self):
         """

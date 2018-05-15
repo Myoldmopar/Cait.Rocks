@@ -2,42 +2,62 @@
 {% block title %}Cait.Rocks Monthly Planning!{% endblock %}
 {% block content %}
 
-    <div class="form-group recipe-input-container">
-        <h1>Select a Month </h1>
-        <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars" class="form-control input-sm"
-                ng-change="get_month_data()"></select>
+    <div>
+        <h1 style="display:inline-block;">
+            {[{ selectedCalendar.nickname }]}
+        </h1>
+        <button class="btn btn-primary recipe-input-container" type="button" data-toggle="collapse" style="float:right;"
+                data-target="#collapseManageMonths"
+                aria-expanded="false" aria-controls="collapseExample">
+            Manage Months
+        </button>
     </div>
 
-    <form class="form-group row" ng-submit="add_calendar()">
-        <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="calendar_name" placeholder="New Calendar Nickname">
+    <div class="collapse recipe-input-container" id="collapseManageMonths">
+        <div class="card card-body" style="padding:10px">
+            <div class="input-group" style="margin-bottom:0;">
+                <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars"
+                        class="form-control input-sm"
+                        style="margin-bottom:10px;"
+                        ng-change="get_month_data()">
+                </select>
+                <span class="input-group-btn" style="padding-left:15px;">
+                    <button class="btn btn-danger form-control" type="submit" ng-click="remove_calendar()">¡Delete Current Month!</button>
+                </span>
+            </div>
+            <form class="form-group row" style="margin-bottom:0px;" ng-submit="add_calendar()">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" ng-model="calendar_name"
+                           placeholder="New Calendar Nickname">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" ng-model="calendar_year" placeholder="New Calendar Year">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" ng-model="calendar_month" placeholder="New Calendar Month">
+                </div>
+                <div class="col-md-3">
+                    <input class="btn btn-primary form-control" type="submit" value="Add New Month">
+                </div>
+            </form>
         </div>
-        <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="calendar_year" placeholder="New Calendar Year">
-        </div>
-        <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="calendar_month" placeholder="New Calendar Month">
-        </div>
-        <div class="col-md-3">
-            <input class="btn btn-primary form-control" type="submit" value="Add New Month">
-        </div>
-    </form>
-
-    <h1>{[{ selectedCalendar.nickname }]}</h1>
+    </div>
 
     <table class="table table-bordered" style="table-layout: fixed;">
         <tr>
-            <th ng-repeat="day in days_of_week">
+            <th ng-repeat="day in days_of_week" style="padding:4px;text-align:center;border:1px solid black">
                 {[{ day }]}
             </th>
         </tr>
         <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
             ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
-            <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
+            <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]"
+                style="padding:4px;background-color:#f2f2f2;border:1px solid black">
                 <div>
-                    <p>{[{ month.data[week_num][day_of_week].date_number }]}</p>
+                    <p style="margin-bottom:4px;">{[{ month.data[week_num][day_of_week].date_number }]}</p>
                     <div class="form-group"
-                         ng-show="month.data[week_num][day_of_week].date_number !== '-'">
+                         ng-show="month.data[week_num][day_of_week].date_number !== '-'"
+                         style="margin-bottom:4px;">
                         <div class="input-group input-group-sm recipe-input-container" ng-repeat="recipe_num in [0, 1]">
                             <select
                                     id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"

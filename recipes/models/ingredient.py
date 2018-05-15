@@ -44,56 +44,56 @@ class MeasurementType(object):
 
 
 class Ingredient(models.Model):
-    """
+    '''
     This class describes a single ingredient, including amount, measurement, and item description
-    """
+    '''
     AMOUNT_TYPE_CHOICES = (
-        (AmountType.NONE, ""),
-        (AmountType.ONE_EIGHTH, "⅛"),
-        (AmountType.ONE_QUARTER, "	¼"),
-        (AmountType.ONE_THIRD, "⅓"),
-        (AmountType.ONE_HALF, "½"),
-        (AmountType.TWO_THIRDS, "⅔"),
-        (AmountType.THREE_QUARTER, "¾"),
-        (AmountType.ONE, "1"),
-        (AmountType.ONE_ONE_HALF, "1 ½"),
-        (AmountType.TWO, "2"),
-        (AmountType.THREE, "3"),
-        (AmountType.FOUR, "4"),
-        (AmountType.FIVE, "5"),
-        (AmountType.SIX, "6"),
-        (AmountType.SEVEN, "7"),
-        (AmountType.EIGHT, "8"),
-        (AmountType.NINE, "9"),
-        (AmountType.TEN, "10"),
-        (AmountType.FIFTEEN, "15"),
-        (AmountType.TWENTY, "20"),
+        (AmountType.NONE, ''),
+        (AmountType.ONE_EIGHTH, '⅛'),
+        (AmountType.ONE_QUARTER, '	¼'),
+        (AmountType.ONE_THIRD, '⅓'),
+        (AmountType.ONE_HALF, '½'),
+        (AmountType.TWO_THIRDS, '⅔'),
+        (AmountType.THREE_QUARTER, '¾'),
+        (AmountType.ONE, '1'),
+        (AmountType.ONE_ONE_HALF, '1 ½'),
+        (AmountType.TWO, '2'),
+        (AmountType.THREE, '3'),
+        (AmountType.FOUR, '4'),
+        (AmountType.FIVE, '5'),
+        (AmountType.SIX, '6'),
+        (AmountType.SEVEN, '7'),
+        (AmountType.EIGHT, '8'),
+        (AmountType.NINE, '9'),
+        (AmountType.TEN, '10'),
+        (AmountType.FIFTEEN, '15'),
+        (AmountType.TWENTY, '20'),
     )
     amount = models.CharField(max_length=5, choices=AMOUNT_TYPE_CHOICES, default='',
-                              help_text="The numeric part of the amount of this ingredient")
+                              help_text='The numeric part of the amount of this ingredient')
 
     MEASUREMENT_TYPE_CHOICES = (
-        (MeasurementType.NONE, ""),
-        (MeasurementType.PINCH, "Pinch"),
-        (MeasurementType.TEASPOON, "tsp"),
-        (MeasurementType.TABLESPOON, "Tbsp"),
-        (MeasurementType.CUP, "c"),
-        (MeasurementType.PINT, "pint"),
-        (MeasurementType.QUART, "qt"),
-        (MeasurementType.LITER, "liter"),
-        (MeasurementType.GALLON, "gallon"),
-        (MeasurementType.OUNCE, "oz"),
-        (MeasurementType.POUND, "lb"),
+        (MeasurementType.NONE, ''),
+        (MeasurementType.PINCH, 'Pinch'),
+        (MeasurementType.TEASPOON, 'tsp'),
+        (MeasurementType.TABLESPOON, 'Tbsp'),
+        (MeasurementType.CUP, 'c'),
+        (MeasurementType.PINT, 'pint'),
+        (MeasurementType.QUART, 'qt'),
+        (MeasurementType.LITER, 'liter'),
+        (MeasurementType.GALLON, 'gallon'),
+        (MeasurementType.OUNCE, 'oz'),
+        (MeasurementType.POUND, 'lb'),
     )
     measurement = models.CharField(max_length=25, choices=MEASUREMENT_TYPE_CHOICES, default='',
-                                   help_text="The measurement portion of this ingredient")
+                                   help_text='The measurement portion of this ingredient')
 
     item_description = models.CharField(max_length=200, blank=True, default='',
-                                        help_text="A description of this ingredient, Can include amount "
-                                                  "if the portion does not fit in the prescribed parameters")
+                                        help_text='A description of this ingredient, Can include amount '
+                                                  'if the portion does not fit in the prescribed parameters')
 
-    recipe = models.ForeignKey(Recipe, related_name="ingredients",
-                               help_text="A pointer to an existing recipe to link them together", null=True)
+    recipe = models.ForeignKey(Recipe, related_name='ingredients',
+                               help_text='A pointer to an existing recipe to link them together', null=True)
 
     def __unicode__(self):
         """

@@ -30,9 +30,9 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_creator(self, recipe_instance):
         if not recipe_instance.creator:
-            return ""
+            return ''
         try:
             c = User.objects.get(pk=recipe_instance.creator.pk)
-            return "%s %s" % (c.first_name, c.last_name)
+            return '%s %s' % (c.first_name, c.last_name)
         except User.DoesNotExist:
-            return ""
+            return ''

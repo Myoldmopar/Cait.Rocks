@@ -19,7 +19,7 @@ def server_version_data(request):
         # git_sha = git_sha[0:10]
     except CalledProcessError:  # pragma: no cover
         # This would be crazy to try to test...
-        git_sha = '<Could not get current git sha, are we not running from a repo?>'
+        git_sha = '<Could not get current git sha, does this server not have Git?>'
 
     # get a flag for whether there are local uncommitted changes
     working_dir_clean_message = 'Clean'
@@ -29,7 +29,7 @@ def server_version_data(request):
             working_dir_clean_message = 'Local uncommitted changes!'
     except CalledProcessError:  # pragma: no cover
         # This would be crazy to try to test...
-        working_dir_clean_message = '<Could not check working directory cleanliness, are we not running from a repo?>'
+        working_dir_clean_message = '<Could not check working directory cleanliness, does this server not have Git?>'
 
     return render(
         request,

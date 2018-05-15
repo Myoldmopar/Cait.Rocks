@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if [ -z ${TRAVIS+x} ]; then
-    # Travis is not set, npm install should already have been done on this development machine, just run tests
+    # Travis is not set, yarn install should already have been done on this development machine, just run tests
     export DISPLAY=:0
-    yarn test -- --browsers Chrome,Firefox  # I'm assuming we have Chrome and Firefox locally, test both!
+    yarn test -- --browsers Chrome  # Firefox was really slow and always had the same results as Chrome
     exit $?
 else
     # Travis is set, need to set up the headless stuff, make sure we install npm dependencies, and then run tests

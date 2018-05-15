@@ -6,7 +6,7 @@
         <h1>{{ recipe.title }}</h1>
 
         <h2>Ingredients</h2>
-        <ul class="list-group">
+        <ul class="list-group" id="ingredientList">
             {% for ingredient in ingredients %}
                 <li class="list-group-item">{{ ingredient }}</li>
             {% endfor %}

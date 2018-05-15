@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from bs4 import BeautifulSoup
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
@@ -36,6 +37,14 @@ class TestHome(TestCase):
         url_path = reverse('home')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_html_response(self):
+        response = self.client.get('/')
+        html_response_content = response.content
+        soup = BeautifulSoup(html_response_content, 'html.parser')
+        welcome_tag = soup.find_all(id='welcome')[0]
+        welcome_string = welcome_tag.contents[0]
+        self.assertEqual(u'Welcome!', welcome_string)
 
 
 class TestAbout(TestCase):

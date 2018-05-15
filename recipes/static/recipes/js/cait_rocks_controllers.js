@@ -137,7 +137,7 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         )
     };
 
-    $scope.delete_calendar = function () {
+    $scope.remove_calendar = function () {
         // check to make sure a calendar is selected
         if (!$scope.selectedCalendar) {
             return;
@@ -152,7 +152,6 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         } else {
             // nothing should happen
         }
-        // console.log("I would be trying to delete calendar: ", $scope.selectedCalendar);
     };
 
     // some hardcoded values

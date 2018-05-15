@@ -118,8 +118,8 @@ describe("caitRockController Testing Suite", function () {
         $scope.$digest();
         expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalled();
         expect(mockCalendarService.update_calendar_recipe_id).toHaveBeenCalledWith(1, 2, 0, 0);
-        console.log($scope.month.data);
-        //expect($scope.month.data[0][1].recipe0).toBeNull();  // TODO: Better testing here; also test actual DOM events like dropdown selections
+        // console.log($scope.month.data);
+        // expect($scope.month.data[0][1].recipe0).toBeNull();  // TODO: Better testing here; also test actual DOM events like dropdown selections
     });
 
     it("should add a new calendar based on $scope variables which are usually models on user inputs", function () {
@@ -129,28 +129,31 @@ describe("caitRockController Testing Suite", function () {
         $scope.calendar_month = 5;
         $scope.calendar_name = "Hey";
         $scope.add_calendar();
+        $scope.$digest();
         expect(mockCalendarService.post_calendar).toHaveBeenCalled();
         expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, "Hey");
     });
 
     it("should try to delete the current calendar but it doesn't exist", function () {
         $scope.selectedCalendar = null;
-        $scope.selectedCalendar = {nickname: 'Jo month', year: 2017, month: 3};
-        $scope.delete_calendar();
+        $scope.remove_calendar();
+        $scope.$digest();
     });
 
     it("should try to delete the current calendar but get negative confirmation", function () {
         spyOn(mockCalendarService, 'confirm_calendar_delete').and.returnValue(false);
         $scope.selectedCalendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
-        $scope.delete_calendar();
+        $scope.remove_calendar();
         expect(mockCalendarService.confirm_calendar_delete).toHaveBeenCalled();
     });
 
     it("should delete the current calendar", function () {
         spyOn(mockCalendarService, 'confirm_calendar_delete').and.returnValue(true);
         spyOn(mockCalendarService, 'delete_calendar').and.returnValue($scope.$q.when({}));
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
         $scope.selectedCalendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
-        $scope.delete_calendar();
+        $scope.remove_calendar();
+        $scope.$digest();
         expect(mockCalendarService.confirm_calendar_delete).toHaveBeenCalled();
         expect(mockCalendarService.delete_calendar).toHaveBeenCalled();
         expect(mockCalendarService.delete_calendar).toHaveBeenCalledWith(1);

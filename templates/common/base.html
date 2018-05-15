@@ -34,9 +34,10 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'planner:planner-list' %}">Planner</a></li>
+                    <li><a href="{% url 'planner:planner-list' %}">Planning Tool</a></li>
                     <li><a href="{% url 'planner:recipe_views-list' %}">Recipes</a></li>
-                    <li><a href="{% url 'planner:months-list' %}">Months</a></li>
+                    <li><a href="{% url 'planner:months-list' %}">Monthly Plans</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     {% if not request.user.is_authenticated %}
@@ -63,9 +64,6 @@
 <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'angular/angular.min.js' %}"></script>
-<script src="{% static 'angular-animate/angular-animate.min.js' %}"></script>
-<script src="{% static 'angular-strap/dist/angular-strap.min.js' %}"></script>
-<script src="{% static 'angular-strap/dist/angular-strap.tpl.min.js' %}"></script>
 {% block extra_js %}{% endblock %}
 
 </body>

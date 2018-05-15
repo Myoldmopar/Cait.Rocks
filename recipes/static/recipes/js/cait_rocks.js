@@ -1,2 +1,2 @@
-angular.module('caitRocksApp', ['ngAnimate', 'mgcrea.ngStrap']);
+angular.module('caitRocksApp', []);
 

@@ -26,6 +26,34 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         else:
             return None
 
+    @staticmethod
+    def _get_calendar_by_pk(pk):
+        try:
+            c = Calendar.objects.get(pk=pk)
+            return {'success': True, 'calendar': c}
+        except Calendar.DoesNotExist:
+            return_body = JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot find calendar with pk=%s' % pk},
+                status=status.HTTP_404_NOT_FOUND
+            )
+            return {'success': False, 'response': return_body}
+
+    @staticmethod
+    def _get_recipe_by_pk(pk):
+        try:
+            r = Recipe.objects.get(pk=pk)
+            return {'success': True, 'recipe': r}
+        except Recipe.DoesNotExist:
+            return_body = JsonResponse(
+                {
+                    'success': False,
+                    'message': 'Cannot find recipe with pk=%s' % pk},
+                status=status.HTTP_404_NOT_FOUND
+            )
+            return {'success': False, 'response': return_body}
+
     @action(methods=['get'], detail=True)
     def monthly_data(self, request, pk):
         """
@@ -40,15 +68,10 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         belong in the current month.  The recipe0 and recipe1 keys are ids to recipe objects in the database.  The
         recipe0title and recipe1title keys are simply the recipe titles for convenience.
         """
-        try:
-            c = Calendar.objects.get(pk=pk)
-        except Calendar.DoesNotExist:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        data = self._get_calendar_by_pk(pk)
+        if not data['success']:
+            return data['response']
+        c = data['calendar']
         dates = c.get_monthly_data()
         weekly_data = []
         for week_num, week_dates in enumerate(dates):
@@ -81,7 +104,7 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
             if required_key not in request.data:
                 return JsonResponse({
-                    'success': False,  # TODO: Remove success from everywhere, maybe this will lead to serialization
+                    'success': False,
                     'message': 'Missing %s key in recipe_id body' % required_key
                 }, status=status.HTTP_400_BAD_REQUEST)
             try:
@@ -99,48 +122,27 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         if recipe_id == 0:
             recipe_to_assign = None
         else:
-            try:
-                recipe_to_assign = Recipe.objects.get(pk=recipe_id)
-            except Recipe.DoesNotExist:
-                return JsonResponse(
-                    {
-                        'success': False,
-                        'message': 'Cannot find recipe with pk=%s' % recipe_id},
-                    status=status.HTTP_404_NOT_FOUND
-                )
-        try:
-            calendar_to_modify = Calendar.objects.get(pk=pk)
-        except Calendar.DoesNotExist:
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot find calendar with pk=%s' % pk},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            recipe_query = self._get_recipe_by_pk(recipe_id)
+            if not recipe_query['success']:
+                return recipe_query['response']
+            recipe_to_assign = recipe_query['recipe']
+        calendar_query = self._get_calendar_by_pk(pk)
+        if not calendar_query['success']:
+            return calendar_query['response']
+        calendar_to_modify = calendar_query['calendar']
 
-        # Now get a two-digit date number so we can lookup a member variable, ...
+        # Now get a two-digit date number so we can lookup a member variable, and set that variable using Python voodoo
         day_string = '%02d' % date_num
         variable_name = 'day{0}recipe{1}'.format(day_string, day_recipe_num)
-        # ... and then set that variable using sweet python voodoo
         if not hasattr(calendar_to_modify, variable_name):
-            return JsonResponse(
-                {
-                    'success': False,
-                    'message': 'Cannot locate field %s, maybe date is out of range?' % variable_name
-                },
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return JsonResponse({
+                'success': False,
+                'message': 'Cannot locate field %s, maybe date is out of range?' % variable_name
+            }, status=status.HTTP_400_BAD_REQUEST)
         setattr(calendar_to_modify, variable_name, recipe_to_assign)
-        # save the calendar
         calendar_to_modify.save()
-        # and return successfully
         if recipe_id == 0:
             message = 'Cleared recipe for %s' % variable_name
         else:
             message = 'Set {0} to {1}'.format(variable_name, recipe_to_assign.title)
-        return JsonResponse(
-            {
-                'success': True,
-                'message': message
-            }
-        )
+        return JsonResponse({'success': True, 'message': message})

@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'ubuntu-font/ubuntu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ubuntu-fontface/ubuntu.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
     {% block extra_css %}{% endblock %}
 
@@ -20,40 +20,52 @@
 <body style="font-family: Ubuntu, sans-serif;" {% block body_ng_declarations %}{% endblock %}>
 
 {% block navbar %}
-    <nav class="navbar navbar-default" style="border-radius: 0;">
-        <a class="navbar-brand" href="{% url 'home' %}">
-            <b>Cait.Rocks</b>
-        </a>
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="{% url 'planner:planner-list' %}">Planning Tool</a></li>
-                    <li><a href="{% url 'planner:recipe_views-list' %}">Recipes</a></li>
-                    <li><a href="{% url 'planner:months-list' %}">Monthly Plans</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav pull-right">
-                    {% if not request.user.is_authenticated %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                    {% else %}
-                        <li><a href="{% url 'admin:index' %}">Administration</a></li>
-                        <li><a href="{% url 'planner:swagger' %}">API</a></li>
-                        <li><a href="{% url 'logout' %}">Logout-{{ user.username }}</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" style="border-radius: 0;">
+        <h1 class="navbar-brand mb-0">
+            <a class="navbar-brand" href="{% url 'home' %}">Cait.Rocks</a>
+        </h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar"
+                aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'planner:planner-list' %}">PlanningTool</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'planner:recipe_views-list' %}">Recipes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'planner:months-list' %}">MonthlyPlans</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'planner:swagger' %}">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout-{{ user.username }}</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 {% endblock %}
 
-<div class="container-fluid">
+<div class="container-fluid" id="mainBodyContainer">
     <div class="row-fluid">
         <div class="col-12">
             {% block content %}{% endblock %}

@@ -10,3 +10,5 @@
 .recipe-clear-button {
     width: auto;
 }
+
+#mainBodyContainer { padding-top: 30px; }

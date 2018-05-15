@@ -21,7 +21,7 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     @staticmethod
     def _get_recipe_data_or_none(date_data, recipe_string):
         if date_data[recipe_string]:
-            recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
+            recipe_serializer = RecipeSerializer(instance=date_data[recipe_string])
             return recipe_serializer.data
         else:
             return None

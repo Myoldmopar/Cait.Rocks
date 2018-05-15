@@ -76,6 +76,24 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
             weekly_data.append(daily_data)
         return JsonResponse({'num_weeks': len(dates), 'data': weekly_data})
 
+    @staticmethod
+    def _validate_recipe_id_request_body(request_data):
+        # Validate body first
+        for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
+            if required_key not in request_data:
+                return {'success': False, 'response': JsonResponse({
+                    'success': False,
+                    'message': 'Missing %s key in recipe_id body' % required_key
+                }, status=status.HTTP_400_BAD_REQUEST)}
+            try:
+                int(request_data[required_key])
+            except (ValueError, TypeError):
+                return {'success': False, 'response': JsonResponse({
+                    'success': False,
+                    'message': 'Could not convert %s to float; value: %s' % (required_key, request_data[required_key])
+                }, status=status.HTTP_400_BAD_REQUEST)}
+        return {'success': True}
+
     @action(methods=['put'], detail=True)
     def recipe_id(self, request, pk):
         """
@@ -86,20 +104,9 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         :param pk: The primary key of the calendar to modify
         :return: A JSONResponse object with keys success and message.  The status code will also be set accordingly
         """
-        # Validate body first
-        for required_key in ['date_num', 'daily_recipe_id', 'recipe_pk']:
-            if required_key not in request.data:
-                return JsonResponse({
-                    'success': False,
-                    'message': 'Missing %s key in recipe_id body' % required_key
-                }, status=status.HTTP_400_BAD_REQUEST)
-            try:
-                int(request.data[required_key])
-            except (ValueError, TypeError):
-                return JsonResponse({
-                    'success': False,
-                    'message': 'Could not convert %s to float; value: %s' % (required_key, request.data[required_key])
-                }, status=status.HTTP_400_BAD_REQUEST)
+        validate_query = self._validate_recipe_id_request_body(request.data)
+        if not validate_query['success']:
+            return validate_query['response']
         date_num = int(request.data['date_num'])
         day_recipe_num = int(request.data['daily_recipe_id'])
         recipe_id = int(request.data['recipe_pk'])

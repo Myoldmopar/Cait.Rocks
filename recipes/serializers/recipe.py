@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from recipes.models.recipe import Recipe
+from recipes.serializers.utilities import get_creator_from_object
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -29,10 +29,4 @@ class RecipeSerializer(serializers.ModelSerializer):
         return recipe_instance.get_absolute_url()
 
     def get_creator(self, recipe_instance):
-        if not recipe_instance.creator:
-            return ''
-        try:
-            c = User.objects.get(pk=recipe_instance.creator.pk)
-            return '%s %s' % (c.first_name, c.last_name)
-        except User.DoesNotExist:
-            return ''
+        return get_creator_from_object(recipe_instance)

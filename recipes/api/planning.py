@@ -18,6 +18,14 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
+    @staticmethod
+    def _get_recipe_data_or_none(date_data, recipe_string):
+        if date_data[recipe_string]:
+            recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
+            return recipe_serializer.data
+        else:
+            return None
+
     @action(methods=['get'], detail=True)
     def monthly_data(self, request, pk):
         """
@@ -49,21 +57,11 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
                 date_number = '-'
                 if date_data['date_number'] > 0:
                     date_number = date_data['date_number']
-                if date_data['recipe0']:
-                    recipe_serializer = RecipeSerializer(instance=date_data['recipe0'])
-                    recipe0 = recipe_serializer.data
-                else:
-                    recipe0 = None
-                if date_data['recipe1']:
-                    recipe_serializer = RecipeSerializer(instance=date_data['recipe1'])
-                    recipe1 = recipe_serializer.data
-                else:
-                    recipe1 = None
                 daily_data.append(
                     {
                         'date_number': date_number,
-                        'recipe0': recipe0,
-                        'recipe1': recipe1,
+                        'recipe0': self._get_recipe_data_or_none(date_data, 'recipe0'),
+                        'recipe1': self._get_recipe_data_or_none(date_data, 'recipe1'),
                     }
                 )
             weekly_data.append(daily_data)

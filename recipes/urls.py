@@ -6,6 +6,7 @@ from rest_framework_swagger.views import get_swagger_view
 from recipes.api.ingredient import IngredientViewSet
 from recipes.api.planning import CalendarViewSet
 from recipes.api.recipe import RecipeViewSet
+from recipes.api.users import UserViewSet
 from recipes.views.planning_pages import MonthViewSet, PlannerViewSet
 from recipes.views.recipe_pages import RecipeViewSet as RecipePageViewSet
 
@@ -17,6 +18,7 @@ api_router = DefaultRouter()
 api_router.register(r'ingredients', IngredientViewSet)
 api_router.register(r'recipes', RecipeViewSet)
 api_router.register(r'calendars', CalendarViewSet)
+api_router.register(r'users', UserViewSet, base_name='users')
 
 # Create a set of urlpatterns that only include the API
 api_urlpatterns = [url(r'^api/', include(api_router.urls, namespace="api")), ]

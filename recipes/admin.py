@@ -27,7 +27,7 @@ class IngredientInline(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
     inlines = [IngredientInline]
-    list_display = ('title', 'recipe_type', 'creator')
+    list_display = ('title', 'recipe_type', 'creator', 'created_date', 'modified_date')
     search_fields = ('title',)
 
 

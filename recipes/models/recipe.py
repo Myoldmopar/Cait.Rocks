@@ -40,6 +40,9 @@ class Recipe(models.Model):
     creator = models.ForeignKey(User, related_name='recipes',
                                 help_text='The user who created this recipe instance', null=True)
 
+    created_date = models.DateTimeField(auto_now_add=True, help_text='The creation date for this recipe object')
+    modified_date = models.DateTimeField(auto_now=True, help_text='The last modified date for this recipe object')
+
     def __str__(self):
         """
         Creates a meaningful string for this object instance

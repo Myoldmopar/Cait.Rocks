@@ -132,8 +132,12 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         // TODO: Validate the year/month, make the HTML inputs a choice field
         var this_month = $scope.calendar_month;
         var this_name = $scope.calendar_name;
-        calendar_service.post_calendar(this_year, this_month, this_name).then(
-            $scope.get_calendars
+        calendar_service.get_current_user().then(
+            function (response) {
+                calendar_service.post_calendar(this_year, this_month, this_name, response.data.id).then(
+                    $scope.get_calendars
+                )
+            }
         )
     };
 
@@ -142,7 +146,7 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         if (!$scope.selectedCalendar) {
             return;
         }
-        if(calendar_service.confirm_calendar_delete()) {
+        if (calendar_service.confirm_calendar_delete()) {
             calendar_service.delete_calendar($scope.selectedCalendar.id).then(
                 function (response) {
                     $scope.selectedCalendar = null;

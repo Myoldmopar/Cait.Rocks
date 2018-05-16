@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
@@ -45,10 +46,14 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['nickname'], description)
 
-    def test_post_fails(self):
+    def test_post_succeeds(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
         url_path = reverse('planner:api:calendar-list')
-        response = self.client.post(url_path, data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
-                                    content_type='application/json')
+        response = self.client.post(
+            url_path,
+            data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4, 'creator_id': 1}),
+            content_type='application/json'
+        )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         data = response.json()
         self.assertEqual(data['nickname'], 'new_name')
@@ -73,7 +78,6 @@ class TestPlanningAPIMethods(TestCase):
 
 
 class TestPlanningAPIMonthlyDatesView(TestCase):
-
     def test_no_calendar(self):
         url_path = reverse('planner:api:calendar-monthly-data', args=[1])
         response = self.client.get(url_path)
@@ -98,7 +102,6 @@ class TestPlanningAPIMonthlyDatesView(TestCase):
 
 
 class TestPlanningAPIRecipeIDView(TestCase):
-
     def test_recipe_id_fails_for_logged_out(self):
         Calendar.objects.create(year=2018, month=5)
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])

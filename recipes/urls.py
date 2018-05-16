@@ -17,7 +17,7 @@ app_name = 'planner'
 api_router = DefaultRouter()
 api_router.register(r'ingredients', IngredientViewSet)
 api_router.register(r'recipes', RecipeViewSet)
-api_router.register(r'calendars', CalendarViewSet, base_name='calendars')
+api_router.register(r'calendars', CalendarViewSet, base_name='calendar')
 api_router.register(r'users', UserViewSet, base_name='users')
 
 # Create a set of urlpatterns that only include the API

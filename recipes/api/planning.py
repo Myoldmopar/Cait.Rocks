@@ -29,7 +29,7 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         calendar_serializer.is_valid(raise_exception=True)
         calendar_instance = Calendar.objects.create(**request.data)
         calendar_serializer = CalendarSerializer(calendar_instance)
-        return JsonResponse(calendar_serializer.data)
+        return JsonResponse(calendar_serializer.data, status=status.HTTP_201_CREATED)
 
     @staticmethod
     def _get_recipe_data_or_none(date_data, recipe_string):

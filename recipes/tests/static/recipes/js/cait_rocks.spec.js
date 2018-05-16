@@ -124,14 +124,15 @@ describe('caitRockController Testing Suite', function () {
 
     it('should add a new calendar based on $scope variables which are usually models on user inputs', function () {
         spyOn(mockCalendarService, 'post_calendar').and.returnValue($scope.$q.when({}));
-        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({data: []}));
+        spyOn(mockCalendarService, 'get_current_user').and.returnValue($scope.$q.when({data: {id: 1}}));
         $scope.calendar_year = 2018;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'Hey';
         $scope.add_calendar();
         $scope.$digest();
         expect(mockCalendarService.post_calendar).toHaveBeenCalled();
-        expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey');
+        expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey', 1);
     });
 
     it('should try to delete the current calendar but it doesn\'t exist', function () {
@@ -347,6 +348,13 @@ describe('calendarService Testing Suite', function () {
         httpBackend.when('DELETE', '/planner/api/calendars/1/').respond('deleted');
         calendarService.delete_calendar(1).then(function (response) {
             expect(response.data).toEqual('deleted');
+        });
+        httpBackend.flush();
+    });
+    it('should get the current user id and return exactly what comes back from api on data member', function () {
+        httpBackend.when('GET', '/planner/api/users/current_user_id/').respond({data:'hi'});
+        calendarService.get_current_user().then(function (response) {
+            expect(response.data).toEqual({data: 'hi'});
         });
         httpBackend.flush();
     });

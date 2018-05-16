@@ -7,8 +7,16 @@ from recipes.models.ingredient import Ingredient
 from recipes.models.planning import Calendar
 from recipes.models.recipe import Recipe
 
-admin.site.register(Calendar)
+
 admin.site.register(Ingredient)
+
+
+class CalendarAdmin(admin.ModelAdmin):
+    model = Calendar
+    list_display = ('nickname', 'creator')
+
+
+admin.site.register(Calendar, CalendarAdmin)
 
 
 class IngredientInline(admin.TabularInline):
@@ -19,7 +27,7 @@ class IngredientInline(admin.TabularInline):
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
     inlines = [IngredientInline]
-    list_display = ('title', 'recipe_type')
+    list_display = ('title', 'recipe_type', 'creator')
     search_fields = ('title',)
 
 

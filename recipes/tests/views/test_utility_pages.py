@@ -63,3 +63,37 @@ class TestAbout(TestCase):
         url_path = reverse('about')
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestHumans(TestCase):
+    def test_url_path(self):
+        """
+        Test the path directly
+        """
+        response = self.client.get('/humans.txt')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_reversed_path(self):
+        """
+        Rely on the url reversing
+        """
+        url_path = reverse('humans_file')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestRobots(TestCase):
+    def test_url_path(self):
+        """
+        Test the path directly
+        """
+        response = self.client.get('/robots.txt')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_reversed_path(self):
+        """
+        Rely on the url reversing
+        """
+        url_path = reverse('robots_file')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

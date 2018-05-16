@@ -18,7 +18,7 @@ app.service('calendarService', ['$http', function ($http) {
     this.post_calendar = function (year, month, name, user_id) {
         return $http.post(
             '/planner/api/calendars/',
-            {'nickname': name, 'year': year, 'month': month, 'creator': user_id}
+            {'nickname': name, 'year': year, 'month': month, 'creator_id': user_id}
         )
     };
     this.confirm_calendar_delete = function () {

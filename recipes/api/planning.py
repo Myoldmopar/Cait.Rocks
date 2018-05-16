@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -17,6 +18,15 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     """
     queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
+
+    def create(self, request, *args, **kwargs):
+        user_to_assign = User.objects.get(pk=request.data['creator_id'])
+        request.data['creator'] = user_to_assign
+        calendar_serializer = CalendarSerializer(data=request.data)
+        calendar_serializer.is_valid(raise_exception=True)
+        calendar_instance = Calendar.objects.create(**request.data)
+        calendar_serializer = CalendarSerializer(calendar_instance)
+        return JsonResponse(calendar_serializer.data)
 
     @staticmethod
     def _get_recipe_data_or_none(date_data, recipe_string):

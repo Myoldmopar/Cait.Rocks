@@ -1,0 +1,7 @@
+/* TEAM */
+Your title: Lee Family
+Site: github.com/myoldmopar
+Location: Oklahoma, USA, Earth, Solar System, Milky Way
+
+/* SITE */
+Components: Python, Django, Angular, Bootstrap

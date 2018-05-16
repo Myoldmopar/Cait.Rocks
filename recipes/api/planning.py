@@ -16,8 +16,11 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     - monthly_data, which is used to get the bulk data for a whole month
     - recipe_id, which is used to put the id onto a
     """
-    queryset = Calendar.objects.all()
+    # queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
+
+    def get_queryset(self):
+        return Calendar.objects.filter(creator=self.request.user.id)
 
     def create(self, request, *args, **kwargs):
         user_to_assign = User.objects.get(pk=request.data['creator_id'])

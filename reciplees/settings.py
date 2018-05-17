@@ -145,5 +145,3 @@ DATABASES['default'].update(db_from_env)
 # Upon logging in, redirect to where?
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'planner:planner-list'
-
-STATICFILES_STORAGE = 'recipes.other.NonStrictCompressedManifestStaticFilesStorage'

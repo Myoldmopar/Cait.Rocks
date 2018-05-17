@@ -10,10 +10,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for recipe in Recipe.objects.all():
-            this_recipe_is_smart = True
+            this_recipe_is_smart = False
             for ingredient in recipe.ingredients.all():
-                if ingredient.amount == AmountType.NONE and ingredient.measurement == MeasurementType.NONE:
-                    this_recipe_is_smart = False
+                if ingredient.amount != AmountType.NONE or ingredient.measurement != MeasurementType.NONE:
+                    this_recipe_is_smart = True
                     break
             if not this_recipe_is_smart:
                 print("Found dumb recipe: %s" % recipe.title)

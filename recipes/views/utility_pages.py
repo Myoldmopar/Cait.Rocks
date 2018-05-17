@@ -20,9 +20,9 @@ def server_version_data(request):
 
     # get the current Git sha
     try:
-        git_sha = check_output(['git', 'rev-parse', 'HEAD']).strip()
+        git_sha = check_output(['git', 'rev-parse', 'HEAD']).decode("utf-8").strip()
         git_sha_found = True
-        local_diff_status = check_output(['git', 'status', '--porcelain'])
+        local_diff_status = check_output(['git', 'status', '--porcelain']).decode("utf-8")
         if local_diff_status != u'':  # pragma: no cover
             working_dir_clean = False
     except CalledProcessError:  # pragma: no cover -- Something failed, try getting it from the ENV...

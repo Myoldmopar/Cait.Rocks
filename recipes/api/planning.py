@@ -24,7 +24,10 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     def create(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return JsonResponse(
-                {'status': 'failed', 'message': 'Must be logged in to create calendar!'},
+                {
+                    'status': 'failed',
+                    'message': 'Must be logged in to create calendar!'
+                },
                 status=status.HTTP_403_FORBIDDEN
             )
         request.data['creator'] = request.user

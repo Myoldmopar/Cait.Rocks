@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'ubuntu-fontface/ubuntu.css' %}">
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
     <style>
         #mainBodyContainer { padding-top: 15px; }
@@ -20,7 +19,7 @@
 
 </head>
 
-<body style="font-family: Ubuntu, sans-serif;" {% block body_ng_declarations %}{% endblock %}>
+<body style="font-family: Arial,sans-serif;" {% block body_ng_declarations %}{% endblock %}>
 
 {% block navbar %}
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" style="border-radius: 0;">

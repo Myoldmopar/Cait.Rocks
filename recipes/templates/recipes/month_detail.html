@@ -19,7 +19,7 @@
                         <div class="list-group"
                              ng-show="month.data[week_num][day_of_week].date_number !== '-'">
                             <a class="list-group-item list-group-item-action"
-                               style="text-align:center;margin-bottom:4px;"
+                               style="text-align:center;margin-bottom:4px;padding:0.25rem;"
                                ng-repeat="recipe_num in [0, 1]"
                                ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
                                href="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num].id + '/' }]}">

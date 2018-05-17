@@ -15,8 +15,24 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
     - monthly_data, which is used to get the bulk data for a whole month
     - recipe_id, which is used to put the id onto a
     """
-    queryset = Calendar.objects.all()
+    # queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
+
+    def get_queryset(self):
+        return Calendar.objects.filter(creator=self.request.user.id)
+
+    def create(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            return JsonResponse(
+                {'status': 'failed', 'message': 'Must be logged in to create calendar!'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        request.data['creator'] = request.user
+        calendar_serializer = CalendarSerializer(data=request.data)
+        calendar_serializer.is_valid(raise_exception=True)
+        calendar_instance = Calendar.objects.create(**request.data)
+        calendar_serializer = CalendarSerializer(calendar_instance)
+        return JsonResponse(calendar_serializer.data, status=status.HTTP_201_CREATED)
 
     @staticmethod
     def _get_recipe_data_or_none(date_data, recipe_string):

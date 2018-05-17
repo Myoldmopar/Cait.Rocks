@@ -14,36 +14,35 @@ def handle404(request):
 def server_version_data(request):
     # get the actual server version
     settings_version = settings.VERSION
+    git_sha = ''
+    git_sha_found = False
+    working_dir_clean = True
 
     # get the current Git sha
     try:
         git_sha = check_output(['git', 'rev-parse', 'HEAD']).strip()
-        # git_sha = git_sha[0:10]
-    except CalledProcessError:  # pragma: no cover -- This would be crazy to try to test...
-        if 'SOURCE_VERSION' in os.environ:
-            git_sha = os.environ['SOURCE_VERSION']
-        else:
-            git_sha = '<Could not get current git sha>'
-    except OSError:  # pragma: no cover -- This would be crazy to try to test...
-        git_sha = '<Could not get current git sha>'
-
-    # get a flag for whether there are local uncommitted changes
-    working_dir_clean_message = 'Clean'
-    try:
+        git_sha_found = True
         local_diff_status = check_output(['git', 'status', '--porcelain'])
         if local_diff_status != u'':  # pragma: no cover
-            working_dir_clean_message = 'Local uncommitted changes!'
-    except CalledProcessError:  # pragma: no cover -- This would be crazy to try to test...
-        working_dir_clean_message = 'Could not check working directory; we\'re probably deployed on a server, so clean'
-    except OSError:  # pragma: no cover -- This would be crazy to try to test...
-        working_dir_clean_message = 'Could not check working directory; we\'re probably deployed on a server, so clean'
+            working_dir_clean = False
+    except CalledProcessError:  # pragma: no cover -- Something failed, try getting it from the ENV...
+        if 'SOURCE_VERSION' in os.environ:
+            git_sha = os.environ['SOURCE_VERSION']
+            git_sha_found = True
+            # if this still didn't work, it will just remain False
+
+    if git_sha_found:
+        git_sha_message = git_sha
+        if not working_dir_clean:
+            git_sha_message += ' (Working directory dirty)'
+    else:
+        git_sha_message = 'Could not get any Git information'
 
     return render(
         request,
         'common/about.html',
         context={
             'version': settings_version,
-            'git_sha': git_sha,
-            'dirty_message': working_dir_clean_message,
+            'git_sha': git_sha_message
         }
     )

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -23,6 +22,11 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         return Calendar.objects.filter(creator=self.request.user.id)
 
     def create(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            return JsonResponse(
+                {'status': 'failed', 'message': 'Must be logged in to create calendar!'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         request.data['creator'] = request.user
         calendar_serializer = CalendarSerializer(data=request.data)
         calendar_serializer.is_valid(raise_exception=True)

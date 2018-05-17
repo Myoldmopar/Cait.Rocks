@@ -46,12 +46,13 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['nickname'], description)
 
-    def test_post_succeeds(self):
+    def test_post_succeeds_if_logged_in(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
         url_path = reverse('planner:api:calendar-list')
         response = self.client.post(
             url_path,
-            data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4, 'creator_id': 1}),
+            data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -59,6 +60,16 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(data['nickname'], 'new_name')
         self.assertEqual(data['year'], 2018)
         self.assertEqual(data['month'], 4)
+
+    def test_post_fails_if_not_logged_in(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        url_path = reverse('planner:api:calendar-list')
+        response = self.client.post(
+            url_path,
+            data=json.dumps({'nickname': 'new_name', 'year': 2018, 'month': 4}),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_put_fails(self):
         url_path = reverse('planner:api:calendar-detail', args=[1])

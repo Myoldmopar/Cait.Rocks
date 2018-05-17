@@ -23,8 +23,8 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         return Calendar.objects.filter(creator=self.request.user.id)
 
     def create(self, request, *args, **kwargs):
-        user_to_assign = User.objects.get(pk=request.data['creator_id'])
-        request.data['creator'] = user_to_assign
+        # user_to_assign = User.objects.get(pk=request.data['creator_id'])
+        request.data['creator'] = request.user
         calendar_serializer = CalendarSerializer(data=request.data)
         calendar_serializer.is_valid(raise_exception=True)
         calendar_instance = Calendar.objects.create(**request.data)

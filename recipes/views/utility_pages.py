@@ -31,7 +31,7 @@ def server_version_data(request):
             git_sha_found = True
             # if this still didn't work, it will just remain False
 
-    if git_sha_found:
+    if git_sha_found:  # pragma: no cover
         git_sha_message = git_sha
         if not working_dir_clean:
             git_sha_message += ' (Working directory dirty)'

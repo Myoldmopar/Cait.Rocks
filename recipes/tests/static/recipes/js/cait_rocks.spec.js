@@ -3,7 +3,6 @@ describe('caitRockController Testing Suite', function () {
 
     beforeEach(module('caitRocksApp'));
 
-    // Inject the real caitRockService
     beforeEach(inject(function ($controller, $rootScope, calendarService, recipeService, $httpBackend, $q) {
         $scope = $rootScope.$new();
         mockCalendarService = calendarService;
@@ -47,11 +46,26 @@ describe('caitRockController Testing Suite', function () {
     it('should initialize the controller using a specific list of method calls', function () {
         spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
         spyOn(mockRecipeService, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
-        $scope.controllerInitialize();
+        $scope.init_full();
         $scope.$digest();
         expect(mockRecipeService.get_recipes).toHaveBeenCalled();
         expect(mockCalendarService.get_calendars).toHaveBeenCalled();
         expect($scope.recipe_list).toEqual(['recipes']);
+    });
+
+    it('should initialize the controller just for recipes', function () {
+        spyOn(mockRecipeService, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        $scope.init_recipe_only();
+        $scope.$digest();
+        expect(mockRecipeService.get_recipes).toHaveBeenCalled();
+        expect($scope.recipe_list).toEqual(['recipes']);
+    });
+
+    it('should initialize the controller using a specific list of method calls', function () {
+        spyOn(mockCalendarService, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        $scope.init_calendar_only();
+        $scope.$digest();
+        expect(mockCalendarService.get_calendars).toHaveBeenCalled();
     });
 
     it('should get recipes through the recipe API service', function () {
@@ -133,6 +147,78 @@ describe('caitRockController Testing Suite', function () {
         $scope.$digest();
         expect(mockCalendarService.post_calendar).toHaveBeenCalled();
         expect(mockCalendarService.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey', 1);
+    });
+
+    it('should fail to add a calendar for bad years', function () {
+        // null year
+        $scope.clear_cal_error();
+        $scope.calendar_year = null;
+        $scope.calendar_month = 5;
+        $scope.calendar_name = 'name';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+        // year too low
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2015;
+        $scope.calendar_month = 5;
+        $scope.calendar_name = 'name';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+        // year too high
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2032;
+        $scope.calendar_month = 5;
+        $scope.calendar_name = 'name';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+    });
+
+    it('should fail to add a calendar for bad months', function () {
+        // null month
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2019;
+        $scope.calendar_month = null;
+        $scope.calendar_name = 'name';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+        // month too low
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2019;
+        $scope.calendar_month = 0;
+        $scope.calendar_name = 'name';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+        // month too high
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2019;
+        $scope.calendar_month = 13;
+        $scope.calendar_name = 'name';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+    });
+
+    it('should fail to add a calendar for missing name', function () {
+        // blank name
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2019;
+        $scope.calendar_month = 1;
+        $scope.calendar_name = '';
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+        // null name
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2019;
+        $scope.calendar_month = 1;
+        $scope.calendar_name = null;
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
+        // undefined name
+        $scope.clear_cal_error();
+        $scope.calendar_year = 2019;
+        $scope.calendar_month = 1;
+        $scope.calendar_name = undefined;
+        $scope.add_calendar();
+        expect($scope.add_calendar_error_message).toBeTruthy();
     });
 
     it('should try to delete the current calendar but it doesn\'t exist', function () {
@@ -290,6 +376,12 @@ describe('caitRockController Testing Suite', function () {
         expect(row2.style.display).toEqual('none');
     });
 
+    it('should clear the calendar error', function () {
+        $scope.add_calendar_error_message = 'Hey there was an error!';
+        $scope.clear_cal_error();
+        expect($scope.add_calendar_error_message).toEqual(false);
+    });
+
 });
 
 describe('calendarService Testing Suite', function () {
@@ -351,6 +443,7 @@ describe('calendarService Testing Suite', function () {
         });
         httpBackend.flush();
     });
+
     it('should get the current user id and return exactly what comes back from api on data member', function () {
         httpBackend.when('GET', '/planner/api/users/current_user_id/').respond({data:'hi'});
         calendarService.get_current_user().then(function (response) {
@@ -376,4 +469,5 @@ describe('recipeService Testing Suite', function () {
         });
         httpBackend.flush();
     });
+
 });

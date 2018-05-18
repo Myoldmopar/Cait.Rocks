@@ -58,7 +58,7 @@ class TestPlanningAPIMethods(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         data = response.json()
         self.assertEqual(data['nickname'], 'new_name')
-        self.assertEqual(data['year'], 2018)
+        self.assertEqual(data['year'], '2018')
         self.assertEqual(data['month'], 4)
 
     def test_post_fails_if_not_logged_in(self):

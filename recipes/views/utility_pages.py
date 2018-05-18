@@ -35,7 +35,7 @@ def server_version_data(request):
         git_sha_message = git_sha
         if not working_dir_clean:
             git_sha_message += ' (Working directory dirty)'
-    else:
+    else:  # pragma: no cover
         git_sha_message = 'Could not get any Git information'
 
     return render(

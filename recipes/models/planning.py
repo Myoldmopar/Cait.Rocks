@@ -190,7 +190,7 @@ class Calendar(models.Model):
         # need to validate year/month
         c = calendar.Calendar()
         c.setfirstweekday(6)
-        date_numbers = c.monthdayscalendar(self.year, self.month)
+        date_numbers = c.monthdayscalendar(int(self.year), self.month)  # TODO: It's a bit dangerous to int()...
         full_date_data = []
         for week in date_numbers:
             this_week = []

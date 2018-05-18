@@ -152,7 +152,7 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
             $scope.add_calendar_error_message = 'You tried to use an out of range month; use 1-12';
             error = true;
         }
-        if ($scope.calendar_name === '' || $scope.calendar_name === undefined) {
+        if ($scope.calendar_name === '' || $scope.calendar_name === undefined || $scope.calendar_name === null) {
             $scope.add_calendar_error_message = 'You can\'t have a blank calendar name!';
             error = true;
         }

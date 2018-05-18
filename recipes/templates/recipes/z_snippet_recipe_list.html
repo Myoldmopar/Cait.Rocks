@@ -1,7 +1,7 @@
 <h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
 
 <div class="input-group" style="border:1px solid black;border-bottom-width:0px;">
-    <input type="text" class="form-control" ng-model="filterText" ng-init="" ng-change="filter_table_rows()"
+    <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
            placeholder="Search by recipe title, creator, or ingredient list..."/>
     <span class="input-group-btn">
         <button class="btn btn-primary" style="border-radius:0;float:right;" type="button" ng-click="clear_filter()">Clear</button>

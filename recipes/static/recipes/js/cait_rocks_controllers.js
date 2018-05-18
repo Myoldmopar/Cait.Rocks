@@ -127,9 +127,37 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         )
     };
 
+    $scope.clear_cal_error = function () {
+        $scope.add_calendar_error_message = false;
+    };
+
     $scope.add_calendar = function () {
+        $scope.add_calendar_error_message = false;
+        var int_calendar_year = parseInt($scope.calendar_year);
+        var error = false;
+        if (isNaN(int_calendar_year)) {
+            $scope.add_calendar_error_message = 'Could not convert calendar_year to an integer, can\'t add calendar';
+            error = true;
+        }
+        if (int_calendar_year < 2018 || int_calendar_year > 2025) {
+            $scope.add_calendar_error_message = 'You tried to use an out of range year; use 2018-2025';
+            error = true;
+        }
+        var int_calendar_month = parseInt($scope.calendar_month);
+        if (isNaN(int_calendar_month)) {
+            $scope.add_calendar_error_message = 'Could not convert calendar_month to an integer, can\'t add calendar';
+            error = true;
+        }
+        if (int_calendar_month < 1 || int_calendar_month > 12) {
+            $scope.add_calendar_error_message = 'You tried to use an out of range month; use 1-12';
+            error = true;
+        }
+        if ($scope.calendar_name === '' || $scope.calendar_name === undefined || $scope.calendar_name === null) {
+            $scope.add_calendar_error_message = 'You can\'t have a blank calendar name!';
+            error = true;
+        }
+        if (error) return;
         var this_year = $scope.calendar_year;
-        // TODO: Validate the year/month, make the HTML inputs a choice field
         var this_month = $scope.calendar_month;
         var this_name = $scope.calendar_name;
         calendar_service.get_current_user().then(
@@ -158,15 +186,35 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         }
     };
 
+    $scope.set_models_to_today = function () {
+        var now = new Date();
+        $scope.calendar_month = now.getMonth() + 1;
+        $scope.calendar_year = now.getFullYear();
+        $scope.calendar_date = now.getDate();
+    };
+
+    // call one of these init functions in an ng-init section, based on the needs of the page //
+
+    $scope.init_full = function () {
+        // use this init for pages where you need recipes, calendars, date, etc.
+        $scope.retrieve_recipes();
+        $scope.get_calendars();
+        $scope.set_models_to_today();
+    };
+
+    $scope.init_recipe_only = function () {
+        // use this init for pages where you aren't getting the full list of recipes
+        $scope.retrieve_recipes();
+    };
+
+    $scope.init_calendar_only = function () {
+        $scope.get_calendars();
+    };
+
     // some hardcoded values
     $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $scope.filterText = '';
     $scope.recipe_list = [];
-
-    // this must be called by ng-init
-    $scope.controllerInitialize = function () {
-        $scope.retrieve_recipes();
-        $scope.get_calendars();
-    }
+    $scope.add_calendar_error_message = false;
 
 }]);

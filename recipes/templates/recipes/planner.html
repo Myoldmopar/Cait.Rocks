@@ -1,5 +1,6 @@
 {% extends 'recipes/base.html' %}
 {% block title %}Cait.Rocks Monthly Planning!{% endblock %}
+{% block nginit %}ng-init="init_full()"{% endblock %}
 {% block content %}
 
     <div>
@@ -22,7 +23,7 @@
                         ng-change="get_month_data()">
                 </select>
                 <span class="input-group-btn" style="padding-left:15px;">
-                    <button class="btn btn-danger form-control" type="submit" ng-click="remove_calendar()">!¡Delete Current Month¡!</button>
+                    <button class="btn btn-danger form-control" type="submit" ng-click="remove_calendar()">Delete Current Month</button>
                 </span>
             </div>
             <form class="form-group row" style="margin-bottom:0px;" ng-submit="add_calendar()">
@@ -31,15 +32,25 @@
                            placeholder="New Calendar Nickname">
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" ng-model="calendar_year" placeholder="New Calendar Year">
+                    <select ng-model="calendar_year"
+                            ng-options="y for y in [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]"
+                            class="form-control"></select>
                 </div>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" ng-model="calendar_month" placeholder="New Calendar Month">
+                    <select ng-model="calendar_month" ng-options="m for m in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+                            class="form-control"></select>
                 </div>
                 <div class="col-md-3">
                     <input class="btn btn-primary form-control" type="submit" value="Add New Month">
                 </div>
             </form>
+            <div class="alert alert-danger" ng-show="add_calendar_error_message"
+                 style="margin-top:12px;margin-bottom:0;">
+                <div class="col-md-12">
+                    <button type="button" class="close" ng-click="clear_cal_error()">&times;</button>
+                    <strong>Error:</strong> {[{ add_calendar_error_message }]}
+                </div>
+            </div>
         </div>
     </div>
 

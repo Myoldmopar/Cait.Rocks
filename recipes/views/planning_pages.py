@@ -9,7 +9,7 @@ from recipes.models.planning import Calendar
 
 class MonthViewSet(ViewSet):
     def list(self, request):
-        months = Calendar.objects.all()
+        months = Calendar.objects.filter(creator=request.user.id)
         return render(request, 'recipes/month_list.html', {'months': months})
 
     def retrieve(self, request, pk=None):

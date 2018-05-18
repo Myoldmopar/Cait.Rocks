@@ -5,8 +5,20 @@ import calendar
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.dates import MONTHS
 
 from recipes.models.recipe import Recipe
+
+
+class YearNumber(object):
+    A = '2018'
+    B = '2019'
+    C = '2020'
+    D = '2021'
+    E = '2022'
+    F = '2023'
+    G = '2024'
+    H = '2025'
 
 
 class Calendar(models.Model):
@@ -14,8 +26,21 @@ class Calendar(models.Model):
     This class describes a full month of data, including the calendar year/month as well as two recipes per day each day
     """
     creator = models.ForeignKey(User, help_text='The user who created this recipe instance', null=True)
-    year = models.IntegerField(help_text='The year of this calendar month')
-    month = models.IntegerField(help_text='The month index (1-12) of this calendar month')
+
+    YEAR_NUMBER_CHOICES = (
+        (YearNumber.A, '2018'),
+        (YearNumber.B, '2019'),
+        (YearNumber.C, '2020'),
+        (YearNumber.D, '2021'),
+        (YearNumber.E, '2022'),
+        (YearNumber.F, '2023'),
+        (YearNumber.G, '2024'),
+        (YearNumber.H, '2025'),
+    )
+    year = models.CharField(max_length=4, choices=YEAR_NUMBER_CHOICES, help_text='The year of this calendar month')
+
+    month = models.PositiveSmallIntegerField(choices=MONTHS.items(), help_text='The month of this calendar plan')
+
     nickname = models.CharField(max_length=100,
                                 help_text='A brief nickname for this month, usually auto-generated as YY-MMM')
     day01recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 01', related_name='day01recipe0',
@@ -165,7 +190,7 @@ class Calendar(models.Model):
         # need to validate year/month
         c = calendar.Calendar()
         c.setfirstweekday(6)
-        date_numbers = c.monthdayscalendar(self.year, self.month)
+        date_numbers = c.monthdayscalendar(int(self.year), self.month)  # TODO: It's a bit dangerous to int()...
         full_date_data = []
         for week in date_numbers:
             this_week = []

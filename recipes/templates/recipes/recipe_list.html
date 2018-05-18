@@ -1,5 +1,6 @@
 {% extends 'recipes/base.html' %}
 {% block title %}Cait.Rocks Recipes!{% endblock %}
+{% block nginit %}ng-init="init_recipe_only()"{% endblock %}
 {% block content %}
 
     {% include 'recipes/z_snippet_recipe_list.html' %}

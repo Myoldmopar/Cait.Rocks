@@ -1,5 +1,6 @@
 {% extends 'recipes/base.html' %}
 {% block title %}Cait.Rocks Monthly Plan!{% endblock %}
+{% block nginit %}ng-init="init_calendar_only()"{% endblock %}
 {% block content %}
     <div ng-init="initialize_to_calendar={{ month.id }} ">
         <h1>{[{ selectedCalendar.nickname }]}

@@ -196,17 +196,27 @@ app.controller('caitRocksController', ['$scope', 'calendarService', 'recipeServi
         $scope.calendar_date = now.getDate();
     };
 
+    // call one of these init functions in an ng-init section, based on the needs of the page
+    $scope.init_full = function () {
+        // use this init for pages where you need recipes, calendars, date, etc.
+        $scope.retrieve_recipes();
+        $scope.get_calendars();
+        $scope.set_models_to_today();
+    };
+
+    $scope.init_recipe_only = function () {
+        // use this init for pages where you aren't getting the full list of recipes
+        $scope.retrieve_recipes();
+    };
+
+    $scope.init_calendar_only = function () {
+        $scope.get_calendars();
+    };
+
     // some hardcoded values
     $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $scope.filterText = '';
     $scope.recipe_list = [];
     $scope.add_calendar_error_message = false;
-
-    // this must be called by ng-init
-    $scope.controllerInitialize = function () {
-        $scope.retrieve_recipes();
-        $scope.get_calendars();
-        $scope.set_models_to_today();
-    }
 
 }]);

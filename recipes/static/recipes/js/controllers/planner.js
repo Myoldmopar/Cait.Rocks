@@ -1,6 +1,5 @@
 var app = angular.module('cait_rocks_app');
 
-// create a controller containing functions and variables made available in the controller's scope
 app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_service', function ($scope, calendar_service, recipe_service) {
     'use strict';
 
@@ -85,11 +84,11 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
                 }
                 $scope.allCalendars = calendars_response.data;
                 if ($scope.initialize_to_calendar) {
-                    $scope.selectedCalendar = $scope.allCalendars.find(function (month) {
+                    $scope.selected_calendar = $scope.allCalendars.find(function (month) {
                         return month.id === $scope.initialize_to_calendar
                     });
                 } else {
-                    $scope.selectedCalendar = $scope.allCalendars[$scope.allCalendars.length - 1];
+                    $scope.selected_calendar = $scope.allCalendars[$scope.allCalendars.length - 1];
                 }
                 $scope.get_month_data();
             }
@@ -97,8 +96,8 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.get_month_data = function () {
-        if ($scope.selectedCalendar) {
-            calendar_service.get_calendar_monthly_data($scope.selectedCalendar.id).then(
+        if ($scope.selected_calendar) {
+            calendar_service.get_calendar_monthly_data($scope.selected_calendar.id).then(
                 function (date_response) {
                     $scope.month = date_response.data;
                     $scope.num_weeks = date_response.data.num_weeks;
@@ -111,7 +110,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
 
     $scope.select_recipe_id = function (week_num, day_num, recipe_num, date_num) {
         var recipe_db_index = $scope.month.data[week_num][day_num]['recipe' + parseInt(recipe_num)].id;
-        calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_num, recipe_num, recipe_db_index).then(
+        calendar_service.update_calendar_recipe_id($scope.selected_calendar.id, date_num, recipe_num, recipe_db_index).then(
             function (response) {
                 $scope.get_month_data();
             }
@@ -119,7 +118,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.clear_recipe_id = function (week_num, day_num, recipe_num, date_num) {
-        calendar_service.update_calendar_recipe_id($scope.selectedCalendar.id, date_num, recipe_num, 0).then(
+        calendar_service.update_calendar_recipe_id($scope.selected_calendar.id, date_num, recipe_num, 0).then(
             function (response) {
                 $scope.get_month_data();
             }
@@ -170,13 +169,13 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
 
     $scope.remove_calendar = function () {
         // check to make sure a calendar is selected
-        if (!$scope.selectedCalendar) {
+        if (!$scope.selected_calendar) {
             return;
         }
         if (calendar_service.confirm_calendar_delete()) {
-            calendar_service.delete_calendar($scope.selectedCalendar.id).then(
+            calendar_service.delete_calendar($scope.selected_calendar.id).then(
                 function (response) {
-                    $scope.selectedCalendar = null;
+                    $scope.selected_calendar = null;
                     $scope.get_calendars();
                 }
             );
@@ -192,7 +191,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         $scope.calendar_date = now.getDate();
     };
 
-    var init = function () {
+    $scope.init = function () {
         // use this init for pages where you need recipes, calendars, date, etc.
         $scope.filterText = '';
         $scope.recipe_list = [];
@@ -202,7 +201,5 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         $scope.get_calendars();
         $scope.set_models_to_today();
     };
-
-    init();
 
 }]);

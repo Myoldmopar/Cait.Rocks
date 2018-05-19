@@ -1,6 +1,5 @@
 var app = angular.module('cait_rocks_app');
 
-// create a controller containing functions and variables made available in the controller's scope
 app.controller('recipe_list_controller', ['$scope', 'recipe_service', function ($scope, recipe_service) {
     'use strict';
 
@@ -77,13 +76,11 @@ app.controller('recipe_list_controller', ['$scope', 'recipe_service', function (
         $scope.filter_table_rows();
     };
 
-    var init = function () {
+    $scope.init = function () {
         // use this init for pages where you aren't getting the full list of recipes
         $scope.filterText = '';
         $scope.recipe_list = [];
         $scope.retrieve_recipes();
     };
-
-    init();
 
 }]);

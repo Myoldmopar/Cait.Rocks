@@ -12,14 +12,14 @@
         <h1 style="display:inline-block;">
             {[{ selectedCalendar.nickname }]}
         </h1>
-        <button class="btn btn-primary recipe-input-container" type="button" data-toggle="collapse" style="float:right;"
+        <button class="btn btn-primary small-bottom-margin" type="button" data-toggle="collapse" style="float:right;"
                 data-target="#collapseManageMonths"
                 aria-expanded="false" aria-controls="collapseExample">
             Manage Months
         </button>
     </div>
 
-    <div class="collapse recipe-input-container" id="collapseManageMonths">
+    <div class="collapse small-bottom-margin" id="collapseManageMonths">
         <div class="card card-body" style="padding:10px">
             <div class="input-group" style="margin-bottom:0;">
                 <select ng-model="selectedCalendar" ng-options="c.nickname for c in allCalendars"
@@ -74,7 +74,7 @@
                     <div class="form-group"
                          ng-show="month.data[week_num][day_of_week].date_number !== '-'"
                          style="margin-bottom:4px;">
-                        <div class="input-group input-group-sm recipe-input-container" ng-repeat="recipe_num in [0, 1]">
+                        <div class="input-group input-group-sm small-bottom-margin" ng-repeat="recipe_num in [0, 1]">
                             <select
                                     id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"
                                     class="form-control"
@@ -88,7 +88,7 @@
                                 </option>
                             </select>
                             <span
-                                    class="input-group-addon recipe-clear-button"
+                                    class="input-group-addon auto-width-control"
                                     ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
                                     ng-click="clear_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
                                 <span class="glyphicon glyphicon-remove"></span>

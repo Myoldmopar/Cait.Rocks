@@ -2,6 +2,11 @@
 
 {% block title %}About Cait.Rocks!{% endblock %}
 
+{% block page_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'recipes/css/about.css' %}">
+{% endblock %}
+
 {% block content %}
     <h1>About this Website!</h1>
     <p>
@@ -24,7 +29,7 @@
     </p>
 
     <h1>Interesting Links</h1>
-    <ul class="list-group" style="margin-bottom:16px;">
+    <ul id="links_table" class="list-group" style="margin-bottom:16px;">
         <li class="list-group-item">Source code hosted on <a href="https://github.com/Myoldmopar/Cait.Rocks">Github</a></li>
         <li class="list-group-item">Back-end server is developed using <a href="https://www.djangoproject.com/">Django</a></li>
         <li class="list-group-item">Front-end site is based on <a href="https://angular.io/">Angular</a></li>
@@ -32,19 +37,21 @@
     </ul>
 
     <h1>Current Server Information</h1>
-    <table class="table table-striped">
+    <table id="server_info_table" class="table table-striped">
         <thead>
-        <th style="border:1px solid black">Key</th>
-        <th style="border:1px solid black">Value</th>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
         </thead>
         <tbody>
         <tr>
-            <td style="border:1px solid black">Version:</td>
-            <td style="border:1px solid black">{{ version }}</td>
+            <td>Version:</td>
+            <td>{{ version }}</td>
         </tr>
         <tr>
-            <td style="border:1px solid black">Git SHA:</td>
-            <td style="border:1px solid black">{{ git_sha }}</td>
+            <td>Git SHA:</td>
+            <td>{{ git_sha }}</td>
         </tr>
         </tbody>
     </table>

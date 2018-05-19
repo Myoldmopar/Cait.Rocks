@@ -19,7 +19,7 @@
 
 </head>
 
-<body style="font-family: Arial,sans-serif;" {% block body_ng_declarations %}{% endblock %} {% block nginit %}{% endblock %}>
+<body style="font-family: Arial,sans-serif;" {% block ng_app %}{% endblock %} {% block ng_controller %}{% endblock %} {% block ng_init %}{% endblock %}>
 
 {% block navbar %}
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" style="border-radius: 0;">
@@ -78,7 +78,8 @@
 <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'angular/angular.min.js' %}"></script>
-{% block extra_js %}{% endblock %}
+{% block app_js %}{% endblock %}
+{% block page_js %}{% endblock %}
 
 </body>
 

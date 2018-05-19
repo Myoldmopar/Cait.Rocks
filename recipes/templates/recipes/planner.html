@@ -1,6 +1,9 @@
 {% extends 'recipes/base.html' %}
+
 {% block title %}Cait.Rocks Monthly Planning!{% endblock %}
-{% block nginit %}ng-init="init_full()"{% endblock %}
+
+{% block ng_controller %}ng-controller="planner_controller"{% endblock %}
+
 {% block content %}
 
     <div>
@@ -97,4 +100,11 @@
 
     {% include 'recipes/z_snippet_recipe_list.html' %}
 
+{% endblock %}
+
+{% block page_js %}
+    {% load static %}
+    <script src="{% static 'recipes/js/controllers/planner.js' %}"></script>
+    <script src="{% static 'recipes/js/services/calendar.js' %}"></script>
+    <script src="{% static 'recipes/js/services/recipes.js' %}"></script>
 {% endblock %}

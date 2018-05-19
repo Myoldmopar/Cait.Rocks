@@ -1,2 +1,2 @@
-angular.module('caitRocksApp', []);
+angular.module('cait_rocks_app', []);
 

@@ -20,7 +20,11 @@ module.exports = function (config) {
             'node_modules/angular/angular.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'recipes/static/recipes/js/*.js',
-            'recipes/tests/static/recipes/js/*.js'
+            'recipes/static/recipes/js/controllers/*.js',
+            'recipes/static/recipes/js/services/*.js',
+            'recipes/tests/static/recipes/js/*.js',
+            'recipes/tests/static/recipes/js/controllers/*.js',
+            'recipes/tests/static/recipes/js/services/*.js'
         ],
 
 

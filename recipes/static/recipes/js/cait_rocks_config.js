@@ -1,4 +1,4 @@
-var app = angular.module('caitRocksApp');
+var app = angular.module('cait_rocks_app');
 
 // configure the module to use a different template interpolation sequence to avoid conflicting with Django
 app.config(function ($interpolateProvider) {

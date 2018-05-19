@@ -1,6 +1,9 @@
 {% extends 'recipes/base.html' %}
+
 {% block title %}Cait.Rocks Monthly Plans{% endblock %}
-{% block nginit %}ng-init="init_calendar_only()"{% endblock %}
+
+{% block ng_init %}ng-init="init_calendar_only()"{% endblock %}
+
 {% block content %}
 
     <h1>All Months {{ num_months }}</h1>

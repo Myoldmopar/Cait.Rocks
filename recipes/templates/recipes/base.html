@@ -10,15 +10,11 @@
     <link rel="stylesheet" href="{% static '/recipes/css/cait_rocks.css' %}">
 {% endblock %}
 
-{% block body_ng_declarations %}
-    ng-app="caitRocksApp" ng-controller="caitRocksController"
+{% block ng_app %}
+    ng-app="cait_rocks_app"
 {% endblock %}
 
-{% block content %}{% endblock %}
-
-{% block extra_js %}
+{% block app_js %}
     <script src="{% static 'recipes/js/cait_rocks.js' %}"></script>
     <script src="{% static 'recipes/js/cait_rocks_config.js' %}"></script>
-    <script src="{% static 'recipes/js/cait_rocks_services.js' %}"></script>
-    <script src="{% static 'recipes/js/cait_rocks_controllers.js' %}"></script>
 {% endblock %}

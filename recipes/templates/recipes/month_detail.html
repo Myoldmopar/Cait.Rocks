@@ -1,6 +1,9 @@
 {% extends 'recipes/base.html' %}
+
 {% block title %}Cait.Rocks Monthly Plan!{% endblock %}
-{% block nginit %}ng-init="init_calendar_only()"{% endblock %}
+
+{% block ng_controller %}ng-controller="month_detail_controller"{% endblock %}
+
 {% block content %}
     <div ng-init="initialize_to_calendar={{ month.id }} ">
         <h1>{[{ selectedCalendar.nickname }]}
@@ -32,4 +35,10 @@
             </tr>
         </table>
     </div>
+{% endblock %}
+
+{% block page_js %}
+    {% load static %}
+    <script src="{% static 'recipes/js/controllers/month_detail.js' %}"></script>
+    <script src="{% static 'recipes/js/services/calendar.js' %}"></script>
 {% endblock %}

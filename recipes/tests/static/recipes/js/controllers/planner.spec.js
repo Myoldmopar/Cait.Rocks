@@ -61,7 +61,7 @@ describe('planner_controller testing', function () {
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.initialize_to_calendar = undefined;
-        $scope.get_calendars();
+        $scope.retrieve_calendars();
         $scope.$digest();
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
         expect($scope.selected_calendar.id).toEqual(2);
@@ -71,7 +71,7 @@ describe('planner_controller testing', function () {
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.initialize_to_calendar = 1;
-        $scope.get_calendars();
+        $scope.retrieve_calendars();
         $scope.$digest();
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
         expect($scope.selected_calendar.id).toEqual(1);

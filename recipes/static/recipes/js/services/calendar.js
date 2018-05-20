@@ -29,5 +29,37 @@ app.service('calendar_service', ['$http', function ($http) {
     };
     this.get_current_user = function () {
         return $http.get('/planner/api/users/current_user_id/');
-    }
+    };
+
+    this.retrieve_calendars = function ($scope) {
+        this.get_calendars().then(
+            function (calendars_response) {
+                if (calendars_response.data.length === 0) {
+                    return;
+                }
+                $scope.allCalendars = calendars_response.data;
+                if ($scope.initialize_to_calendar) {
+                    $scope.selected_calendar = $scope.allCalendars.find(function (month) {
+                        return month.id === $scope.initialize_to_calendar
+                    });
+                } else {
+                    $scope.selected_calendar = $scope.allCalendars[$scope.allCalendars.length - 1];
+                }
+                $scope.get_month_data();
+            }
+        );
+    };
+
+    this.get_month_data = function ($scope) {
+        if ($scope.selected_calendar) {
+            this.get_calendar_monthly_data($scope.selected_calendar.id).then(
+                function (date_response) {
+                    $scope.month = date_response.data;
+                    $scope.num_weeks = date_response.data.num_weeks;
+                }
+            );
+        } else {
+            // nothing should really happen; I guess we could null out $scope variables
+        }
+    };
 }]);

@@ -31,6 +31,13 @@ app.service('calendar_service', ['$http', function ($http) {
         return $http.get('/planner/api/users/current_user_id/');
     };
 
+    // So the following functions are much better suited to live in the controller, as they act on the page scope
+    // and maybe the document object itself.  But the code is used by two different controllers, and I wasn't sure
+    // where I should drop that code so that each controller could use it.  I thought about extending the controller
+    // but that seemed like a bit overkill.  I also thought about dropping the code into a standalone JS file, as
+    // global functions, but that didn't seem right.  So here they are.  I'd love to move them if I can figure out
+    // the right place to put them.
+
     this.retrieve_calendars = function ($scope) {
         this.get_calendars().then(
             function (calendars_response) {

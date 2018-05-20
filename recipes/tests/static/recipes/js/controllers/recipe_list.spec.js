@@ -41,13 +41,18 @@ describe('recipe_list_controller testing', function () {
         document.body.removeChild(document.getElementById('recipeListTable'));
     });
 
-    // it('should initialize the controller just for recipes', function () {
-    //     spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
-    //     $scope.init_recipe_only();
-    //     $scope.$digest();
-    //     expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
-    //     expect($scope.recipe_list).toEqual(['recipes']);
-    // });
+    it('should initialize the controller just for recipes', function () {
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        $scope.init();
+        $scope.$digest();
+        expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
+        expect($scope.recipe_list).toEqual(['recipes']);
+    });
+
+    // All of this below should go in the service test!
+    // This controller should, at this point, just test whether it has these functions available
+    // Once I find a better spot for that DRY code, maybe these comments will also change
+    // So for now I'll be leaving them here
 
     it('should clear the filter variable', function () {
         $scope.filterText = 'abc';

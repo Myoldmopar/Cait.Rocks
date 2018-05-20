@@ -3,6 +3,33 @@ describe('planner_controller testing', function () {
 
     beforeEach(module('cait_rocks_app'));
 
+    beforeEach(function () {
+        var recipeTable =
+            '<table id="recipeListTable">' +
+            '<tr>' +
+            '<th></th><th></th><th></th><th></th>' +
+            '</tr>' +
+            '<tr id="row1">' +
+            '<td>TypeA</td>' +
+            '<td><a href="#">TitleA</a></td>' +
+            '<td>CreatorA</td>' +
+            '<td>IngredientA</td>' +
+            '<tr id="row2">' +
+            '<td>TypeB</td>' +
+            '<td><a href="#">TitleB</a></td>' +
+            '<td>CreatorB</td>' +
+            '<td>IngredientB</td>' +
+            '</table>';
+        document.body.insertAdjacentHTML('afterbegin', recipeTable);
+
+        var datasetBasedItem = '<div id="someSpecialID" data-weeknum="0" data-daynum="0" data-recipenum="0"></div>';
+        document.body.insertAdjacentHTML('afterbegin', datasetBasedItem);
+    });
+
+    afterEach(function () {
+        document.body.removeChild(document.getElementById('recipeListTable'));
+    });
+
     beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
         $scope = $rootScope.$new();
         mock_calendar_service = calendar_service;
@@ -16,22 +43,15 @@ describe('planner_controller testing', function () {
         });
     }));
 
-    // it('should initialize the controller using a specific list of method calls', function () {
-    //     spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
-    //     spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
-    //     $scope.init();
-    //     $scope.$digest();
-    //     expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
-    //     expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
-    //     expect($scope.recipe_list).toEqual(['recipes']);
-    // });
-    //
-    // it('should initialize the controller using a specific list of method calls', function () {
-    //     spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
-    //     $scope.init_calendar_only();
-    //     $scope.$digest();
-    //     expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
-    // });
+    it('should initialize the controller using a specific list of method calls', function () {
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        $scope.init();
+        $scope.$digest();
+        expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
+        expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
+        expect($scope.recipe_list).toEqual(['recipes']);
+    });
 
     it('should get recipes through the recipe API service', function () {
         spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
@@ -211,12 +231,36 @@ describe('planner_controller testing', function () {
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalledWith(1);
     });
 
-    // recipe list filter tests went here
+
+    it('should set models for today', function () {
+        $scope.calendar_month = undefined;
+        $scope.calendar_year = undefined;
+        $scope.calendar_date = undefined;
+        $scope.set_models_to_today();
+        expect($scope.calendar_month).toBeTruthy();
+        expect($scope.calendar_year).toBeTruthy();
+        expect($scope.calendar_date).toBeTruthy();
+    });
 
     it('should clear the calendar error', function () {
         $scope.add_calendar_error_message = 'Hey there was an error!';
         $scope.clear_cal_error();
         expect($scope.add_calendar_error_message).toEqual(false);
+    });
+
+    // These functions are really just exercising to make sure the planner controller has these functions
+    // The implementation of these functions has been moved to a service...for now
+    // The major testing of the underlying functionality is in the recipe_list controller test
+
+    it('should clear the filter variable', function () {
+        $scope.filterText = 'abc';
+        $scope.clear_filter();
+        expect($scope.filterText).toEqual('');
+    });
+
+    it('should ignore if it cant find a table', function () {
+        $scope.filterText = '';
+        $scope.filter_table_rows();
     });
 
 });

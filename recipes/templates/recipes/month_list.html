@@ -2,21 +2,26 @@
 
 {% block title %}Cait.Rocks Monthly Plans{% endblock %}
 
+{% block page_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'recipes/css/month_list.css' %}">
+{% endblock %}
+
 {% block content %}
 
     <h1>All Months {{ num_months }}</h1>
 
-    <table id="monthListTable" class="table table-striped">
+    <table id="month_list_table" class="table table-striped">
         <tr>
-            <th class="bordered_cell">Nickname</th>
-            <th class="bordered_cell">Year</th>
-            <th class="bordered_cell">Month</th>
+            <th>Nickname</th>
+            <th>Year</th>
+            <th>Month</th>
         </tr>
         {% for month in months %}
             <tr>
-                <td class="bordered_cell"><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
-                <td class="bordered_cell">{{ month.year }}</td>
-                <td class="bordered_cell">{{ month.month }}</td>
+                <td><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
+                <td>{{ month.year }}</td>
+                <td>{{ month.month }}</td>
             </tr>
         {% endfor %}
     </table>

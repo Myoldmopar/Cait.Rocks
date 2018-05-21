@@ -4,17 +4,15 @@
 <head>
 
     <meta charset="UTF-8">
+
     <title>
         {% block title %}Cait.Rocks!{% endblock %}
     </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% load static %}
 
+    {% load static %}
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
-    <style>
-        #mainBodyContainer { padding-top: 15px; }
-    </style>
     {% block app_css %}{% endblock %}
     {% block page_css %}{% endblock %}
 

@@ -6,6 +6,10 @@ body {
     border-radius: 0;
 }
 
+#mainBodyContainer {
+    padding-top: 15px;
+}
+
 .small-bottom-margin {
     margin-bottom: 4px;
 }

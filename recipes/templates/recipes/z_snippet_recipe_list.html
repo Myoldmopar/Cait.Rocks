@@ -1,29 +1,29 @@
 <h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
 
-<div class="input-group" style="border:1px solid black;border-bottom-width:0px;">
+<div id="recipe_filter_group" class="input-group">
     <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
            placeholder="Search by recipe title, creator, or ingredient list..."/>
     <span class="input-group-btn">
-        <button class="btn btn-primary" style="border-radius:0;float:right;" type="button" ng-click="clear_filter()">Clear</button>
+        <button id="recipe_filter_clear_button" class="btn btn-primary" type="button" ng-click="clear_filter()">Clear</button>
     </span>
 </div>
 
-<div id="recipe_table_container" style="overflow:auto;max-height:450px;">
+<div id="recipe_table_container">
     <table id="recipeListTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="border:1px solid black">Recipe Type</th>
-            <th style="border:1px solid black">Recipe Name</th>
-            <th style="border:1px solid black">Creator</th>
-            <th style="display:none;border:1px solid black;">Ingredients-HIDDEN</th>
+            <th class="bordered_cell">Recipe Type</th>
+            <th class="bordered_cell">Recipe Name</th>
+            <th class="bordered_cell">Creator</th>
+            <th class="hidden_bordered_cell">Ingredients-HIDDEN</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="recipe in recipe_list">
-            <td style="border:1px solid black">{[{ recipe.recipe_type }]}</td>
-            <td style="border:1px solid black"><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
-            <td style="border:1px solid black">{[{ recipe.creator }]}</td>
-            <td style="display:none;border:1px solid black;">{[{ recipe.ingredients }]}</td>
+            <td class="bordered_cell">{[{ recipe.recipe_type }]}</td>
+            <td class="bordered_cell"><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
+            <td class="bordered_cell">{[{ recipe.creator }]}</td>
+            <td class="hidden_bordered_cell">{[{ recipe.ingredients }]}</td>
         </tr>
         </tbody>
     </table>

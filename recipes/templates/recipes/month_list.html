@@ -8,15 +8,15 @@
 
     <table id="monthListTable" class="table table-striped">
         <tr>
-            <th style="border:1px solid black">Nickname</th>
-            <th style="border:1px solid black">Year</th>
-            <th style="border:1px solid black">Month</th>
+            <th class="bordered_cell">Nickname</th>
+            <th class="bordered_cell">Year</th>
+            <th class="bordered_cell">Month</th>
         </tr>
         {% for month in months %}
             <tr>
-                <td style="border:1px solid black"><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
-                <td style="border:1px solid black">{{ month.year }}</td>
-                <td style="border:1px solid black">{{ month.month }}</td>
+                <td class="bordered_cell"><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
+                <td class="bordered_cell">{{ month.year }}</td>
+                <td class="bordered_cell">{{ month.month }}</td>
             </tr>
         {% endfor %}
     </table>

@@ -6,3 +6,47 @@
 .auto-width-control {
     width: auto;
 }
+
+.bordered_cell {
+    border: 1px solid black !important;
+}
+
+.hidden_bordered_cell {
+    border: 1px solid black;
+    display: none;
+}
+
+#recipe_filter_group {
+    border: 1px solid black;
+    border-bottom-width: 0;
+}
+
+#recipe_filter_clear_button {
+    border-radius: 0;
+    float: right;
+}
+
+#recipe_table_container {
+    overflow: auto;
+    max-height: 450px;
+}
+
+#month_table {
+    table-layout: fixed;
+}
+
+.calendar_day_header_cell {
+    padding: 4px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.calendar_day_cell {
+    padding: 4px;
+    background-color: #f2f2f2;
+    border: 1px solid black;
+}
+
+.date_number_paragraph {
+    margin-bottom: 4px;
+}

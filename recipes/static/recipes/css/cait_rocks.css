@@ -1,3 +1,10 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#navigation_bar {
+    border-radius: 0;
+}
 
 .small-bottom-margin {
     margin-bottom: 4px;
@@ -12,7 +19,7 @@
 }
 
 .hidden_bordered_cell {
-    border: 1px solid black;
+    border: 1px solid black !important;
     display: none;
 }
 

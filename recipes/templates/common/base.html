@@ -20,10 +20,10 @@
 
 </head>
 
-<body style="font-family: Arial,sans-serif;" {% block ng_app %}{% endblock %} {% block ng_controller %}{% endblock %} {% block ng_init %}{% endblock %}>
+<body {% block ng_app %}{% endblock %} {% block ng_controller %}{% endblock %} {% block ng_init %}{% endblock %}>
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" style="border-radius: 0;">
+    <nav id="navigation_bar" class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top">
         <h1 class="navbar-brand mb-0">
             <a class="navbar-brand" href="{% url 'home' %}">Cait.Rocks</a>
         </h1>

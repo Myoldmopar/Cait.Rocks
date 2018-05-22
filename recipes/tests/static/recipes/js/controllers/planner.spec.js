@@ -1,34 +1,7 @@
-describe('planner_controller testing', function () {
+describe('planner_controller testing init function', function () {
     var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
 
     beforeEach(module('cait_rocks_app'));
-
-    beforeEach(function () {
-        var recipeTable =
-            '<table id="recipeListTable">' +
-            '<tr>' +
-            '<th></th><th></th><th></th><th></th>' +
-            '</tr>' +
-            '<tr id="row1">' +
-            '<td>TypeA</td>' +
-            '<td><a href="#">TitleA</a></td>' +
-            '<td>CreatorA</td>' +
-            '<td>IngredientA</td>' +
-            '<tr id="row2">' +
-            '<td>TypeB</td>' +
-            '<td><a href="#">TitleB</a></td>' +
-            '<td>CreatorB</td>' +
-            '<td>IngredientB</td>' +
-            '</table>';
-        document.body.insertAdjacentHTML('afterbegin', recipeTable);
-
-        var datasetBasedItem = '<div id="someSpecialID" data-weeknum="0" data-daynum="0" data-recipenum="0"></div>';
-        document.body.insertAdjacentHTML('afterbegin', datasetBasedItem);
-    });
-
-    afterEach(function () {
-        document.body.removeChild(document.getElementById('recipeListTable'));
-    });
 
     beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
         $scope = $rootScope.$new();
@@ -52,6 +25,25 @@ describe('planner_controller testing', function () {
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
         expect($scope.recipe_list).toEqual(['recipes']);
     });
+});
+
+describe('planner_controller testing retrieve_recipes function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should get recipes through the recipe API service', function () {
         spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
@@ -60,6 +52,25 @@ describe('planner_controller testing', function () {
         expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
         expect($scope.recipe_list).toEqual(['recipes']);
     });
+});
+
+describe('planner_controller testing get_month_data function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should get month data when there isn\'t a currently selected calendar', function () {
         $scope.selected_calendar = undefined;
@@ -76,6 +87,25 @@ describe('planner_controller testing', function () {
         expect($scope.month).toEqual({'num_weeks': 5});
         expect($scope.num_weeks).toEqual(5);
     });
+});
+
+describe('planner_controller testing retrieve_calendars function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should get calendars through the calendar API service without a target id', function () {
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
@@ -96,6 +126,25 @@ describe('planner_controller testing', function () {
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
         expect($scope.selected_calendar.id).toEqual(1);
     });
+});
+
+describe('planner_controller testing select_recipe_id function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should update the recipe id as if a drop-down was selected', function () {
         spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
@@ -107,6 +156,25 @@ describe('planner_controller testing', function () {
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalled();
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalledWith(1, 1, 0, 0);
     });
+});
+
+describe('planner_controller testing clear_recipe_id function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should clear the recipe id as if a clear button was pressed', function () {
         spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
@@ -120,6 +188,25 @@ describe('planner_controller testing', function () {
         // console.log($scope.month.data);
         // expect($scope.month.data[0][1].recipe0).toBeNull();  // TODO: Better testing here; also test actual DOM events like dropdown selections
     });
+});
+
+describe('planner_controller testing add_calendar function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should add a new calendar based on $scope variables which are usually models on user inputs', function () {
         spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.when({}));
@@ -205,6 +292,25 @@ describe('planner_controller testing', function () {
         $scope.add_calendar();
         expect($scope.add_calendar_error_message).toBeTruthy();
     });
+});
+
+describe('planner_controller testing remove_calendar function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should try to delete the current calendar but it doesn\'t exist', function () {
         $scope.selected_calendar = null;
@@ -230,7 +336,25 @@ describe('planner_controller testing', function () {
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalledWith(1);
     });
+});
 
+describe('planner_controller testing set_models_to_today function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should set models for today', function () {
         $scope.calendar_month = undefined;
@@ -241,26 +365,136 @@ describe('planner_controller testing', function () {
         expect($scope.calendar_year).toBeTruthy();
         expect($scope.calendar_date).toBeTruthy();
     });
+});
+
+describe('planner_controller testing clear_cal_error function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should clear the calendar error', function () {
         $scope.add_calendar_error_message = 'Hey there was an error!';
         $scope.clear_cal_error();
         expect($scope.add_calendar_error_message).toEqual(false);
     });
+});
 
-    // These functions are really just exercising to make sure the planner controller has these functions
-    // The implementation of these functions has been moved to a service...for now
-    // The major testing of the underlying functionality is in the recipe_list controller test
+// clear_filter and filter_table_rows function tests are just making sure the planner controller has these functions
+// The implementation of these functions has been moved to a service...for now...it should be a directive I think
+// The major testing of the underlying functionality is in the recipe_list controller test
+
+describe('planner_controller testing clear_filter function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(function () {
+        var recipeTable =
+            '<table id="recipeListTable">' +
+            '<tr>' +
+            '<th></th><th></th><th></th><th></th>' +
+            '</tr>' +
+            '<tr id="row1">' +
+            '<td>TypeA</td>' +
+            '<td><a href="#">TitleA</a></td>' +
+            '<td>CreatorA</td>' +
+            '<td>IngredientA</td>' +
+            '<tr id="row2">' +
+            '<td>TypeB</td>' +
+            '<td><a href="#">TitleB</a></td>' +
+            '<td>CreatorB</td>' +
+            '<td>IngredientB</td>' +
+            '</table>';
+        document.body.insertAdjacentHTML('afterbegin', recipeTable);
+
+        var datasetBasedItem = '<div id="someSpecialID" data-weeknum="0" data-daynum="0" data-recipenum="0"></div>';
+        document.body.insertAdjacentHTML('afterbegin', datasetBasedItem);
+    });
+
+    afterEach(function () {
+        document.body.removeChild(document.getElementById('recipeListTable'));
+    });
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should clear the filter variable', function () {
         $scope.filterText = 'abc';
         $scope.clear_filter();
         expect($scope.filterText).toEqual('');
     });
+});
+
+describe('planner_controller testing filter_table_rows function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(function () {
+        var recipeTable =
+            '<table id="recipeListTable">' +
+            '<tr>' +
+            '<th></th><th></th><th></th><th></th>' +
+            '</tr>' +
+            '<tr id="row1">' +
+            '<td>TypeA</td>' +
+            '<td><a href="#">TitleA</a></td>' +
+            '<td>CreatorA</td>' +
+            '<td>IngredientA</td>' +
+            '<tr id="row2">' +
+            '<td>TypeB</td>' +
+            '<td><a href="#">TitleB</a></td>' +
+            '<td>CreatorB</td>' +
+            '<td>IngredientB</td>' +
+            '</table>';
+        document.body.insertAdjacentHTML('afterbegin', recipeTable);
+
+        var datasetBasedItem = '<div id="someSpecialID" data-weeknum="0" data-daynum="0" data-recipenum="0"></div>';
+        document.body.insertAdjacentHTML('afterbegin', datasetBasedItem);
+    });
+
+    afterEach(function () {
+        document.body.removeChild(document.getElementById('recipeListTable'));
+    });
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     it('should ignore if it cant find a table', function () {
         $scope.filterText = '';
         $scope.filter_table_rows();
     });
-
 });

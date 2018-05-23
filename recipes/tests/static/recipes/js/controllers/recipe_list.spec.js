@@ -121,9 +121,10 @@ describe('recipe_list_controller testing filter_table_rows function', function (
         document.body.removeChild(document.getElementById('recipeListTable'));
     });
 
-    it('should ignore if it cant find a table', function () {
+    it('should ignore if the filter text is too short', function () {
         $scope.filterText = '';
         $scope.filter_table_rows();
+        // literally shouldn't do anything, just wait until possibly more text is entered before filtering
     });
 
     it('should re-show all table rows for a blank filter', function () {

@@ -185,8 +185,8 @@ describe('planner_controller testing clear_recipe_id function', function () {
         $scope.$digest();
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalled();
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalledWith(1, 2, 0, 0);
-        // console.log($scope.month.data);
-        // expect($scope.month.data[0][1].recipe0).toBeNull();  // TODO: Better testing here; also test actual DOM events like dropdown selections
+        // we aren't actually updating anything on the database, so the best we can do is to verify that it tried to call the right service method
+        expect(mock_calendar_service.get_calendar_monthly_data).toHaveBeenCalled();
     });
 });
 
@@ -316,6 +316,7 @@ describe('planner_controller testing remove_calendar function', function () {
         $scope.selected_calendar = null;
         $scope.remove_calendar();
         $scope.$digest();
+        expect($scope.selected_calendar).toBeNull();
     });
 
     it('should try to delete the current calendar but get negative confirmation', function () {
@@ -493,8 +494,9 @@ describe('planner_controller testing filter_table_rows function', function () {
         });
     }));
 
-    it('should ignore if it cant find a table', function () {
+    it('should ignore if the filter text is too short', function () {
         $scope.filterText = '';
         $scope.filter_table_rows();
+        // literally shouldn't do anything, just wait until possibly more text is entered before filtering
     });
 });

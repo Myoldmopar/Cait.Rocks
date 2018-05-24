@@ -79,11 +79,33 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.retrieve_calendars = function () {
-        return calendar_service.retrieve_calendars($scope);
+        calendar_service.get_calendars().then(
+            function (calendars_response) {
+                if (calendars_response.length === 0) {
+                    return;
+                }
+                $scope.allCalendars = calendars_response;
+                $scope.selected_calendar = $scope.allCalendars[$scope.allCalendars.length - 1];
+                $scope.get_month_data();
+            }
+        ).catch(function () {
+            $scope.calendar_error_message = 'Could not get calendars through API; server broken?';
+        });
     };
 
-    $scope.get_month_data = function () {
-        return calendar_service.get_month_data($scope);
+    $scope.get_month_data = function ($scope) {
+        if ($scope.selected_calendar) {
+            calendar_service.get_calendar_monthly_data($scope.selected_calendar.id).then(
+                function (date_response) {
+                    $scope.month = date_response;
+                    $scope.num_weeks = date_response.num_weeks;
+                }
+            ).catch(function () {
+                $scope.calendar_error_message = 'Could not get monthly calendar data; server broken?';
+            });
+        } else {
+            // nothing should really happen; I guess we could null out $scope variables
+        }
     };
 
     $scope.select_recipe_id = function (week_num, day_num, recipe_num, date_num) {

@@ -14,7 +14,7 @@ class MonthViewSet(ViewSet):
 
     def retrieve(self, request, pk=None):
         month = get_object_or_404(Calendar, pk=pk)
-        return render(request, 'recipes/month_detail.html', {'month': month})
+        return render(request, 'recipes/month_detail.html', {'month_id': month.id})
 
 
 class PlannerViewSet(LoginRequiredMixin, ViewSet):

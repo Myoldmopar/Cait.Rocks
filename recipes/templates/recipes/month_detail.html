@@ -12,7 +12,7 @@
 {% block ng_init %}ng-init="init()"{% endblock %}
 
 {% block content %}
-    <div ng-init="initialize_to_calendar={{ month.id }} ">
+    <div ng-init="retrieve_calendar({{ month_id }})">
         <h1>
             {[{ selected_calendar.nickname }]}
             <small>({[{ selected_calendar.creator }]})</small>

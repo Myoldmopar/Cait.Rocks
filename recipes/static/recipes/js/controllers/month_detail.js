@@ -29,8 +29,6 @@ app.controller('month_detail_controller', ['$scope', 'calendar_service', functio
         });
     };
 
-    $scope.init = function () {
-        $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    };
+    $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 }]);

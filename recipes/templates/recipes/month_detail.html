@@ -9,8 +9,6 @@
 
 {% block ng_controller %}ng-controller="month_detail_controller"{% endblock %}
 
-{% block ng_init %}ng-init="init()"{% endblock %}
-
 {% block content %}
     <div ng-init="retrieve_calendar({{ month_id }})">
         <h1>

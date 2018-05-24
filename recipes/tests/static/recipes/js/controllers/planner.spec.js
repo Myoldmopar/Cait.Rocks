@@ -124,7 +124,7 @@ describe('planner_controller testing retrieve_calendars function', function () {
         });
     }));
 
-    it('should get calendars through the calendar API service without a target id', function () {
+    it('should get calendars through the calendar API service', function () {
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.initialize_to_calendar = undefined;
@@ -132,16 +132,6 @@ describe('planner_controller testing retrieve_calendars function', function () {
         $scope.$digest();
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
         expect($scope.selected_calendar.id).toEqual(2);
-    });
-
-    it('should get calendars through the calendar API service with a target id', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
-        $scope.initialize_to_calendar = 1;
-        $scope.retrieve_calendars();
-        $scope.$digest();
-        expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
-        expect($scope.selected_calendar.id).toEqual(1);
     });
 
     it('should fail to get calendars through the calendar API service', function () {

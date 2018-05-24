@@ -11,7 +11,7 @@ class IngredientModelConstructionTests(TestCase):
         Makes sure ingredient can potentially be blank...do we want this?
         """
         blank_ingredient = Ingredient(item_description='')
-        if six.PY2:
+        if six.PY2:  # pragma: no cover (we end up covering both Py2 and Py3 but Coveralls complains)
             self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:  # pragma: no cover
             self.assertEqual(str(blank_ingredient), u'')
@@ -21,7 +21,7 @@ class IngredientModelConstructionTests(TestCase):
         Makes sure ingredient can potentially be blank...do we want this?
         """
         blank_ingredient = Ingredient()
-        if six.PY2:
+        if six.PY2:  # pragma: no cover (we end up covering both Py2 and Py3 but Coveralls complains)
             self.assertEqual(unicode(blank_ingredient), u'')  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:  # pragma: no cover
             self.assertEqual(str(blank_ingredient), u'')
@@ -29,7 +29,7 @@ class IngredientModelConstructionTests(TestCase):
     def test_ingredient_normal_construction(self):
         ingredient_string = u'This is a normal ingredient'
         proper_ingredient = Ingredient(item_description=ingredient_string)
-        if six.PY2:
+        if six.PY2:  # pragma: no cover (we end up covering both Py2 and Py3 but Coveralls complains)
             self.assertEqual(unicode(proper_ingredient), ingredient_string)  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:  # pragma: no cover
             self.assertEqual(str(proper_ingredient), ingredient_string)
@@ -40,7 +40,7 @@ class TestIngredientStringTests(TestCase):
         i = Ingredient(
             amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff'
         )
-        if six.PY2:
+        if six.PY2:  # pragma: no cover (we end up covering both Py2 and Py3 but Coveralls complains)
             with self.assertRaises(Exception):
                 str(i)
         elif six.PY3:  # pragma: no cover
@@ -62,7 +62,7 @@ class IngredientFullStringFunctionTests(TestCase):
         self.assertEqual(i.measurement, expected_measurement)
         expected_description = kwargs.get('item_description', '')
         self.assertEqual(i.item_description, expected_description)
-        if six.PY2:
+        if six.PY2:  # pragma: no cover (we end up covering both Py2 and Py3 but Coveralls complains)
             self.assertEqual(unicode(i), expected_full_string)  # noqa: F821  (unicode not defined in Py3)
         elif six.PY3:  # pragma: no cover
             self.assertEqual(str(i), expected_full_string)

@@ -1,9 +1,16 @@
 {% extends 'common/base.html' %}
+
 {% block title %}Monthly Plan{% endblock %}
+
+{% block page_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'recipes/css/404.css' %}">
+{% endblock %}
+
 {% block content %}
     <h1>Oh no! I couldn't find this page of the cookbook!</h1>
     {% load static %}
-    <div class="row" style="text-align:center">
+    <div id="cookbook_image_container" class="row">
         <img src="{% static 'recipes/images/wolf_cookbook.jpg' %}"/>
     </div>
 {% endblock %}

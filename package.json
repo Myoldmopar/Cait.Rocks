@@ -7,10 +7,11 @@
   "description": "Django-backed website for Cait.Rocks",
   "license": "MIT",
   "engines": {
-    "yarn": "1.6.0"
+    "yarn": "1.7.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run"
+    "test": "./node_modules/.bin/karma start --single-run",
+    "debug": "./node_modules/.bin/karma start --browsers=Chrome --single-run=false"
   },
   "dependencies": {
     "angular": "1.7.0",

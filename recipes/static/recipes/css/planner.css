@@ -1,0 +1,36 @@
+#calendar_name {
+    display: inline-block;
+}
+
+#manage_months_button {
+    float: right;
+}
+
+#manage_months_container {
+    padding: 10px;
+}
+
+#month_dropdown_container {
+    margin-bottom: 0;
+}
+
+#month_dropdown {
+    margin-bottom: 10px;
+}
+
+#month_delete_button {
+    padding-left: 15px;
+}
+
+#add_month_container {
+    margin-bottom: 0;
+}
+
+#calendar_err_msg {
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.recipes_div_container {
+    margin-bottom: 4px;
+}

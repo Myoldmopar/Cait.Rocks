@@ -4,25 +4,24 @@
 <head>
 
     <meta charset="UTF-8">
+
     <title>
         {% block title %}Cait.Rocks!{% endblock %}
     </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% load static %}
 
+    {% load static %}
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
-    <style>
-        #mainBodyContainer { padding-top: 15px; }
-    </style>
-    {% block extra_css %}{% endblock %}
+    {% block app_css %}{% endblock %}
+    {% block page_css %}{% endblock %}
 
 </head>
 
-<body style="font-family: Arial,sans-serif;" {% block body_ng_declarations %}{% endblock %} {% block nginit %}{% endblock %}>
+<body {% block ng_app %}{% endblock %} {% block ng_controller %}{% endblock %} {% block ng_init %}{% endblock %}>
 
 {% block navbar %}
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top" style="border-radius: 0;">
+    <nav id="navigation_bar" class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top">
         <h1 class="navbar-brand mb-0">
             <a class="navbar-brand" href="{% url 'home' %}">Cait.Rocks</a>
         </h1>
@@ -78,7 +77,8 @@
 <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'angular/angular.min.js' %}"></script>
-{% block extra_js %}{% endblock %}
+{% block app_js %}{% endblock %}
+{% block page_js %}{% endblock %}
 
 </body>
 

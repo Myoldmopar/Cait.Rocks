@@ -1,0 +1,11 @@
+#server_info_table th, td {
+    border: 1px solid black;
+}
+
+#links_table {
+    margin-bottom: 16px;
+}
+
+#links_table li {
+    border: 1px solid black;
+}

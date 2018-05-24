@@ -52,6 +52,14 @@ describe('planner_controller testing retrieve_recipes function', function () {
         expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
         expect($scope.recipe_list).toEqual(['recipes']);
     });
+
+    it('should fail to get recipes through the recipe API service', function () {
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.reject('recipes'));
+        $scope.retrieve_recipes();
+        $scope.$digest();
+        expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
+        expect($scope.recipe_list).toEqual([]);
+    });
 });
 
 describe('planner_controller testing get_month_data function', function () {
@@ -86,6 +94,15 @@ describe('planner_controller testing get_month_data function', function () {
         expect(mock_calendar_service.get_calendar_monthly_data).toHaveBeenCalled();
         expect($scope.month).toEqual({'num_weeks': 5});
         expect($scope.num_weeks).toEqual(5);
+    });
+
+    it('should fail to get month data for the current calendar through the calendar API service', function () {
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.reject('reasons'));
+        $scope.selected_calendar = {'id': 1};
+        $scope.get_month_data();
+        $scope.$digest();
+        expect(mock_calendar_service.get_calendar_monthly_data).toHaveBeenCalled();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 });
 
@@ -125,6 +142,17 @@ describe('planner_controller testing retrieve_calendars function', function () {
         $scope.$digest();
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
         expect($scope.selected_calendar.id).toEqual(1);
+    });
+
+    it('should fail to get calendars through the calendar API service', function () {
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.reject('reasons'));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
+        $scope.initialize_to_calendar = undefined;
+        $scope.calendar_error_message = '';
+        $scope.retrieve_calendars();
+        $scope.$digest();
+        expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 });
 
@@ -219,6 +247,33 @@ describe('planner_controller testing add_calendar function', function () {
         $scope.$digest();
         expect(mock_calendar_service.post_calendar).toHaveBeenCalled();
         expect(mock_calendar_service.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey', 1);
+    });
+
+    it('should fail to add a new calendar because the POST failed', function () {
+        spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.reject('reasons'));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
+        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.when({id: 1}));
+        $scope.calendar_year = 2018;
+        $scope.calendar_month = 5;
+        $scope.calendar_name = 'Hey';
+        $scope.calendar_error_message = '';
+        $scope.add_calendar();
+        $scope.$digest();
+        expect(mock_calendar_service.post_calendar).toHaveBeenCalled();
+        expect(mock_calendar_service.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey', 1);
+        expect($scope.calendar_error_message).toBeTruthy();
+    });
+
+    it('should fail to add a new calendar because the get_current_user call failed', function () {
+        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.reject('reasons'));
+        $scope.calendar_year = 2018;
+        $scope.calendar_month = 5;
+        $scope.calendar_name = 'Hey';
+        $scope.calendar_error_message = '';
+        $scope.add_calendar();
+        $scope.$digest();
+        expect(mock_calendar_service.get_current_user).toHaveBeenCalled();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 
     it('should fail to add a calendar for bad years', function () {
@@ -336,6 +391,19 @@ describe('planner_controller testing remove_calendar function', function () {
         expect(mock_calendar_service.confirm_calendar_delete).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalledWith(1);
+    });
+
+    it('should fail to delete the current calendar', function () {
+        spyOn(mock_calendar_service, 'confirm_calendar_delete').and.returnValue(true);
+        spyOn(mock_calendar_service, 'delete_calendar').and.returnValue($scope.$q.reject('reasons'));
+        $scope.selected_calendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
+        $scope.calendar_error_message = '';
+        $scope.remove_calendar();
+        $scope.$digest();
+        expect(mock_calendar_service.confirm_calendar_delete).toHaveBeenCalled();
+        expect(mock_calendar_service.delete_calendar).toHaveBeenCalled();
+        expect(mock_calendar_service.delete_calendar).toHaveBeenCalledWith(1);
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 });
 

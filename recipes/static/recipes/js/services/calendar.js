@@ -71,7 +71,6 @@ app.service('calendar_service', ['$http', function ($http) {
                 $scope.get_month_data();
             }
         ).catch(function () {
-            console.log("Caught bad response from get_calendars");
             $scope.calendar_error_message = 'Could not get calendars through API; server broken?';
         });
     };

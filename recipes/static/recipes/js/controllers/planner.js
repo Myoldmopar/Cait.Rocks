@@ -3,15 +3,25 @@ var app = angular.module('cait_rocks_app');
 app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_service', function ($scope, calendar_service, recipe_service) {
     'use strict';
 
-    $scope.retrieve_recipes = function () {return recipe_service.retrieve_recipes($scope);};
+    $scope.retrieve_recipes = function () {
+        return recipe_service.retrieve_recipes($scope);
+    };
 
-    $scope.filter_table_rows = function () {return recipe_service.filter_table_rows($scope);};
+    $scope.filter_table_rows = function () {
+        return recipe_service.filter_table_rows($scope);
+    };
 
-    $scope.clear_filter = function () {return recipe_service.clear_filter($scope)};
+    $scope.clear_filter = function () {
+        return recipe_service.clear_filter($scope)
+    };
 
-    $scope.retrieve_calendars = function () {return calendar_service.retrieve_calendars($scope);};
+    $scope.retrieve_calendars = function () {
+        return calendar_service.retrieve_calendars($scope);
+    };
 
-    $scope.get_month_data = function () {return calendar_service.get_month_data($scope);};
+    $scope.get_month_data = function () {
+        return calendar_service.get_month_data($scope);
+    };
 
     $scope.select_recipe_id = function (week_num, day_num, recipe_num, date_num) {
         var recipe_db_index = $scope.month.data[week_num][day_num]['recipe' + parseInt(recipe_num)].id;
@@ -63,16 +73,10 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         var this_year = $scope.calendar_year;
         var this_month = $scope.calendar_month;
         var this_name = $scope.calendar_name;
-        calendar_service.get_current_user().then( // I don't think we need this right?
-            function (response) {
-                calendar_service.post_calendar(this_year, this_month, this_name, response.id).then(
-                    $scope.retrieve_calendars
-                ).catch(function () {
-                    $scope.calendar_error_message = 'Could not POST a calendar, not sure why';
-                })
-            }
+        calendar_service.post_calendar(this_year, this_month, this_name).then(
+            $scope.retrieve_calendars
         ).catch(function () {
-            $scope.calendar_error_message = 'Could not get current user, are you somehow not logged in?';
+            $scope.calendar_error_message = 'Could not POST a calendar, not sure why';
         })
     };
 

@@ -21,21 +21,16 @@ app.service('calendar_service', ['$http', function ($http) {
             return response.data;
         });
     };
-    this.post_calendar = function (year, month, name, user_id) {
+    this.post_calendar = function (year, month, name) {
         return $http.post(
             '/planner/api/calendars/',
-            {'nickname': name, 'year': year, 'month': month, 'creator_id': user_id}
+            {'nickname': name, 'year': year, 'month': month}
         ).then(function (response) {
             return response.data;
         })
     };
     this.delete_calendar = function (calendar_id) {
         return $http.delete('/planner/api/calendars/' + calendar_id + '/').then(function (response) {
-            return response.data;
-        });
-    };
-    this.get_current_user = function () {
-        return $http.get('/planner/api/users/current_user_id/').then(function (response) {
             return response.data;
         });
     };

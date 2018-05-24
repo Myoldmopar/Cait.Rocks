@@ -239,20 +239,18 @@ describe('planner_controller testing add_calendar function', function () {
     it('should add a new calendar based on $scope variables which are usually models on user inputs', function () {
         spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.when({}));
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
-        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.when({id: 1}));
         $scope.calendar_year = 2018;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'Hey';
         $scope.add_calendar();
         $scope.$digest();
         expect(mock_calendar_service.post_calendar).toHaveBeenCalled();
-        expect(mock_calendar_service.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey', 1);
+        expect(mock_calendar_service.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey');
     });
 
     it('should fail to add a new calendar because the POST failed', function () {
         spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.reject('reasons'));
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
-        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.when({id: 1}));
         $scope.calendar_year = 2018;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'Hey';
@@ -260,19 +258,7 @@ describe('planner_controller testing add_calendar function', function () {
         $scope.add_calendar();
         $scope.$digest();
         expect(mock_calendar_service.post_calendar).toHaveBeenCalled();
-        expect(mock_calendar_service.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey', 1);
-        expect($scope.calendar_error_message).toBeTruthy();
-    });
-
-    it('should fail to add a new calendar because the get_current_user call failed', function () {
-        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.reject('reasons'));
-        $scope.calendar_year = 2018;
-        $scope.calendar_month = 5;
-        $scope.calendar_name = 'Hey';
-        $scope.calendar_error_message = '';
-        $scope.add_calendar();
-        $scope.$digest();
-        expect(mock_calendar_service.get_current_user).toHaveBeenCalled();
+        expect(mock_calendar_service.post_calendar).toHaveBeenCalledWith(2018, 5, 'Hey');
         expect($scope.calendar_error_message).toBeTruthy();
     });
 

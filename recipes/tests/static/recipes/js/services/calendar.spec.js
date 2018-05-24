@@ -57,12 +57,4 @@ describe('calendar_service testing', function () {
         });
         httpBackend.flush();
     });
-
-    it('should get the current user id and return exactly what comes back from api on data member', function () {
-        httpBackend.when('GET', '/planner/api/users/current_user_id/').respond('hi');
-        calendar_service.get_current_user().then(function (response) {
-            expect(response).toEqual('hi');
-        });
-        httpBackend.flush();
-    });
 });

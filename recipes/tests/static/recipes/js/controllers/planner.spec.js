@@ -178,7 +178,13 @@ describe('planner_controller testing select_recipe_id function', function () {
         spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.selected_calendar = {'id': 1};
-        $scope.month = {'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{recipe0: {id: 2}, recipe1: {id: 3}, date_number: 2}]]};
+        $scope.month = {
+            'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{
+                recipe0: {id: 2},
+                recipe1: {id: 3},
+                date_number: 2
+            }]]
+        };
         $scope.select_recipe_id(0, 0, 0, 1);
         $scope.$digest();
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalled();
@@ -208,7 +214,13 @@ describe('planner_controller testing clear_recipe_id function', function () {
         spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.selected_calendar = {'id': 1};
-        $scope.month = {'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{recipe0: {id: 2}, recipe1: {id: 3}, date_number: 2}]]};
+        $scope.month = {
+            'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{
+                recipe0: {id: 2},
+                recipe1: {id: 3},
+                date_number: 2
+            }]]
+        };
         $scope.clear_recipe_id(0, 1, 0, 2);
         $scope.$digest();
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalled();
@@ -361,32 +373,30 @@ describe('planner_controller testing remove_calendar function', function () {
     });
 
     it('should try to delete the current calendar but get negative confirmation', function () {
-        spyOn(mock_calendar_service, 'confirm_calendar_delete').and.returnValue(false);
+        spyOn(window, 'confirm').and.returnValue(false);
         $scope.selected_calendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
         $scope.remove_calendar();
-        expect(mock_calendar_service.confirm_calendar_delete).toHaveBeenCalled();
+        expect($scope.selected_calendar.id).toEqual(1);
     });
 
     it('should delete the current calendar', function () {
-        spyOn(mock_calendar_service, 'confirm_calendar_delete').and.returnValue(true);
+        spyOn(window, 'confirm').and.returnValue(true);
         spyOn(mock_calendar_service, 'delete_calendar').and.returnValue($scope.$q.when({}));
         spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
         $scope.selected_calendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
         $scope.remove_calendar();
         $scope.$digest();
-        expect(mock_calendar_service.confirm_calendar_delete).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalledWith(1);
     });
 
     it('should fail to delete the current calendar', function () {
-        spyOn(mock_calendar_service, 'confirm_calendar_delete').and.returnValue(true);
+        spyOn(window, 'confirm').and.returnValue(true);
         spyOn(mock_calendar_service, 'delete_calendar').and.returnValue($scope.$q.reject('reasons'));
         $scope.selected_calendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
         $scope.calendar_error_message = '';
         $scope.remove_calendar();
         $scope.$digest();
-        expect(mock_calendar_service.confirm_calendar_delete).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalled();
         expect(mock_calendar_service.delete_calendar).toHaveBeenCalledWith(1);
         expect($scope.calendar_error_message).toBeTruthy();
@@ -663,5 +673,34 @@ describe('planner_controller testing filter_table_rows function', function () {
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('none');
+    });
+});
+
+describe('planner_controller testing delete confirmation function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
+
+    it('should get positive delete confirmation from the user', function () {
+        spyOn(window, 'confirm').and.returnValue(true);
+        expect($scope.confirm_calendar_delete()).toEqual(true);
+    });
+
+    it('should get negative delete confirmation from the user', function () {
+        spyOn(window, 'confirm').and.returnValue(false);
+        expect($scope.confirm_calendar_delete()).toEqual(false);
     });
 });

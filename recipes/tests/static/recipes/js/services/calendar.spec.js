@@ -39,18 +39,7 @@ describe('calendar_service testing', function () {
         httpBackend.flush();
     });
 
-    it('should get positive delete confirmation from the user', function () {
-        spyOn(window, 'confirm').and.returnValue(true);
-        expect(calendar_service.confirm_calendar_delete()).toEqual(true);
-    });
-
-    it('should get negative delete confirmation from the user', function () {
-        spyOn(window, 'confirm').and.returnValue(false);
-        expect(calendar_service.confirm_calendar_delete()).toEqual(false);
-    });
-
     it('should delete one calendar and return exactly what comes back from api on data member', function () {
-        spyOn(window, 'confirm').and.returnValue(true);
         httpBackend.when('DELETE', '/planner/api/calendars/1/').respond('deleted');
         calendar_service.delete_calendar(1).then(function (response) {
             expect(response).toEqual('deleted');

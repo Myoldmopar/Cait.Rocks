@@ -35,13 +35,6 @@ app.service('calendar_service', ['$http', function ($http) {
         });
     };
 
-    // this is not really a service method, but seems like some sort of "worker" method
-    // not sure the best place for this, so it will live here for now
-
-    this.confirm_calendar_delete = function () {
-        return confirm('Are you super sure you want to delete this calendar?  This is permanent!');
-    };
-
     // So the following functions are much better suited to live in the controller, as they act on the page scope
     // and maybe the document object itself.  But the code is used by two different controllers, and I wasn't sure
     // where I should drop that code so that each controller could use it.  I thought about extending the controller

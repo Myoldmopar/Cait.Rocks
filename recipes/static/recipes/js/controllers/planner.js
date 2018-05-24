@@ -148,7 +148,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         if (!$scope.selected_calendar) {
             return;
         }
-        if (calendar_service.confirm_calendar_delete()) {
+        if ($scope.confirm_calendar_delete()) {
             calendar_service.delete_calendar($scope.selected_calendar.id).then(
                 function (response) {
                     $scope.selected_calendar = null;
@@ -167,6 +167,10 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         $scope.calendar_month = now.getMonth() + 1;
         $scope.calendar_year = now.getFullYear();
         $scope.calendar_date = now.getDate();
+    };
+
+    $scope.confirm_calendar_delete = function () {
+        return confirm('Are you super sure you want to delete this calendar?  This is permanent!');
     };
 
     $scope.init = function () {

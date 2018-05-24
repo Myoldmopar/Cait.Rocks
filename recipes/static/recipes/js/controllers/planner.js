@@ -93,7 +93,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         });
     };
 
-    $scope.get_month_data = function ($scope) {
+    $scope.get_month_data = function () {
         if ($scope.selected_calendar) {
             calendar_service.get_calendar_monthly_data($scope.selected_calendar.id).then(
                 function (date_response) {

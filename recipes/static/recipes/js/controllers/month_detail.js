@@ -3,7 +3,7 @@ var app = angular.module('cait_rocks_app');
 app.controller('month_detail_controller', ['$scope', 'calendar_service', function ($scope, calendar_service) {
     'use strict';
 
-    $scope.get_month_data = function ($scope) {
+    $scope.get_month_data = function () {
         if ($scope.selected_calendar) {
             calendar_service.get_calendar_monthly_data($scope.selected_calendar.id).then(
                 function (date_response) {

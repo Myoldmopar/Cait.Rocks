@@ -7,9 +7,6 @@ from recipes.models.recipe import Recipe
 
 
 class RecipeViewSet(ViewSet):
-    def list(self, request):
-        return render(request, 'recipes/recipe_list.html')
-
     def retrieve(self, request, pk=None):
         recipe = get_object_or_404(Recipe, pk=pk)
         ingredients = Ingredient.objects.filter(recipe=recipe)

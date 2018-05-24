@@ -21,6 +21,47 @@
                 data-toggle="collapse" data-target="#collapseManageMonths" aria-expanded="false">
             Manage Months
         </button>
+        <button id="view_recipes_button" class="btn btn-primary small-bottom-margin" type="button"
+                data-toggle="collapse" data-target="#collapseViewRecipes" aria-expanded="false">
+            Toggle Recipes
+        </button>
+    </div>
+
+    <div class="collapse small-bottom-margin" id="collapseViewRecipes">
+        <div id="view_recipes_container" class="card card-body">
+            <h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
+
+            <div id="recipe_filter_group" class="input-group">
+                <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
+                       placeholder="Search by recipe title, creator, or ingredient list..."/>
+                <span class="input-group-btn">
+                    <button id="recipe_filter_clear_button" class="btn btn-primary" type="button"
+                            ng-click="clear_filter()">Clear</button>
+                </span>
+            </div>
+
+            <div id="recipe_table_container">
+                <table id="recipeListTable" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="bordered_cell">Recipe Type</th>
+                        <th class="bordered_cell">Recipe Name</th>
+                        <th class="bordered_cell">Creator</th>
+                        <th class="hidden_bordered_cell">Ingredients-HIDDEN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="recipe in recipe_list">
+                        <td class="bordered_cell">{[{ recipe.recipe_type }]}</td>
+                        <td class="bordered_cell"><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
+                        <td class="bordered_cell">{[{ recipe.creator }]}</td>
+                        <td class="hidden_bordered_cell">{[{ recipe.ingredients }]}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
 
     <div class="collapse small-bottom-margin" id="collapseManageMonths">
@@ -99,8 +140,6 @@
             </td>
         </tr>
     </table>
-
-    {% include 'recipes/z_snippet_recipe_list.html' %}
 
 {% endblock %}
 

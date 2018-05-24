@@ -6,6 +6,15 @@
     float: right;
 }
 
+#view_recipes_button {
+    margin-right: 10px;
+    float: right;
+}
+
+#view_recipes_container {
+    padding: 10px;
+}
+
 #manage_months_container {
     padding: 10px;
 }

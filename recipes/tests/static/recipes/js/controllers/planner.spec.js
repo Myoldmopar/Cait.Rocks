@@ -447,12 +447,8 @@ describe('planner_controller testing clear_cal_error function', function () {
     });
 });
 
-// clear_filter and filter_table_rows function tests are just making sure the planner controller has these functions
-// The implementation of these functions has been moved to a service...for now...it should be a directive I think
-// The major testing of the underlying functionality is in the recipe_list controller test
-
 describe('planner_controller testing clear_filter function', function () {
-    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+    var $scope, mock_recipe_service, httpBackend;
 
     beforeEach(module('cait_rocks_app'));
 
@@ -483,15 +479,13 @@ describe('planner_controller testing clear_filter function', function () {
         document.body.removeChild(document.getElementById('recipeListTable'));
     });
 
-    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+    beforeEach(inject(function ($controller, $rootScope, recipe_service, $httpBackend, $q) {
         $scope = $rootScope.$new();
-        mock_calendar_service = calendar_service;
         mock_recipe_service = recipe_service;
         httpBackend = $httpBackend;
         $scope.$q = $q;
         $controller('planner_controller', {
             $scope: $scope,
-            calendar_service: mock_calendar_service,
             recipe_service: mock_recipe_service
         });
     }));
@@ -504,9 +498,20 @@ describe('planner_controller testing clear_filter function', function () {
 });
 
 describe('planner_controller testing filter_table_rows function', function () {
-    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+    var $scope, mock_recipe_service, httpBackend;
 
     beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            recipe_service: mock_recipe_service
+        });
+    }));
 
     beforeEach(function () {
         var recipeTable =
@@ -535,22 +540,128 @@ describe('planner_controller testing filter_table_rows function', function () {
         document.body.removeChild(document.getElementById('recipeListTable'));
     });
 
-    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
-        $scope = $rootScope.$new();
-        mock_calendar_service = calendar_service;
-        mock_recipe_service = recipe_service;
-        httpBackend = $httpBackend;
-        $scope.$q = $q;
-        $controller('planner_controller', {
-            $scope: $scope,
-            calendar_service: mock_calendar_service,
-            recipe_service: mock_recipe_service
-        });
-    }));
-
     it('should ignore if the filter text is too short', function () {
         $scope.filterText = '';
         $scope.filter_table_rows();
         // literally shouldn't do anything, just wait until possibly more text is entered before filtering
+    });
+
+    it('should re-show all table rows for a blank filter', function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = '';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it('should hide all table rows for a non-matching filter', function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+        row1.style.display = '';
+        row2.style.display = '';
+        $scope.filterText = 'abc';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('none');
+    });
+
+    it('should show based on title', function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Title';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'TitleA';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'TitleB';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it('should show based on creator', function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Creator';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'CreatorA';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'CreatorB';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it('should show based on ingredients', function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Ingredient';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'IngredientA';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'IngredientB';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('none');
+        expect(row2.style.display).toEqual('');
+    });
+
+    it('should match on multi-part search', function () {
+        var row1 = document.getElementById('row1');
+        var row2 = document.getElementById('row2');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'Ingredient Creator';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('');
+
+        row1.style.display = 'none';
+        row2.style.display = 'none';
+        $scope.filterText = 'IngredientA Creator';
+        $scope.filter_table_rows();
+        expect(row1.style.display).toEqual('');
+        expect(row2.style.display).toEqual('none');
     });
 });

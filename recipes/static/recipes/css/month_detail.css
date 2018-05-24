@@ -3,3 +3,7 @@
     margin-bottom: 4px;
     padding: 0.25rem;
 }
+
+#month_specs {
+    float: right;
+}

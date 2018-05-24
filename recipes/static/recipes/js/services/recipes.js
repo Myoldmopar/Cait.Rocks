@@ -3,7 +3,9 @@ var app = angular.module('cait_rocks_app');
 app.service('recipe_service', ['$http', function ($http) {
     'use strict';
     this.get_recipes = function () {
-        return $http.get('/planner/api/recipes/');
+        return $http.get('/planner/api/recipes/').then(function (response) {
+            return response.data;
+        });
     };
 
     // So the following functions are much better suited to live in the controller, as they act on the page scope
@@ -15,10 +17,12 @@ app.service('recipe_service', ['$http', function ($http) {
 
     this.retrieve_recipes = function ($scope) {
         this.get_recipes().then(
-            function (response) {
-                $scope.recipe_list = response.data;
+            function (data) {
+                $scope.recipe_list = data;
             }
-        );
+        ).catch(function () {
+            $scope.recipe_list = [];
+        });
     };
 
     this.filter_table_rows = function ($scope) {

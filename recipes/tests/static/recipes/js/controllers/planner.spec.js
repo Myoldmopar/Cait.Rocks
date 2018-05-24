@@ -17,8 +17,8 @@ describe('planner_controller testing init function', function () {
     }));
 
     it('should initialize the controller using a specific list of method calls', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
-        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when(['recipes']));
         $scope.init();
         $scope.$digest();
         expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
@@ -46,7 +46,7 @@ describe('planner_controller testing retrieve_recipes function', function () {
     }));
 
     it('should get recipes through the recipe API service', function () {
-        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when(['recipes']));
         $scope.retrieve_recipes();
         $scope.$digest();
         expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
@@ -79,7 +79,7 @@ describe('planner_controller testing get_month_data function', function () {
     });
 
     it('should get month data for the current calendar through the calendar API service', function () {
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.selected_calendar = {'id': 1};
         $scope.get_month_data();
         $scope.$digest();
@@ -108,8 +108,8 @@ describe('planner_controller testing retrieve_calendars function', function () {
     }));
 
     it('should get calendars through the calendar API service without a target id', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.initialize_to_calendar = undefined;
         $scope.retrieve_calendars();
         $scope.$digest();
@@ -118,8 +118,8 @@ describe('planner_controller testing retrieve_calendars function', function () {
     });
 
     it('should get calendars through the calendar API service with a target id', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.initialize_to_calendar = 1;
         $scope.retrieve_calendars();
         $scope.$digest();
@@ -148,7 +148,7 @@ describe('planner_controller testing select_recipe_id function', function () {
 
     it('should update the recipe id as if a drop-down was selected', function () {
         spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.selected_calendar = {'id': 1};
         $scope.month = {'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{recipe0: {id: 2}, recipe1: {id: 3}, date_number: 2}]]};
         $scope.select_recipe_id(0, 0, 0, 1);
@@ -210,8 +210,8 @@ describe('planner_controller testing add_calendar function', function () {
 
     it('should add a new calendar based on $scope variables which are usually models on user inputs', function () {
         spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.when({}));
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({data: []}));
-        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.when({data: {id: 1}}));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
+        spyOn(mock_calendar_service, 'get_current_user').and.returnValue($scope.$q.when({id: 1}));
         $scope.calendar_year = 2018;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'Hey';
@@ -228,21 +228,21 @@ describe('planner_controller testing add_calendar function', function () {
         $scope.calendar_month = 5;
         $scope.calendar_name = 'name';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
         // year too low
         $scope.clear_cal_error();
         $scope.calendar_year = 2015;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'name';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
         // year too high
         $scope.clear_cal_error();
         $scope.calendar_year = 2032;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'name';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 
     it('should fail to add a calendar for bad months', function () {
@@ -252,21 +252,21 @@ describe('planner_controller testing add_calendar function', function () {
         $scope.calendar_month = null;
         $scope.calendar_name = 'name';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
         // month too low
         $scope.clear_cal_error();
         $scope.calendar_year = 2019;
         $scope.calendar_month = 0;
         $scope.calendar_name = 'name';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
         // month too high
         $scope.clear_cal_error();
         $scope.calendar_year = 2019;
         $scope.calendar_month = 13;
         $scope.calendar_name = 'name';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 
     it('should fail to add a calendar for missing name', function () {
@@ -276,21 +276,21 @@ describe('planner_controller testing add_calendar function', function () {
         $scope.calendar_month = 1;
         $scope.calendar_name = '';
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
         // null name
         $scope.clear_cal_error();
         $scope.calendar_year = 2019;
         $scope.calendar_month = 1;
         $scope.calendar_name = null;
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
         // undefined name
         $scope.clear_cal_error();
         $scope.calendar_year = 2019;
         $scope.calendar_month = 1;
         $scope.calendar_name = undefined;
         $scope.add_calendar();
-        expect($scope.add_calendar_error_message).toBeTruthy();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 });
 
@@ -387,9 +387,9 @@ describe('planner_controller testing clear_cal_error function', function () {
     }));
 
     it('should clear the calendar error', function () {
-        $scope.add_calendar_error_message = 'Hey there was an error!';
+        $scope.calendar_error_message = 'Hey there was an error!';
         $scope.clear_cal_error();
-        expect($scope.add_calendar_error_message).toEqual(false);
+        expect($scope.calendar_error_message).toEqual(false);
     });
 });
 

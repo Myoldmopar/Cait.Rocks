@@ -52,10 +52,10 @@
                     <input class="btn btn-primary form-control" type="submit" value="Add New Month">
                 </div>
             </form>
-            <div id="calendar_err_msg" class="alert alert-danger" ng-show="add_calendar_error_message">
+            <div id="calendar_err_msg" class="alert alert-danger" ng-show="calendar_error_message">
                 <div class="col-md-12">
                     <button type="button" class="close" ng-click="clear_cal_error()">&times;</button>
-                    <strong>Error:</strong> {[{ add_calendar_error_message }]}
+                    <strong>Error:</strong> {[{ calendar_error_message }]}
                 </div>
             </div>
         </div>

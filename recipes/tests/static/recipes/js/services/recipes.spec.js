@@ -11,7 +11,7 @@ describe('recipe_service testing', function () {
     it('should get recipes and return exactly what comes back from api on data member', function () {
         httpBackend.when('GET', '/planner/api/recipes/').respond('yummy recipes');
         recipe_service.get_recipes().then(function (response) {
-            expect(response.data).toEqual('yummy recipes');
+            expect(response).toEqual('yummy recipes');
         });
         httpBackend.flush();
     });

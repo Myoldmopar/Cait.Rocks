@@ -39,8 +39,8 @@ describe('month_detail_controller testing retrieve_calendars function', function
     }));
 
     it('should get calendars through the calendar API service with a target id', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.initialize_to_calendar = 1;
         $scope.retrieve_calendars();
         $scope.$digest();
@@ -51,8 +51,8 @@ describe('month_detail_controller testing retrieve_calendars function', function
     it('should get calendars through the calendar API service without a target id', function () {
         // this isn't really useful on the page, but I would like to verify what happens
         // this will also go away once we remove the angular stuff from the month detail view
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': [{'id': 1}, {'id': 2}]}));
-        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
+        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
+        spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.retrieve_calendars();
         $scope.$digest();
         expect(mock_calendar_service.get_calendars).toHaveBeenCalled();

@@ -15,7 +15,7 @@ describe('recipe_list_controller testing init function', function () {
     }));
 
     it('should initialize the controller just for recipes', function () {
-        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when({'data': ['recipes']}));
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when(['recipes']));
         $scope.init();
         $scope.$digest();
         expect(mock_recipe_service.get_recipes).toHaveBeenCalled();

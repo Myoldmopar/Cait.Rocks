@@ -10,7 +10,7 @@ describe('calendar_service testing', function () {
     it('should get calendars and return exactly what comes back from api on data member', function () {
         httpBackend.when('GET', '/planner/api/calendars/').respond('stuff');
         calendar_service.get_calendars().then(function (response) {
-            expect(response.data).toEqual('stuff');
+            expect(response).toEqual('stuff');
         });
         httpBackend.flush();
     });
@@ -18,7 +18,7 @@ describe('calendar_service testing', function () {
     it('should get one calendar and return exactly what comes back from api on data member', function () {
         httpBackend.when('GET', '/planner/api/calendars/1/monthly_data/').respond('stuff1');
         calendar_service.get_calendar_monthly_data(1).then(function (response) {
-            expect(response.data).toEqual('stuff1');
+            expect(response).toEqual('stuff1');
         });
         httpBackend.flush();
     });
@@ -26,15 +26,15 @@ describe('calendar_service testing', function () {
     it('should create a new calendar and return exactly what comes back from api on data member', function () {
         httpBackend.when('POST', '/planner/api/calendars/').respond('whatever_server_responds');
         calendar_service.post_calendar(2018, 1, 'name').then(function (response) {
-            expect(response.data).toEqual('whatever_server_responds');
+            expect(response).toEqual('whatever_server_responds');
         });
         httpBackend.flush();
     });
 
-    it('should get one calendar and return exactly what comes back from api on data member', function () {
+    it('should update calendar recipe id and return exactly what comes back from api on data member', function () {
         httpBackend.when('PUT', '/planner/api/calendars/1/recipe_id/').respond('updated');
         calendar_service.update_calendar_recipe_id(1, 25, 0, 1).then(function (response) {
-            expect(response.data).toEqual('updated');
+            expect(response).toEqual('updated');
         });
         httpBackend.flush();
     });
@@ -53,15 +53,15 @@ describe('calendar_service testing', function () {
         spyOn(window, 'confirm').and.returnValue(true);
         httpBackend.when('DELETE', '/planner/api/calendars/1/').respond('deleted');
         calendar_service.delete_calendar(1).then(function (response) {
-            expect(response.data).toEqual('deleted');
+            expect(response).toEqual('deleted');
         });
         httpBackend.flush();
     });
 
     it('should get the current user id and return exactly what comes back from api on data member', function () {
-        httpBackend.when('GET', '/planner/api/users/current_user_id/').respond({data:'hi'});
+        httpBackend.when('GET', '/planner/api/users/current_user_id/').respond('hi');
         calendar_service.get_current_user().then(function (response) {
-            expect(response.data).toEqual({data: 'hi'});
+            expect(response).toEqual('hi');
         });
         httpBackend.flush();
     });

@@ -9,13 +9,12 @@
 
 {% block ng_controller %}ng-controller="month_detail_controller"{% endblock %}
 
-{% block ng_init %}ng-init="init()"{% endblock %}
-
 {% block content %}
-    <div ng-init="initialize_to_calendar={{ month.id }} ">
+    <div ng-init="retrieve_calendar({{ month_id }})">
         <h1>
             {[{ selected_calendar.nickname }]}
             <small>({[{ selected_calendar.creator }]})</small>
+            <span style="float: right;">{{ month_name }} {[{ selected_calendar.year }]}</span>
         </h1>
         <table id="month_table" class="table table-bordered">
             <tr>

@@ -16,6 +16,14 @@ describe('calendar_service testing', function () {
     });
 
     it('should get one calendar and return exactly what comes back from api on data member', function () {
+        httpBackend.when('GET', '/planner/api/calendars/1/').respond('stuff');
+        calendar_service.get_calendar(1).then(function (response) {
+            expect(response).toEqual('stuff');
+        });
+        httpBackend.flush();
+    });
+
+    it('should get one calendar worth of data and return exactly what comes back from api on data member', function () {
         httpBackend.when('GET', '/planner/api/calendars/1/monthly_data/').respond('stuff1');
         calendar_service.get_calendar_monthly_data(1).then(function (response) {
             expect(response).toEqual('stuff1');
@@ -39,29 +47,10 @@ describe('calendar_service testing', function () {
         httpBackend.flush();
     });
 
-    it('should get positive delete confirmation from the user', function () {
-        spyOn(window, 'confirm').and.returnValue(true);
-        expect(calendar_service.confirm_calendar_delete()).toEqual(true);
-    });
-
-    it('should get negative delete confirmation from the user', function () {
-        spyOn(window, 'confirm').and.returnValue(false);
-        expect(calendar_service.confirm_calendar_delete()).toEqual(false);
-    });
-
     it('should delete one calendar and return exactly what comes back from api on data member', function () {
-        spyOn(window, 'confirm').and.returnValue(true);
         httpBackend.when('DELETE', '/planner/api/calendars/1/').respond('deleted');
         calendar_service.delete_calendar(1).then(function (response) {
             expect(response).toEqual('deleted');
-        });
-        httpBackend.flush();
-    });
-
-    it('should get the current user id and return exactly what comes back from api on data member', function () {
-        httpBackend.when('GET', '/planner/api/users/current_user_id/').respond('hi');
-        calendar_service.get_current_user().then(function (response) {
-            expect(response).toEqual('hi');
         });
         httpBackend.flush();
     });

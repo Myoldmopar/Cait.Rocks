@@ -15,5 +15,4 @@ describe('recipe_service testing', function () {
         });
         httpBackend.flush();
     });
-
 });

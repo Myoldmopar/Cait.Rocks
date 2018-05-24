@@ -82,7 +82,8 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         calendar_service.get_calendars().then(
             function (calendars_response) {
                 if (calendars_response.length === 0) {
-                    return;
+                    $scope.selected_calendar = null;
+                    $scope.month = null;
                 }
                 $scope.allCalendars = calendars_response;
                 $scope.selected_calendar = $scope.allCalendars[$scope.allCalendars.length - 1];

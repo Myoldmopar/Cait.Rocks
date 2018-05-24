@@ -7,7 +7,7 @@
   "description": "Django-backed website for Cait.Rocks",
   "license": "MIT",
   "engines": {
-    "yarn": "1.6.0"
+    "yarn": "1.7.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run",

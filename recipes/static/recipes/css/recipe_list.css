@@ -2,6 +2,10 @@
     border: 1px solid black !important;
 }
 
+.selected_recipe_row {
+    background-color: orange;
+}
+
 /*.link_holding_cell {*/
     /*position: relative;*/
 /*}*/

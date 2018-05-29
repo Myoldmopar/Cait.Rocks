@@ -7,4 +7,9 @@ app.service('recipe_service', ['$http', function ($http) {
             return response.data;
         });
     };
+    this.get_recipe = function (recipe_id) {
+        return $http.get('/planner/api/recipes/' + recipe_id + '/').then(function (response) {
+            return response.data;
+        });
+    };
 }]);

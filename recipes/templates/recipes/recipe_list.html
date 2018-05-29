@@ -1,0 +1,74 @@
+{% extends 'recipes/base.html' %}
+
+{% block title %}Cait.Rocks Recipes{% endblock %}
+
+{% block page_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'recipes/css/recipe_list.css' %}">
+{% endblock %}
+
+{% block ng_controller %}ng-controller="recipe_list_controller"{% endblock %}
+
+{% block ng_init %}ng-init="init()"{% endblock %}
+
+{% block content %}
+    <h2>Recipes</h2>
+
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" placeholder="Filter Recipes" ng-model="searchRecipe">
+            </div>
+        </div>
+    </form>
+
+    <table id="recipe_list_table" class="table table-bordered">
+
+        <thead>
+        <tr>
+            <td>
+                <a href="#" ng-click="sortType = 'recipe_type'; sortReverse = !sortReverse">
+                    Recipe Type
+                    <span ng-show="sortType == 'recipe_type' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'recipe_type' && sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
+                    Recipe Name
+                    <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td>
+                <a href="#" ng-click="sortType = 'creator'; sortReverse = !sortReverse">
+                    Creator
+                    <span ng-show="sortType == 'creator' && !sortReverse" class="fa fa-caret-down"></span>
+                    <span ng-show="sortType == 'creator' && sortReverse" class="fa fa-caret-up"></span>
+                </a>
+            </td>
+            <td class="hidden_bordered_cell">
+                Ingredients-HIDDEN
+            </td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="recipe in allRecipes | orderBy:sortType:sortReverse | filter:searchRecipe" ng-click="logme(recipe.id)">
+            <td class="bordered_cell">{[{ recipe.recipe_type }]}</td>
+            <td class="bordered_cell link_holding_cell"><a class="link_cell" href="{[{ recipe.get_absolute_url }}">{[{ recipe.title }]}</a></td>
+            <td class="bordered_cell">{[{ recipe.creator }]}</td>
+            <td class="hidden_bordered_cell">{[{ recipe.ingredients }]}</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+{% endblock %}
+
+{% block page_js %}
+    {% load static %}
+    <script src="{% static 'recipes/js/controllers/recipe_list.js' %}"></script>
+    <script src="{% static 'recipes/js/services/recipes.js' %}"></script>
+{% endblock %}

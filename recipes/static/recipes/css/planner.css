@@ -43,3 +43,7 @@
 .recipes_div_container {
     margin-bottom: 4px;
 }
+
+.clear_recipe_button {
+    border-radius: 5px;
+}

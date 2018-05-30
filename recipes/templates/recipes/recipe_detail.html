@@ -17,5 +17,8 @@
         <h2>Directions</h2>
         <p>{{ recipe.directions | linebreaks }}</p>
 
+        <h2>Recipe Image</h2>
+
+        <img src="{{ recipe.image.url }}"/>
     {% endif %}
 {% endblock %}

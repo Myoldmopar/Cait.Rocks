@@ -145,3 +145,6 @@ DATABASES['default'].update(db_from_env)
 # Upon logging in, redirect to where?
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'planner:planner-list'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+MEDIA_URL = '/media/'

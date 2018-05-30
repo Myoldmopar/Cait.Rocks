@@ -42,6 +42,7 @@ class Recipe(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True, help_text='The creation date for this recipe object')
     modified_date = models.DateTimeField(auto_now=True, help_text='The last modified date for this recipe object')
+    image = models.ImageField(upload_to='images/%y/%m/%d', max_length=200, null=True, blank=True)
 
     def __str__(self):
         """

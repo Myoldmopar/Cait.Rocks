@@ -18,7 +18,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('id', 'title', 'recipe_type', 'creator', 'absolute_url', 'ingredients', 'directions')
+        fields = ('id', 'title', 'recipe_type', 'creator', 'absolute_url', 'ingredients', 'directions', 'image')
 
     def get_absolute_url(self, recipe_instance):
         """

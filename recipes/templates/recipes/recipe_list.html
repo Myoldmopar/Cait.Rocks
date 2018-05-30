@@ -17,7 +17,7 @@
     <form>
         <div class="form-group">
             <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <div class="input-group-addon"></div>
                 <input type="text" class="form-control" placeholder="Filter Recipes" ng-model="searchRecipe">
             </div>
         </div>
@@ -66,18 +66,28 @@
     </table>
 
     <div ng-show="selected_recipe">
+
         <h1>{[{ selected_recipe.title }]}</h1>
 
-        <h2>Ingredients</h2>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="ingredient in selected_recipe.ingredients">
-                {[{ ingredient }]}
-            </li>
-        </ul>
+        <hr>
 
-        <h2>Directions</h2>
-        <p style="white-space: pre-wrap;">{[{ selected_recipe.directions }]}</p>
+        <div class="row">
+            <div ng-show="selected_recipe.image" class="col-3" style="border-right: solid 1px rgba(0, 0, 0, 0.1);">
+                <img id="selected_recipe_image" src="{[{ selected_recipe.image }]}"/>
+            </div>
 
+            <div class="col-9">
+                <h2>Ingredients</h2>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="ingredient in selected_recipe.ingredients">
+                        {[{ ingredient }]}
+                    </li>
+                </ul>
+
+                <h2 style="margin-top:20px;">Directions</h2>
+                <p style="white-space: pre-wrap;">{[{ selected_recipe.directions }]}</p>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

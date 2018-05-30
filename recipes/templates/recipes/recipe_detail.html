@@ -7,18 +7,29 @@
 
         <h1>{{ recipe.title }}</h1>
 
-        <h2>Ingredients</h2>
-        <ul class="list-group" id="ingredientList">
-            {% for ingredient in ingredients %}
-                <li class="list-group-item">{{ ingredient }}</li>
-            {% endfor %}
-        </ul>
+        <hr>
 
-        <h2>Directions</h2>
-        <p>{{ recipe.directions | linebreaks }}</p>
+        <div class="row">
+            {% if recipe.image %}
+            <div class="col-3" style="border-right: solid 1px rgba(0, 0, 0, 0.1);">
+                <img id="selected_recipe_image" src="{{ recipe.image.url }}" style="max-width: 100%; height: auto;"/>
+            </div>
 
-        <h2>Recipe Image</h2>
+            <div class="col-9">
+            {% else %}
+            <div class="col-12">
+            {% endif %}
+                <h2>Ingredients</h2>
+                <ul class="list-group" id="ingredientList">
+                    {% for ingredient in ingredients %}
+                        <li class="list-group-item">{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
 
-        <img src="{{ recipe.image.url }}"/>
+                <h2>Directions</h2>
+                <p>{{ recipe.directions | linebreaks }}</p>
+
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

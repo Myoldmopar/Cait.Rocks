@@ -14,7 +14,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}">
-    {% block app_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'recipes/css/cait_rocks.css' %}">
     {% block page_css %}{% endblock %}
 
 </head>
@@ -69,7 +69,7 @@
     </nav>
 {% endblock %}
 
-<div class="container-fluid" id="mainBodyContainer">
+<div class="container-fluid" id="main_body_container">
     <div class="row-fluid">
         <div class="col-12">
             {% block content %}{% endblock %}

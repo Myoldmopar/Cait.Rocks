@@ -102,10 +102,6 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-argv@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/argv/-/argv-0.0.2.tgz#ecbd16f8949b157183711b1bda334f37840185ab"
-
 arr-diff@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-2.0.0.tgz#8f3b827f955a8bd669697e4a4256ac3ceae356cf"
@@ -405,13 +401,9 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-codecov@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/codecov/-/codecov-3.0.2.tgz#aea43843a5cd2fb6b7e488b2eff25d367ab70b12"
-  dependencies:
-    argv "0.0.2"
-    request "^2.81.0"
-    urlgrey "0.4.4"
+codecov@4.0.0-0:
+  version "4.0.0-0"
+  resolved "https://registry.yarnpkg.com/codecov/-/codecov-4.0.0-0.tgz#f9586a54b04705278dd6746c1a0b70d3f7bc6da5"
 
 colors@^1.1.0:
   version "1.2.5"
@@ -1336,7 +1328,7 @@ jasmine-core@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-3.1.0.tgz#a4785e135d5df65024dfc9224953df585bd2766c"
 
-jquery@^3.3.1:
+jquery@3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
@@ -2180,7 +2172,7 @@ request@2.75.x:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
 
-request@^2.0.0, request@^2.74.0, request@^2.81.0:
+request@^2.0.0, request@^2.74.0:
   version "2.85.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.85.0.tgz#5a03615a47c61420b3eb99b7dba204f83603e1fa"
   dependencies:
@@ -2585,10 +2577,6 @@ underscore@~1.7.0:
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
-
-urlgrey@0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/urlgrey/-/urlgrey-0.4.4.tgz#892fe95960805e85519f1cd4389f2cb4cbb7652f"
 
 useragent@2.2.1:
   version "2.2.1"

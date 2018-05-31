@@ -19,7 +19,7 @@ class RecipeTypes(object):
 
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=100, help_text='The descriptive title for this recipe')
+    title = models.CharField(max_length=100, unique=True, help_text='The descriptive title for this recipe')
 
     RECIPE_TYPE_CHOICES = (
         (RecipeTypes.UNKNOWN, 'Unknown'),

@@ -18,7 +18,7 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon"></div>
-                <input type="text" class="form-control" placeholder="Filter Recipes" ng-model="searchRecipe">
+                <input type="text" class="form-control" placeholder="Filter Recipes" ng-model="search_recipe">
             </div>
         </div>
     </form>
@@ -27,22 +27,22 @@
 
         <thead>
         <tr>
-            <td ng-click="sortType = 'recipe_type'; sortReverse = !sortReverse">
+            <td ng-click="sort_type = 'recipe_type'; sort_reverse = !sort_reverse">
                 Recipe Type
-                <span ng-show="sortType == 'recipe_type' && !sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'recipe_type' && sortReverse" class="fa fa-caret-up"></span>
+                <span ng-show="sort_type == 'recipe_type' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'recipe_type' && sort_reverse" class="fa fa-caret-up"></span>
 
             </td>
-            <td ng-click="sortType = 'title'; sortReverse = !sortReverse">
+            <td ng-click="sort_type = 'title'; sort_reverse = !sort_reverse">
                 Recipe Name
-                <span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
+                <span ng-show="sort_type == 'title' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'title' && sort_reverse" class="fa fa-caret-up"></span>
 
             </td>
-            <td ng-click="sortType = 'creator'; sortReverse = !sortReverse">
+            <td ng-click="sort_type = 'creator'; sort_reverse = !sort_reverse">
                 Creator
-                <span ng-show="sortType == 'creator' && !sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="sortType == 'creator' && sortReverse" class="fa fa-caret-up"></span>
+                <span ng-show="sort_type == 'creator' && !sort_reverse" class="fa fa-caret-down"></span>
+                <span ng-show="sort_type == 'creator' && sort_reverse" class="fa fa-caret-up"></span>
             </td>
             <td class="hidden_bordered_cell">
                 Ingredients-HIDDEN
@@ -51,7 +51,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="recipe in allRecipes | orderBy:sortType:sortReverse | filter:searchRecipe"
+        <tr ng-repeat="recipe in allRecipes | orderBy:sort_type:sort_reverse | filter:search_recipe"
             ng-click="select_a_recipe(recipe.id)"
             style="cursor: pointer;"
             ng-class="selected_recipe.id==recipe.id ? 'selected_recipe_row' : ''"

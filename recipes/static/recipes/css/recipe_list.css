@@ -1,0 +1,23 @@
+#recipe_list_table thead tr td {
+    border: 1px solid black !important;
+}
+
+.selected_recipe_row {
+    background-color: orange;
+}
+
+#selected_recipe_image {
+    max-width: 100%;
+    height: auto;
+}
+
+/*.link_holding_cell {*/
+/*position: relative;*/
+/*}*/
+
+/*.link_cell {*/
+/*display: block;*/
+/*text-align: center;*/
+/*padding: 10em;*/
+/*margin: -10em;*/
+/*}*/

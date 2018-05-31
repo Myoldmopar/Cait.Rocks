@@ -13,7 +13,8 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
-    {% block app_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'recipes/css/cait_rocks.css' %}">
     {% block page_css %}{% endblock %}
 
 </head>
@@ -32,8 +33,13 @@
 
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav mr-auto">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'planner:planner-list' %}">PlanningTool</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'planner:planner-list' %}">PlanningTool</a>
+                    <a class="nav-link" href="{% url 'planner:recipe_views-list' %}">Recipes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'planner:months-list' %}">MonthlyPlans</a>
@@ -63,7 +69,7 @@
     </nav>
 {% endblock %}
 
-<div class="container-fluid" id="mainBodyContainer">
+<div class="container-fluid" id="main_body_container">
     <div class="row-fluid">
         <div class="col-12">
             {% block content %}{% endblock %}

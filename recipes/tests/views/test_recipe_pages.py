@@ -32,3 +32,20 @@ class TestRecipeDetailView(TestCase):
         soup = BeautifulSoup(html_response_content, 'html.parser')
         ingredient_lists = soup.find_all(id='ingredientList')
         self.assertEqual(1, len(ingredient_lists))
+
+
+class TestRecipeListView(TestCase):
+    def test_url_path(self):
+        """
+        Test the path directly
+        """
+        response = self.client.get('/planner/recipe_views/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_reversed_path(self):
+        """
+        Rely on the url reversing
+        """
+        url_path = reverse('planner:recipe_views-list')
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, 200)

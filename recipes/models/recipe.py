@@ -19,7 +19,7 @@ class RecipeTypes(object):
 
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=100, help_text='The descriptive title for this recipe')
+    title = models.CharField(max_length=100, unique=True, help_text='The descriptive title for this recipe')
 
     RECIPE_TYPE_CHOICES = (
         (RecipeTypes.UNKNOWN, 'Unknown'),
@@ -42,6 +42,7 @@ class Recipe(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True, help_text='The creation date for this recipe object')
     modified_date = models.DateTimeField(auto_now=True, help_text='The last modified date for this recipe object')
+    image = models.ImageField(upload_to='images/%y/%m/%d', max_length=200, null=True, blank=True)
 
     def __str__(self):
         """

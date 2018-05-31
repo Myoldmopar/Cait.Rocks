@@ -15,4 +15,12 @@ describe('recipe_service testing', function () {
         });
         httpBackend.flush();
     });
+
+    it('should get a single recipe and return exactly what comes back from api on data member', function () {
+        httpBackend.when('GET', '/planner/api/recipes/1/').respond('yummy recipe');
+        recipe_service.get_recipe(1).then(function (response) {
+            expect(response).toEqual('yummy recipe');
+        });
+        httpBackend.flush();
+    });
 });

@@ -196,9 +196,19 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         return confirm('Are you super sure you want to delete this calendar?  This is permanent!');
     };
 
+    $scope.add_blank_recipe = function () {
+        console.log("Found recipe title: ", $scope.blank_recipe_title);
+        recipe_service.post_blank_recipe($scope.blank_recipe_title).then(
+            function (response) {
+                $scope.retrieve_recipes();
+            }
+        )
+    };
+
     $scope.init = function () {
         // use this init for pages where you need recipes, calendars, date, etc.
         $scope.filterText = '';
+        $scope.blank_recipe_title = '';
         $scope.recipe_list = [];
         $scope.calendar_error_message = false;
         $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

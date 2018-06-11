@@ -32,7 +32,7 @@
 
     <div class="collapse small-bottom-margin" id="collapseViewRecipes">
         <div id="view_recipes_container" class="card card-body">
-            <h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
+            <h2>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h2>
 
             <div id="recipe_filter_group" class="input-group">
                 <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
@@ -63,6 +63,14 @@
                     </tbody>
                 </table>
             </div>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label style="font-size:32px;" for="blank_recipe_title">Quick Add Recipe Title:</label>
+                    <input style="margin-left:8px;" class="form-control" id="blank_recipe_title" ng-model="blank_recipe_title" placeholder="Recipe Title">
+                    <button class="btn btn-primary" style="margin-left:8px;" ng-click="add_blank_recipe()" class="btn btn-default">Submit</button>
+                </div>
+            </form>
 
         </div>
     </div>

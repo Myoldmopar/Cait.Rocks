@@ -17,7 +17,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         // Declare variables
         var filter, table, tr, td, i, j, inner_a;
         filter = $scope.filterText.toUpperCase();
-        table = document.getElementById('recipeListTable');
+        table = document.getElementById('recipe_list_table');
         tr = table.getElementsByTagName('tr');
 
         // make sure all rows are shown first

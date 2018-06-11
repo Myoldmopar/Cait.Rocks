@@ -473,7 +473,7 @@ describe('planner_controller testing clear_filter function', function () {
 
     beforeEach(function () {
         var recipeTable =
-            '<table id="recipeListTable">' +
+            '<table id="recipe_list_table">' +
             '<tr>' +
             '<th></th><th></th><th></th><th></th>' +
             '</tr>' +
@@ -495,7 +495,7 @@ describe('planner_controller testing clear_filter function', function () {
     });
 
     afterEach(function () {
-        document.body.removeChild(document.getElementById('recipeListTable'));
+        document.body.removeChild(document.getElementById('recipe_list_table'));
     });
 
     beforeEach(inject(function ($controller, $rootScope, recipe_service, $httpBackend, $q) {
@@ -534,7 +534,7 @@ describe('planner_controller testing filter_table_rows function', function () {
 
     beforeEach(function () {
         var recipeTable =
-            '<table id="recipeListTable">' +
+            '<table id="recipe_list_table">' +
             '<tr>' +
             '<th></th><th></th><th></th><th></th>' +
             '</tr>' +
@@ -556,7 +556,7 @@ describe('planner_controller testing filter_table_rows function', function () {
     });
 
     afterEach(function () {
-        document.body.removeChild(document.getElementById('recipeListTable'));
+        document.body.removeChild(document.getElementById('recipe_list_table'));
     });
 
     it('should ignore if the filter text is too short', function () {

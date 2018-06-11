@@ -44,6 +44,23 @@
     margin-bottom: 4px;
 }
 
+.recipe_select {
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+
 .clear_recipe_button {
     border-radius: 5px;
+    border-style: solid !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    line-height: 32px;
+}
+
+.heading_text {
+    font-size: 32px;
+}
+
+.small_left_margin {
+    margin-left: 8px;
 }

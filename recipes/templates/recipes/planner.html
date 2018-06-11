@@ -21,16 +21,16 @@
             Need to add a calendar!
         </h1>
         <button id="manage_months_button" class="btn btn-primary small_bottom_margin" type="button"
-                data-toggle="collapse" data-target="#collapseManageMonths" aria-expanded="false">
+                data-toggle="collapse" data-target="#collapse_manage_months" aria-expanded="false">
             Manage Months
         </button>
         <button id="view_recipes_button" class="btn btn-primary small_bottom_margin" type="button"
-                data-toggle="collapse" data-target="#collapseViewRecipes" aria-expanded="false">
+                data-toggle="collapse" data-target="#collapse_recipe_view" aria-expanded="false">
             Toggle Recipes
         </button>
     </div>
 
-    <div class="collapse small_bottom_margin" id="collapseViewRecipes">
+    <div class="collapse small_bottom_margin" id="collapse_recipe_view">
         <div id="view_recipes_container" class="card card-body">
             <h2>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h2>
 
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div class="collapse small_bottom_margin" id="collapseManageMonths">
+    <div class="collapse small_bottom_margin" id="collapse_manage_months">
         <div id="manage_months_container" class="card card-body">
             <div id="month_dropdown_container" class="input-group">
                 <select id="month_dropdown" ng-model="selected_calendar" ng-options="c.nickname for c in allCalendars"

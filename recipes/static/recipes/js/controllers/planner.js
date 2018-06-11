@@ -119,11 +119,17 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.clear_recipe_id = function (week_num, day_num, recipe_num, date_num) {
-        calendar_service.update_calendar_recipe_id($scope.selected_calendar.id, date_num, recipe_num, 0).then(
-            function (response) {
-                $scope.get_month_data();
-            }
-        )
+        if ($scope.confirm_recipe_delete()) {
+            calendar_service.update_calendar_recipe_id($scope.selected_calendar.id, date_num, recipe_num, 0).then(
+                function (response) {
+                    $scope.get_month_data();
+                }
+            ).catch(function () {
+                $scope.calendar_error_message = 'Could not remove selected recipe!';
+            });
+        } else {
+            // nothing should happen
+        }
     };
 
     $scope.clear_cal_error = function () {
@@ -196,13 +202,22 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         return confirm('Are you super sure you want to delete this calendar?  This is permanent!');
     };
 
+    $scope.confirm_recipe_delete = function () {
+        return confirm('Are you sure you want to clear this recipe?');
+    };
+
     $scope.add_blank_recipe = function () {
-        console.log("Found recipe title: ", $scope.blank_recipe_title);
+        if (!$scope.blank_recipe_title) {
+            $scope.calendar_error_message = 'Cannot add a blank recipe title!';
+            return;
+        }
         recipe_service.post_blank_recipe($scope.blank_recipe_title).then(
             function (response) {
                 $scope.retrieve_recipes();
             }
-        )
+        ).catch(function () {
+            $scope.calendar_error_message = 'Could not create a blank recipe!';
+        })
     };
 
     $scope.init = function () {

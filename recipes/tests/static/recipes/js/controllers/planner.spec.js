@@ -201,6 +201,7 @@ describe('planner_controller testing clear_recipe_id function', function () {
     }));
 
     it('should clear the recipe id as if a clear button was pressed', function () {
+        spyOn(window, 'confirm').and.returnValue(true);
         spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.when({}));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'data': {'num_weeks': 5}}));
         $scope.selected_calendar = {'id': 1};
@@ -217,6 +218,24 @@ describe('planner_controller testing clear_recipe_id function', function () {
         expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalledWith(1, 2, 0, 0);
         // we aren't actually updating anything on the database, so the best we can do is to verify that it tried to call the right service method
         expect(mock_calendar_service.get_calendar_monthly_data).toHaveBeenCalled();
+    });
+
+    it('should fail to clear the recipe id when a clear button was pressed', function () {
+        spyOn(window, 'confirm').and.returnValue(true);
+        spyOn(mock_calendar_service, 'update_calendar_recipe_id').and.returnValue($scope.$q.reject('reasons'));
+        $scope.selected_calendar = {'id': 1};
+        $scope.month = {
+            'data': [[{recipe0: {id: 0}, recipe1: {id: 1}, date_number: 1}], [{
+                recipe0: {id: 2},
+                recipe1: {id: 3},
+                date_number: 2
+            }]]
+        };
+        $scope.clear_recipe_id(0, 1, 0, 2);
+        $scope.$digest();
+        expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalled();
+        expect(mock_calendar_service.update_calendar_recipe_id).toHaveBeenCalledWith(1, 2, 0, 0);
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 });
 
@@ -666,7 +685,7 @@ describe('planner_controller testing filter_table_rows function', function () {
     });
 });
 
-describe('planner_controller testing delete confirmation function', function () {
+describe('planner_controller testing delete calendar confirmation function', function () {
     var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
 
     beforeEach(module('cait_rocks_app'));
@@ -692,5 +711,81 @@ describe('planner_controller testing delete confirmation function', function () 
     it('should get negative delete confirmation from the user', function () {
         spyOn(window, 'confirm').and.returnValue(false);
         expect($scope.confirm_calendar_delete()).toEqual(false);
+    });
+});
+
+describe('planner_controller testing delete recipe confirmation function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
+
+    it('should get positive delete confirmation from the user', function () {
+        spyOn(window, 'confirm').and.returnValue(true);
+        expect($scope.confirm_recipe_delete()).toEqual(true);
+    });
+
+    it('should get negative delete confirmation from the user', function () {
+        spyOn(window, 'confirm').and.returnValue(false);
+        expect($scope.confirm_recipe_delete()).toEqual(false);
+    });
+});
+
+describe('planner_controller testing add_blank_recipe function', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
+
+    it('should create a new blank recipe using scope variables', function () {
+        spyOn(mock_recipe_service, 'post_blank_recipe').and.returnValue($scope.$q.when({}));
+        spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when(['recipes']));
+        $scope.blank_recipe_title = 'Recipe Title';
+        $scope.add_blank_recipe();
+        $scope.$digest();
+        expect(mock_recipe_service.post_blank_recipe).toHaveBeenCalled();
+        expect(mock_recipe_service.post_blank_recipe).toHaveBeenCalledWith('Recipe Title');
+    });
+
+    it('should fail to create a new blank recipe because the POST failed', function () {
+        spyOn(mock_recipe_service, 'post_blank_recipe').and.returnValue($scope.$q.reject('reasons'));
+        $scope.blank_recipe_title = 'Recipe Title';
+        $scope.add_blank_recipe();
+        $scope.$digest();
+        expect(mock_recipe_service.post_blank_recipe).toHaveBeenCalled();
+        expect(mock_recipe_service.post_blank_recipe).toHaveBeenCalledWith('Recipe Title');
+        expect($scope.calendar_error_message).toBeTruthy();
+    });
+
+    it('should fail to create a new blank recipe because the title is blank', function () {
+        spyOn(mock_recipe_service, 'post_blank_recipe').and.returnValue($scope.$q.when({}));
+        $scope.blank_recipe_title = '';
+        $scope.add_blank_recipe();
+        $scope.$digest();
+        expect($scope.calendar_error_message).toBeTruthy();
     });
 });

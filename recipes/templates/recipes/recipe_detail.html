@@ -2,6 +2,11 @@
 
 {% block title %}Cait.Rocks {{ recipe.title }}{% endblock %}
 
+{% block page_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'recipes/css/recipe_detail.css' %}">
+{% endblock %}
+
 {% block content %}
     {% if recipe %}
 
@@ -11,8 +16,8 @@
 
         <div class="row">
             {% if recipe.image %}
-            <div class="col-3" style="border-right: solid 1px rgba(0, 0, 0, 0.1);">
-                <img id="selected_recipe_image" src="{{ recipe.image.url }}" style="max-width: 100%; height: auto;"/>
+            <div class="col-3 recipe_image_container">
+                <img id="selected_recipe_image" src="{{ recipe.image.url }}"/>
             </div>
 
             <div class="col-9">

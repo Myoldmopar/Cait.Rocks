@@ -23,4 +23,12 @@ describe('recipe_service testing', function () {
         });
         httpBackend.flush();
     });
+
+    it('should post a blank recipe and return exactly what comes back from api on data member', function () {
+        httpBackend.when('POST', '/planner/api/recipes/').respond('yummy recipe');
+        recipe_service.post_blank_recipe(1).then(function (response) {
+            expect(response).toEqual('yummy recipe');
+        });
+        httpBackend.flush();
+    });
 });

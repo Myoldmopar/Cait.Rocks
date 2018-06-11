@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
@@ -44,10 +45,18 @@ class TestRecipeAPIMethods(TestCase):
         self.assertEqual(body['id'], 1)
         self.assertEqual(body['title'], title)
 
-    def test_post_fails(self):
+    def test_post_fails_if_not_logged_in(self):
         url_path = reverse('planner:api:recipe-list')
         response = self.client.post(url_path, data=json.dumps({}), content_type='application/json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_post_succeeds_with_title_only_recipe(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+        url_path = reverse('planner:api:recipe-list')
+        response = self.client.post(url_path, data=json.dumps({'title': 'Only Title'}), content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Recipe.objects.get(pk=1).title, 'Only Title')
 
     def test_put_fails(self):
         url_path = reverse('planner:api:recipe-detail', args=[1])

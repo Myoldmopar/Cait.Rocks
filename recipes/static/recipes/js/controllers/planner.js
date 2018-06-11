@@ -17,7 +17,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         // Declare variables
         var filter, table, tr, td, i, j, inner_a;
         filter = $scope.filterText.toUpperCase();
-        table = document.getElementById('recipeListTable');
+        table = document.getElementById('recipe_list_table');
         tr = table.getElementsByTagName('tr');
 
         // make sure all rows are shown first
@@ -119,11 +119,17 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.clear_recipe_id = function (week_num, day_num, recipe_num, date_num) {
-        calendar_service.update_calendar_recipe_id($scope.selected_calendar.id, date_num, recipe_num, 0).then(
-            function (response) {
-                $scope.get_month_data();
-            }
-        )
+        if ($scope.confirm_recipe_delete()) {
+            calendar_service.update_calendar_recipe_id($scope.selected_calendar.id, date_num, recipe_num, 0).then(
+                function (response) {
+                    $scope.get_month_data();
+                }
+            ).catch(function () {
+                $scope.calendar_error_message = 'Could not remove selected recipe!';
+            });
+        } else {
+            // nothing should happen
+        }
     };
 
     $scope.clear_cal_error = function () {
@@ -196,9 +202,29 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         return confirm('Are you super sure you want to delete this calendar?  This is permanent!');
     };
 
+    $scope.confirm_recipe_delete = function () {
+        return confirm('Are you sure you want to clear this recipe?');
+    };
+
+    $scope.add_blank_recipe = function () {
+        if (!$scope.blank_recipe_title) {
+            $scope.calendar_error_message = 'Cannot add a blank recipe title!';
+            return;
+        }
+        recipe_service.post_blank_recipe($scope.blank_recipe_title).then(
+            function (response) {
+                $scope.blank_recipe_title = '';
+                $scope.retrieve_recipes();
+            }
+        ).catch(function () {
+            $scope.calendar_error_message = 'Could not create a blank recipe!';
+        })
+    };
+
     $scope.init = function () {
         // use this init for pages where you need recipes, calendars, date, etc.
         $scope.filterText = '';
+        $scope.blank_recipe_title = '';
         $scope.recipe_list = [];
         $scope.calendar_error_message = false;
         $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

@@ -40,10 +40,28 @@
     margin-bottom: 0;
 }
 
-.recipes_div_container {
-    margin-bottom: 4px;
+.recipe_select {
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
 }
 
 .clear_recipe_button {
     border-radius: 5px;
+    border-style: solid !important;
+    border-width: 1px;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    line-height: 34px;
+}
+
+.heading_text {
+    font-size: 32px;
+}
+
+.small_left_margin {
+    margin-left: 8px;
+}
+
+.small_bottom_margin {
+    margin-bottom: 4px;
 }

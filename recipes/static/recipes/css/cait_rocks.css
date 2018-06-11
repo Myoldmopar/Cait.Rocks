@@ -10,14 +10,6 @@ body {
     padding-top: 15px;
 }
 
-.small-bottom-margin {
-    margin-bottom: 4px;
-}
-
-.auto-width-control {
-    width: auto;
-}
-
 .bordered_cell {
     border: 1px solid black !important;
 }
@@ -39,7 +31,7 @@ body {
 
 #recipe_table_container {
     overflow: auto;
-    max-height: 450px;
+    max-height: 350px;
 }
 
 #month_table {

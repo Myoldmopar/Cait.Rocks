@@ -12,4 +12,17 @@ app.service('recipe_service', ['$http', function ($http) {
             return response.data;
         });
     };
+    this.post_blank_recipe = function (recipe_title) {
+        return $http.post(
+            '/planner/api/recipes/',
+            {
+                title: recipe_title,
+                recipe_type: 'unknown'
+            }
+        ).then(
+            function (response) {
+                return response.data;
+            }
+        )
+    };
 }]);

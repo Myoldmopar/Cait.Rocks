@@ -20,19 +20,34 @@
         <h1 ng-hide="selected_calendar" id="calendar_name">
             Need to add a calendar!
         </h1>
-        <button id="manage_months_button" class="btn btn-primary small-bottom-margin" type="button"
-                data-toggle="collapse" data-target="#collapseManageMonths" aria-expanded="false">
+        <button id="manage_months_button" class="btn btn-primary small_bottom_margin" type="button"
+                data-toggle="collapse" data-target="#collapse_manage_months" aria-expanded="false">
             Manage Months
         </button>
-        <button id="view_recipes_button" class="btn btn-primary small-bottom-margin" type="button"
-                data-toggle="collapse" data-target="#collapseViewRecipes" aria-expanded="false">
+        <button id="view_recipes_button" class="btn btn-primary small_bottom_margin" type="button"
+                data-toggle="collapse" data-target="#collapse_recipe_view" aria-expanded="false">
             Toggle Recipes
         </button>
     </div>
 
-    <div class="collapse small-bottom-margin" id="collapseViewRecipes">
+    <div class="collapse small_bottom_margin" id="collapse_recipe_view">
         <div id="view_recipes_container" class="card card-body">
-            <h1>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h1>
+
+            <form>
+            <div class="input-group mb-3">
+                <input id="blank_recipe_title" type="text" class="form-control" ng-model="blank_recipe_title"
+                       placeholder="Quick Add New Recipe Title">
+                <div class="input-group-append">
+                    <button style="float:right;" class="btn btn-primary" ng-click="add_blank_recipe()" type="submit">
+                        Quick Add
+                    </button>
+                </div>
+            </div>
+                </form>
+
+            <h2>
+                All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}
+            </h2>
 
             <div id="recipe_filter_group" class="input-group">
                 <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
@@ -44,7 +59,7 @@
             </div>
 
             <div id="recipe_table_container">
-                <table id="recipeListTable" class="table table-striped">
+                <table id="recipe_list_table" class="table table-striped">
                     <thead>
                     <tr>
                         <th class="bordered_cell">Recipe Type</th>
@@ -67,7 +82,7 @@
         </div>
     </div>
 
-    <div class="collapse small-bottom-margin" id="collapseManageMonths">
+    <div class="collapse small_bottom_margin" id="collapse_manage_months">
         <div id="manage_months_container" class="card card-body">
             <div id="month_dropdown_container" class="input-group">
                 <select id="month_dropdown" ng-model="selected_calendar" ng-options="c.nickname for c in allCalendars"
@@ -114,41 +129,37 @@
         <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
             ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
             <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" class="calendar_day_cell">
-                <div>
-                    <p class="date_number_paragraph">{[{ month.data[week_num][day_of_week].date_number }]}</p>
-                    <div class="form-group recipes_div_container"
-                         ng-show="month.data[week_num][day_of_week].date_number !== '-'">
-                        <div class="input-group input-group-sm small-bottom-margin" ng-repeat="recipe_num in [0, 1]">
-                            <span class="input-group-addon">
-                                <button
-                                        type="button"
-                                        class="clear_recipe_button alert-danger"
-                                        ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
-                                        ng-click="clear_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
-                                    x
-                                </button>
-                            </span>
-                            <select
-                                    id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"
-                                    class="selectpicker form-control"
-                                    style="height:29px;"
-                                    ng-model="month.data[week_num][day_of_week]['recipe' + recipe_num].id"
-                                    ng-change="select_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
-                                <option
-                                        ng-selected="month.data[week_num][day_of_week]['recipe' + recipe_num].id == recipe.id"
-                                        ng-repeat="recipe in recipe_list"
-                                        ng-value="recipe.id">
-                                    {[{ recipe.title }]}
-                                </option>
-                            </select>
+                <div class="form-group small_bottom_margin">
+                    <label class="control-label">{[{ month.data[week_num][day_of_week].date_number }]}</label>
+                    <div class="input-group small_bottom_margin"
+                         ng-show="month.data[week_num][day_of_week].date_number !== '-'"
+                         ng-repeat="recipe_num in [0, 1]">
+                        <select
+                                id="day{[{ week_num }]}{[{ day_of_week }]}recipe0{[{ recipe_num }]}input"
+                                class="recipe_select form-control"
+                                ng-model="month.data[week_num][day_of_week]['recipe' + recipe_num].id"
+                                ng-change="select_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
+                            <option
+                                    ng-selected="month.data[week_num][day_of_week]['recipe' + recipe_num].id == recipe.id"
+                                    ng-repeat="recipe in recipe_list"
+                                    ng-value="recipe.id">
+                                {[{ recipe.title }]}
+                            </option>
+                        </select>
+                        <div class="input-group-btn">
+                            <button
+                                    type="button"
+                                    class="clear_recipe_button btn-outline-danger"
+                                    ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
+                                    ng-click="clear_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
+                                x
+                            </button>
                         </div>
                     </div>
                 </div>
             </td>
         </tr>
     </table>
-    </div>
-
 
 {% endblock %}
 

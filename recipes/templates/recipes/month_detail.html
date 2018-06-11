@@ -35,6 +35,11 @@
                                href="{[{ '/planner/recipe_views/' + month.data[week_num][day_of_week]['recipe' + recipe_num].id + '/' }]}">
                                 {[{ month.data[week_num][day_of_week]['recipe' + recipe_num]['title']}]}
                             </a>
+                            <a class="list-group-item list-group-item-action disabled_recipe_link_box disabled"
+                               ng-repeat="recipe_num in [0, 1]"
+                               ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] === null" href="">
+                                -
+                            </a>
                         </div>
                     </div>
                 </td>

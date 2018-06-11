@@ -6,18 +6,23 @@
     background-color: orange;
 }
 
+.recipe_image_container {
+    border-right: solid 1px rgba(0, 0, 0, 0.1);
+}
+
 #selected_recipe_image {
     max-width: 100%;
     height: auto;
 }
 
-/*.link_holding_cell {*/
-/*position: relative;*/
-/*}*/
+.pointer {
+    cursor: pointer;
+}
 
-/*.link_cell {*/
-/*display: block;*/
-/*text-align: center;*/
-/*padding: 10em;*/
-/*margin: -10em;*/
-/*}*/
+.directions_heading_text {
+    margin-top: 20px;
+}
+
+.wrapped_text {
+    white-space: pre-wrap;
+}

@@ -14,10 +14,6 @@ body {
     margin-bottom: 4px;
 }
 
-.auto-width-control {
-    width: auto;
-}
-
 .bordered_cell {
     border: 1px solid black !important;
 }

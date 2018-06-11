@@ -769,6 +769,7 @@ describe('planner_controller testing add_blank_recipe function', function () {
         $scope.$digest();
         expect(mock_recipe_service.post_blank_recipe).toHaveBeenCalled();
         expect(mock_recipe_service.post_blank_recipe).toHaveBeenCalledWith('Recipe Title');
+        expect($scope.blank_recipe_title).toEqual('');
     });
 
     it('should fail to create a new blank recipe because the POST failed', function () {

@@ -31,7 +31,7 @@ body {
 
 #recipe_table_container {
     overflow: auto;
-    max-height: 450px;
+    max-height: 350px;
 }
 
 #month_table {

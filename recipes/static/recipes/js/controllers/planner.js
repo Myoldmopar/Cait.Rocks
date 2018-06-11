@@ -213,6 +213,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         }
         recipe_service.post_blank_recipe($scope.blank_recipe_title).then(
             function (response) {
+                $scope.blank_recipe_title = '';
                 $scope.retrieve_recipes();
             }
         ).catch(function () {

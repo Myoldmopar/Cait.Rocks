@@ -32,7 +32,22 @@
 
     <div class="collapse small_bottom_margin" id="collapse_recipe_view">
         <div id="view_recipes_container" class="card card-body">
-            <h2>All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}</h2>
+
+            <form>
+            <div class="input-group mb-3">
+                <input id="blank_recipe_title" type="text" class="form-control" ng-model="blank_recipe_title"
+                       placeholder="Quick Add New Recipe Title">
+                <div class="input-group-append">
+                    <button style="float:right;" class="btn btn-primary" ng-click="add_blank_recipe()" type="submit">
+                        Quick Add
+                    </button>
+                </div>
+            </div>
+                </form>
+
+            <h2>
+                All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}
+            </h2>
 
             <div id="recipe_filter_group" class="input-group">
                 <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
@@ -63,14 +78,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <form class="form-inline">
-                <div class="form-group">
-                    <label class="heading_text" for="blank_recipe_title">Quick Add Recipe Title:</label>
-                    <input class="form-control small_left_margin" id="blank_recipe_title" ng-model="blank_recipe_title" placeholder="Recipe Title">
-                    <button class="btn btn-primary small_left_margin" ng-click="add_blank_recipe()">Submit</button>
-                </div>
-            </form>
 
         </div>
     </div>
@@ -142,7 +149,7 @@
                         <div class="input-group-btn">
                             <button
                                     type="button"
-                                    class="clear_recipe_button btn-primary"
+                                    class="clear_recipe_button btn-outline-danger"
                                     ng-show="month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
                                     ng-click="clear_recipe_id(week_num, day_of_week, recipe_num, month.data[week_num][day_of_week].date_number)">
                                 x

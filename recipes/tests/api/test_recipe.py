@@ -7,7 +7,6 @@ from django.urls import reverse
 from rest_framework import status
 
 from recipes.models.recipe import Recipe
-from recipes.models.ingredient import Ingredient
 
 
 class TestRecipeAPIMethods(TestCase):

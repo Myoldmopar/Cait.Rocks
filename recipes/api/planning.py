@@ -69,7 +69,7 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         - num_weeks returns the number of weeks in this month for convenience, either 4, 5 or 6
         - data is an array of 4, 5, or 6 items, with each item being weekly data.  Each weekly data item is an array of
         7 items, with each item being daily data.  Each daily data item is a dictionary containing keys date_number,
-        recipe0, recipe0title, recipe1, and recipe1title.  The date_number key can be "-" to represent this day doesn't
+        recipe0, recipe0title, recipe1, and recipe1title.  The date_number key can be "-" to represent this day does not
         belong in the current month.  The recipe0 and recipe1 keys are ids to recipe objects in the database.  The
         recipe0title and recipe1title keys are simply the recipe titles for convenience.
         """

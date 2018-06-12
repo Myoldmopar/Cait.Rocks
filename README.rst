@@ -20,12 +20,13 @@ The JavaScript code is tested using Karma.  To execute all the tests, run ``yarn
 install all the necessary dependencies and execute the karma tool.  Code coverage results can be found in the coverage/
 directory.
 
-Documentation
--------------
+Documentation |docsimage|_
+--------------------------
 
 The project source code is documented using Sphinx.  To build the documentation locally, just change into the docs
 directory and execute ``make html``.  The root index.html file should be generated and placed in
-``docs/_build/index.html``.  The documentation is also built for every commit over on ReadTheDocs.
+``docs/_build/index.html``.  The documentation is also built for every commit over on
+`ReadTheDocs <https://caitrocks.readthedocs.io/en/latest/?badge=latest>`__.
 
 
 Development |ubuntuimage|_
@@ -92,5 +93,8 @@ Follow these steps to get a development version up and running:
 .. |davidimage| image:: https://david-dm.org/myoldmopar/cait.rocks.svg
 .. _davidimage: https://david-dm.org/myoldmopar/cait.rocks
 
-.. |ubuntuimage| image:: https://img.shields.io/badge/Ubuntu-17.10-orange.svg
+.. |docsimage| image:: https://readthedocs.org/projects/caitrocks/badge/?version=latest
+.. _docsimage: https://caitrocks.readthedocs.io/en/latest/?badge=latest
+
+.. |ubuntuimage| image:: https://img.shields.io/badge/Ubuntu-18.04_LTS-orange.svg
 .. _ubuntuimage: https://ubuntu.com

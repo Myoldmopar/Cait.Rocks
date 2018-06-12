@@ -19,21 +19,6 @@ body {
     display: none;
 }
 
-#recipe_filter_group {
-    border: 1px solid black;
-    border-bottom-width: 0;
-}
-
-#recipe_filter_clear_button {
-    border-radius: 0;
-    float: right;
-}
-
-#recipe_table_container {
-    overflow: auto;
-    max-height: 350px;
-}
-
 #month_table {
     table-layout: fixed;
 }

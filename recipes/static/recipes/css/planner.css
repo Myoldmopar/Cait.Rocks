@@ -43,6 +43,7 @@
 .recipe_select {
     border-top-left-radius: 5px !important;
     border-bottom-left-radius: 5px !important;
+    border: 1px solid #888888;
 }
 
 .clear_recipe_button {
@@ -64,4 +65,23 @@
 
 .small_bottom_margin {
     margin-bottom: 4px;
+}
+
+#recipe_filter_group {
+    border: 1px solid black;
+    margin-bottom: 2px;
+}
+
+#recipe_filter_clear_button {
+    border-radius: 0;
+    float: right;
+}
+
+#recipe_table_container {
+    overflow: auto;
+    max-height: 350px;
+}
+
+#blank_recipe_title {
+    border: 1px solid black;
 }

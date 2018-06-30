@@ -9,3 +9,7 @@ post information for discussions or whatever.
    :caption: Contents:
 
    note_serializers
+   note_ingredient_foreign_key
+   note_ingredient_foreign_key_2
+   note_year_dropdown
+   note_permissions

@@ -11,6 +11,10 @@ from recipes.models.recipe import Recipe
 
 
 class YearNumber(object):
+    """
+    This class is an enum list of years which was created to conveniently create the drop-down for the user when
+    creating a new monthly plan.  Using a choice list based on these strings allows for easier validation.
+    """
     A = '2018'
     B = '2019'
     C = '2020'
@@ -24,9 +28,14 @@ class YearNumber(object):
 class Calendar(models.Model):
     """
     This class describes a full month of data, including the calendar year/month as well as two recipes per day each day
+    Each recipe field is a ForeignKey to a Recipe and the creator field is a ForeignKey to a User
+    Contains fields, a __str__ method, and two worker methods for getting full monthly data and recipes for one day
     """
+
+    #: The creator field is a ForeignKey to a User model instance to keep track of who created this recipe
     creator = models.ForeignKey(User, help_text='The user who created this recipe instance', null=True)
 
+    #: This tuple of tuples is a map between Year strings to meaningful display options
     YEAR_NUMBER_CHOICES = (
         (YearNumber.A, '2018'),
         (YearNumber.B, '2019'),
@@ -37,12 +46,17 @@ class Calendar(models.Model):
         (YearNumber.G, '2024'),
         (YearNumber.H, '2025'),
     )
+    #: The year field stores a string reference that is matched to a descriptive year for display
     year = models.CharField(max_length=4, choices=YEAR_NUMBER_CHOICES, help_text='The year of this calendar month')
 
+    #: The month field stores an integer month, and the list of options is conveniently generated from a library
     month = models.PositiveSmallIntegerField(choices=MONTHS.items(), help_text='The month of this calendar plan')
 
+    #: The nickname field is a personalized string representation of this month
     nickname = models.CharField(max_length=100,
                                 help_text='A brief nickname for this month, usually auto-generated as YY-MMM')
+
+    #: The dayXYrecipeA fields are optional pointers to recipe instances, two per day for 31 days
     day01recipe0 = models.ForeignKey(Recipe, help_text='A pointer to recipe 0 for day 01', related_name='day01recipe0',
                                      null=True, blank=True)
     day01recipe1 = models.ForeignKey(Recipe, help_text='A pointer to recipe 1 for day 01', related_name='day01recipe1',

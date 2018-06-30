@@ -8,3 +8,4 @@ Model Serializers
    serializers_recipes
    serializers_ingredients
    serializers_planning
+   serializers_utilities

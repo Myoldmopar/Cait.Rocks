@@ -9,11 +9,14 @@ cache:
   directories:
     - .tox
 
+sudo: required
+
 env:
   - TOX_ENV=python
   - TOX_ENV=flake8
   - TOX_ENV=structure
   - TOX_ENV=karma
+  - TOX_ENV=spelling
 
 matrix:
   exclude:
@@ -21,12 +24,15 @@ matrix:
       env: TOX_ENV=structure
     - python: 3.5
       env: TOX_ENV=karma
+    - python: 3.5
+      env: TOX_ENV=spelling
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- -- --version 1.7.0
   - export PATH="$HOME/.yarn/bin:$PATH"
 
 install:
+  - sudo apt-get install python-enchant -y
   - pip install tox
   - pip install --upgrade pip
   - pip install tox coveralls

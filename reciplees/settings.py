@@ -106,6 +106,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+recipe_columns_to_ignore = []
+for date_in_month in range(2, 32):
+    for recipe_num in [0, 1]:
+        recipe_columns_to_ignore.append("day{0}recipe{1}".format("%02d" % date_in_month, recipe_num))
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+    'exclude_models': [
+        'Session', 'AbstractBaseSession', 'LogEntry', 'ContentType', 'Permission', 'Group', 'AbstractUser'
+    ],
+    'exclude_columns': recipe_columns_to_ignore,
+    'output': '/tmp/project_models.png',
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 

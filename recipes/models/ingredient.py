@@ -7,6 +7,9 @@ from recipes.models.recipe import Recipe
 
 
 class AmountType(object):
+    """
+    This class is an enum list of string variables used for convenience when referencing amount choices
+    """
     NONE = '0'
     ONE_EIGHTH = '10'
     ONE_QUARTER = '30'
@@ -30,6 +33,9 @@ class AmountType(object):
 
 
 class MeasurementType(object):
+    """
+    This class is an enum list of string variables used for convenience when referencing measurement choices
+    """
     NONE = '0'
     PINCH = '5'
     TEASPOON = '10'
@@ -44,9 +50,12 @@ class MeasurementType(object):
 
 
 class Ingredient(models.Model):
-    '''
-    This class describes a single ingredient, including amount, measurement, and item description
-    '''
+    """
+    This class describes a single ingredient, including amount, measurement, and item description.
+    The class includes model fields to describe the ingredient, plus one ForeignKey to a Recipe model instance.
+    The only methods that are added to this model class are the __unicode__ and __str__ methods for representation.
+    """
+
     AMOUNT_TYPE_CHOICES = (
         (AmountType.NONE, ''),
         (AmountType.ONE_EIGHTH, '⅛'),

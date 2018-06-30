@@ -9,6 +9,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     """
     This serializer allows direct serialization for recipe objects, with additional keys as needed
     """
+
     recipe_type = serializers.CharField(source='get_recipe_type_display', read_only=True)
 
     ingredients = serializers.StringRelatedField(many=True, required=False)

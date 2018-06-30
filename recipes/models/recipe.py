@@ -12,6 +12,7 @@ class RecipeTypes(object):
     """
     UNKNOWN = '10'
     ENTREE = '30'
+    SALAD_ENTREE = '35'
     SOUP = '40'
     SALAD = '50'
     DRINK = '60'
@@ -35,6 +36,7 @@ class Recipe(models.Model):
     RECIPE_TYPE_CHOICES = (
         (RecipeTypes.UNKNOWN, 'Unknown'),
         (RecipeTypes.ENTREE, 'Entree'),
+        (RecipeTypes.SALAD_ENTREE, 'Salad-Entree'),
         (RecipeTypes.SOUP, 'Soup'),
         (RecipeTypes.SALAD, 'Salad'),
         (RecipeTypes.DRINK, 'Drink'),

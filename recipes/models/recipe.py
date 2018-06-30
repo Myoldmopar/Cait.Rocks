@@ -66,6 +66,7 @@ class Recipe(models.Model):
     def __str__(self):
         """
         Creates a meaningful string for this object instance
+
         :return: string
         """
         return self.title
@@ -73,6 +74,7 @@ class Recipe(models.Model):
     def get_absolute_url(self):
         """
         Gets the URL path to this recipe's nice view page, not the API url!
+
         :return: string
         """
         return reverse('planner:recipe_views-detail', kwargs={'pk': self.id})

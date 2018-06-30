@@ -22,7 +22,6 @@ module.exports = function (config) {
             'recipes/static/recipes/js/*.js',
             'recipes/static/recipes/js/controllers/*.js',
             'recipes/static/recipes/js/services/*.js',
-            'recipes/tests/static/recipes/js/*.js',
             'recipes/tests/static/recipes/js/controllers/*.js',
             'recipes/tests/static/recipes/js/services/*.js'
         ],
@@ -39,7 +38,6 @@ module.exports = function (config) {
             'recipes/static/recipes/js/*.js': ['coverage'],
             'recipes/static/recipes/js/controllers/*.js': ['coverage'],
             'recipes/static/recipes/js/services/*.js': ['coverage'],
-            'recipes/tests/static/recipes/js/*.js': ['coverage'],
             'recipes/tests/static/recipes/js/controllers/*.js': ['coverage'],
             'recipes/tests/static/recipes/js/services/*.js': ['coverage']
         },
@@ -61,7 +59,7 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_INFO,
 
 
         // enable / disable watching file and executing tests whenever any file changes

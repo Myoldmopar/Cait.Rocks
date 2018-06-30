@@ -11,17 +11,19 @@ def handle404(request):
     """
     This view is called by Django when the a GET request is made to a page that does not exist.
     It renders a static page but isn't amenable to making into a simple TemplateView because it must return a 404
-    :param request: An http request
-    :return: Rendered HTML
+
+    :param request: An HTTP request
+    :return: A rendered HTML response
     """
     return render(request, 'common/404.html', status=status.HTTP_404_NOT_FOUND)
 
 
 def server_version_data(request):
     """
-    This view provides the "about" page data, including server information
-    :param request: An http request
-    :return: Rendered HTML
+    This function provides the "About" page response, including server information
+
+    :param request: An HTTP request
+    :return: A rendered HTML response
     """
     # get the actual server version
     settings_version = settings.VERSION

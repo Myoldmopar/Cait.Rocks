@@ -34,23 +34,24 @@
         <div id="view_recipes_container" class="card card-body">
 
             <form>
-            <div class="input-group mb-3">
-                <input id="blank_recipe_title" type="text" class="form-control" ng-model="blank_recipe_title"
-                       placeholder="Quick Add New Recipe Title">
-                <div class="input-group-append">
-                    <button style="float:right;" class="btn btn-primary" ng-click="add_blank_recipe()" type="submit">
-                        Quick Add
-                    </button>
+                <div class="input-group mb-3">
+                    <input id="blank_recipe_title" type="text" class="form-control" ng-model="blank_recipe_title"
+                           placeholder="Quick Add New Recipe Title">
+                    <div class="input-group-append">
+                        <button style="float:right;" class="btn btn-primary" ng-click="add_blank_recipe()"
+                                type="submit">
+                            Quick Add
+                        </button>
+                    </div>
                 </div>
-            </div>
-                </form>
+            </form>
 
             <h2>
                 All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}
             </h2>
 
             <div id="recipe_filter_group" class="input-group">
-                <input type="text" class="form-control" ng-model="filterText" ng-change="filter_table_rows()"
+                <input type="text" class="form-control" ng-model="filter_text" ng-change="filter_table_rows()"
                        placeholder="Filter by recipe title, creator, or ingredient list..."/>
                 <span class="input-group-btn">
                     <button id="recipe_filter_clear_button" class="btn btn-primary" type="button"
@@ -111,12 +112,13 @@
                     <input class="btn btn-primary form-control" type="submit" value="Add New Month">
                 </div>
             </form>
-            <div id="calendar_err_msg" class="alert alert-danger" ng-show="calendar_error_message">
-                <div class="col-md-12">
-                    <button type="button" class="close" ng-click="clear_cal_error()">&times;</button>
-                    <strong>Error:</strong> {[{ calendar_error_message }]}
-                </div>
-            </div>
+        </div>
+    </div>
+
+    <div id="calendar_err_msg" class="alert alert-danger" ng-show="calendar_error_message">
+        <div class="col-md-12">
+            <button type="button" class="close" ng-click="clear_cal_error()">&times;</button>
+            <strong>Error:</strong> {[{ calendar_error_message }]}
         </div>
     </div>
 

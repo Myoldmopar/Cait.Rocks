@@ -510,9 +510,9 @@ describe('planner_controller testing clear_filter function', function () {
     }));
 
     it('should clear the filter variable', function () {
-        $scope.filterText = 'abc';
+        $scope.filter_text = 'abc';
         $scope.clear_filter();
-        expect($scope.filterText).toEqual('');
+        expect($scope.filter_text).toEqual('');
     });
 });
 
@@ -560,7 +560,7 @@ describe('planner_controller testing filter_table_rows function', function () {
     });
 
     it('should ignore if the filter text is too short', function () {
-        $scope.filterText = '';
+        $scope.filter_text = '';
         $scope.filter_table_rows();
         // literally shouldn't do anything, just wait until possibly more text is entered before filtering
     });
@@ -570,7 +570,7 @@ describe('planner_controller testing filter_table_rows function', function () {
         var row2 = document.getElementById('row2');
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = '';
+        $scope.filter_text = '';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('');
@@ -581,7 +581,7 @@ describe('planner_controller testing filter_table_rows function', function () {
         var row2 = document.getElementById('row2');
         row1.style.display = '';
         row2.style.display = '';
-        $scope.filterText = 'abc';
+        $scope.filter_text = 'abc';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('none');
         expect(row2.style.display).toEqual('none');
@@ -593,21 +593,21 @@ describe('planner_controller testing filter_table_rows function', function () {
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'Title';
+        $scope.filter_text = 'Title';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'TitleA';
+        $scope.filter_text = 'TitleA';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('none');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'TitleB';
+        $scope.filter_text = 'TitleB';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('none');
         expect(row2.style.display).toEqual('');
@@ -619,21 +619,21 @@ describe('planner_controller testing filter_table_rows function', function () {
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'Creator';
+        $scope.filter_text = 'Creator';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'CreatorA';
+        $scope.filter_text = 'CreatorA';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('none');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'CreatorB';
+        $scope.filter_text = 'CreatorB';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('none');
         expect(row2.style.display).toEqual('');
@@ -645,21 +645,21 @@ describe('planner_controller testing filter_table_rows function', function () {
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'Ingredient';
+        $scope.filter_text = 'Ingredient';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'IngredientA';
+        $scope.filter_text = 'IngredientA';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('none');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'IngredientB';
+        $scope.filter_text = 'IngredientB';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('none');
         expect(row2.style.display).toEqual('');
@@ -671,14 +671,14 @@ describe('planner_controller testing filter_table_rows function', function () {
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'Ingredient Creator';
+        $scope.filter_text = 'Ingredient Creator';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('');
 
         row1.style.display = 'none';
         row2.style.display = 'none';
-        $scope.filterText = 'IngredientA Creator';
+        $scope.filter_text = 'IngredientA Creator';
         $scope.filter_table_rows();
         expect(row1.style.display).toEqual('');
         expect(row2.style.display).toEqual('none');

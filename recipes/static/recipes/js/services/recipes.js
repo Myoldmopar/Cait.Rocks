@@ -23,6 +23,6 @@ app.service('recipe_service', ['$http', function ($http) {
             function (response) {
                 return response.data;
             }
-        )
+        );
     };
 }]);

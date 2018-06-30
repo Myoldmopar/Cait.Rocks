@@ -12,6 +12,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Note I didn't use a fixture here because I need to access the User model which isn't available from dump-data
+        User.objects.all().delete()
+        Recipe.objects.all().delete()
+        Ingredient.objects.all().delete()
+
         u = User.objects.create_user(
             username='TestUser',
             password='TestPass',

@@ -107,6 +107,7 @@ class Ingredient(models.Model):
     def __unicode__(self):
         """
         Returns a full string representation of this ingredient, including amount/measurement where applicable
+
         :return: string
         """
         this_ingredient_string = ''

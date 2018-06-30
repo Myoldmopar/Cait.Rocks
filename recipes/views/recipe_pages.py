@@ -15,6 +15,7 @@ class RecipeViewSet(ViewSet):
     def list(self, request):
         """
         Retrieves a list of recipes and renders them in a template
+
         :param request: An http request object
         :return: Rendered HTML
         """
@@ -24,6 +25,7 @@ class RecipeViewSet(ViewSet):
     def retrieve(self, request, pk=None):
         """
         Retrieves a single recipe and renders it in a template
+
         :param request: An http request object
         :param pk: The pk for the recipe of interest
         :return: Rendered HTML

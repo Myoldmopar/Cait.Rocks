@@ -197,9 +197,10 @@ class Calendar(models.Model):
     def get_monthly_data(self):
         """
         Returns monthly data, including date numbers and recipe ids for each day, if applicable
+
         :return: An array of 4, 5, or 6 weeks, each week is an array of 7 days, each day is a dictionary that has a
-        date_number key that is the actual date or 0, and recipe0 and recipe1 ids, which point to the recipe objects
-        in the database (recipe ids may be None if no recipes are selected)
+                 date_number key that is the actual date or 0, and recipe0 and recipe1 ids, which point to the recipe
+                 objects in the database (recipe ids may be None if no recipes are selected)
         """
         # need to validate year/month
         c = calendar.Calendar()
@@ -221,9 +222,10 @@ class Calendar(models.Model):
     def get_recipes_for_day_of_month(self, date_num):
         """
         Returns the recipe ids for the given date num on this calendar instance, if applicable
+
         :param date_num: The date of the month, 1-31
         :return: List of two ids: [recipe01_id, recipe02_id]; these may be None if no recipes are selected or if
-        date_num is out of range
+                 date_num is out of range
         """
         if date_num == 0:
             return [None, None]

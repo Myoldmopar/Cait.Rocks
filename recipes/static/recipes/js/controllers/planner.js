@@ -14,9 +14,10 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.filter_table_rows = function () {
+
         // Declare variables
         var filter, table, tr, td, i, j, inner_a;
-        filter = $scope.filterText.toUpperCase();
+        filter = $scope.filter_text.toUpperCase();
         table = document.getElementById('recipe_list_table');
         tr = table.getElementsByTagName('tr');
 
@@ -74,7 +75,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.clear_filter = function () {
-        $scope.filterText = '';
+        $scope.filter_text = '';
         $scope.filter_table_rows();
     };
 
@@ -214,16 +215,19 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         recipe_service.post_blank_recipe($scope.blank_recipe_title).then(
             function (response) {
                 $scope.blank_recipe_title = '';
-                $scope.retrieve_recipes();
             }
-        ).catch(function () {
-            $scope.calendar_error_message = 'Could not create a blank recipe!';
+        ).then(
+            $scope.retrieve_recipes
+        ).then(
+            $scope.filter_table_rows
+        ).catch(function (response) {
+            $scope.calendar_error_message = 'Could not create a new recipe - duplicate title exists?!';
         })
     };
 
     $scope.init = function () {
         // use this init for pages where you need recipes, calendars, date, etc.
-        $scope.filterText = '';
+        $scope.filter_text = '';
         $scope.blank_recipe_title = '';
         $scope.recipe_list = [];
         $scope.calendar_error_message = false;

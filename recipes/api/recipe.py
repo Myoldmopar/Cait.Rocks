@@ -31,14 +31,16 @@ class RecipeViewSet(mixins.CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         if request.user.is_anonymous:
             return JsonResponse(
                 {
-                    'status': 'failed',
                     'message': 'Must be logged in to create calendar!'
                 },
                 status=status.HTTP_403_FORBIDDEN
             )
         request.data['creator'] = request.user
         recipe_serializer = RecipeSerializer(data=request.data)
-        recipe_serializer.is_valid(raise_exception=True)
+        try:
+            recipe_serializer.is_valid(raise_exception=True)
+        except Exception as e:  # pragma: no cover
+            return JsonResponse(e.detail, status=status.HTTP_400_BAD_REQUEST)
         recipe_instance = Recipe.objects.create(**request.data)
         recipe_serializer = RecipeSerializer(recipe_instance)
         return JsonResponse(recipe_serializer.data, status=status.HTTP_201_CREATED)

@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 
 def get_creator_from_object(created_instance):
     """
-    This worker function is defined here in utilities to allow each serializer to reuse this code.  This function takes
-    an existing model instance that has a "creator" field on it, and looks up a string representation of that creator.
-    :param created_instance: Instance of a model with a creator attribute
-    :return: A string representation of that creator
+    This worker function will get a creator from a class that has that field, or else return a blank string
+
+    :param created_instance: A Python model object, or really any object that has a creator member variable - not a dict
+    :return: A string, either the creator name or a blank string
     """
     if not created_instance.creator:
         return ''

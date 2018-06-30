@@ -19,7 +19,7 @@ class MonthViewSet(ViewSet):
         :param request: An http request object
         :return: Rendered HTML
         """
-        months = Calendar.objects.filter(creator=request.user.id)
+        months = Calendar.objects.all()
         return render(request, 'recipes/month_list.html', {'months': months})
 
     def retrieve(self, request, pk=None):

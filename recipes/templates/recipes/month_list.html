@@ -16,12 +16,14 @@
             <th>Nickname</th>
             <th>Year</th>
             <th>Month</th>
+            <th>Creator</th>
         </tr>
         {% for month in months %}
             <tr>
                 <td><a href="{% url 'planner:months-detail' month.id %}">{{ month.nickname }}</a></td>
                 <td>{{ month.year }}</td>
                 <td>{{ month.month }}</td>
+                <td>{{ month.creator }}</td>
             </tr>
         {% endfor %}
     </table>

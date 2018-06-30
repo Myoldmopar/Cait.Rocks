@@ -790,3 +790,60 @@ describe('planner_controller testing add_blank_recipe function', function () {
         expect($scope.calendar_error_message).toBeTruthy();
     });
 });
+
+describe('planner loading spinner function responds to underlying flags', function () {
+    var $scope, mock_calendar_service, mock_recipe_service, httpBackend;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, calendar_service, recipe_service, $httpBackend, $q) {
+        $scope = $rootScope.$new();
+        mock_calendar_service = calendar_service;
+        mock_recipe_service = recipe_service;
+        httpBackend = $httpBackend;
+        $scope.$q = $q;
+        $controller('planner_controller', {
+            $scope: $scope,
+            calendar_service: mock_calendar_service,
+            recipe_service: mock_recipe_service
+        });
+    }));
+
+   it('should turn on whenever the anything is loading', function () {
+       $scope.loading_calendars = false;
+       $scope.loading_recipes = false;
+       $scope.loading_month_data = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_calendars = false;
+       $scope.loading_recipes = true;
+       $scope.loading_month_data = false;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_calendars = true;
+       $scope.loading_recipes = false;
+       $scope.loading_month_data = false;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_calendars = false;
+       $scope.loading_recipes = true;
+       $scope.loading_month_data = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_calendars = true;
+       $scope.loading_recipes = false;
+       $scope.loading_month_data = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_calendars = true;
+       $scope.loading_recipes = true;
+       $scope.loading_month_data = false;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_calendars = true;
+       $scope.loading_recipes = true;
+       $scope.loading_month_data = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+   });
+
+   it('should turn off when all flags are off', function () {
+       $scope.loading_calendars = false;
+       $scope.loading_recipes = false;
+       $scope.loading_month_data = false;
+       expect($scope.show_loading_spinner()).toBeFalsy();
+   })
+});

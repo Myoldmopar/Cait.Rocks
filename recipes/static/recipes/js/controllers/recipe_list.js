@@ -8,9 +8,12 @@ app.controller('recipe_list_controller', ['$scope', 'recipe_service', function (
     $scope.sort_reverse = false;
     $scope.search_recipe = '';
     $scope.recipe_error_message = '';
+    $scope.loading_recipe = false;
+    $scope.loading_recipes = false;
 
     $scope.init = function () {
         $scope.recipe_error_message = '';
+        $scope.loading_recipe = true;
         recipe_service.get_recipes().then(
             function (response) {
                 $scope.allRecipes = response;
@@ -18,11 +21,14 @@ app.controller('recipe_list_controller', ['$scope', 'recipe_service', function (
         ).catch(function () {
             $scope.allRecipes = [];
             $scope.recipe_error_message = 'Could not retrieve recipes, is the server broken?'
+        }).finally(function () {
+            $scope.loading_recipe = false;
         });
     };
 
     $scope.select_a_recipe = function (recipe_id) {
         $scope.recipe_error_message = '';
+        $scope.loading_recipe = true;
         recipe_service.get_recipe(recipe_id).then(
             function (response) {
                 $scope.selected_recipe = response;
@@ -42,7 +48,12 @@ app.controller('recipe_list_controller', ['$scope', 'recipe_service', function (
         ).catch(function () {
             $scope.selected_recipe = null;
             $scope.recipe_error_message = 'Could not retrieve recipe, is the server broken?';
+        }).finally(function () {
+            $scope.loading_recipe = false;
         });
     };
 
+    $scope.show_loading_spinner = function () {
+        return $scope.loading_recipes || $scope.loading_recipe;
+    };
 }]);

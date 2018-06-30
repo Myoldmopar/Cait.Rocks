@@ -16,6 +16,11 @@
     <div>
         <h1 ng-show="selected_calendar" id="calendar_name">
             {[{ selected_calendar.nickname }]}
+            <i id="planner_load_spinner"
+               ng-show="show_loading_spinner()"
+               class="fa fa-spinner fa-spin"
+               style="color:gray;">
+            </i>
         </h1>
         <h1 ng-hide="selected_calendar" id="calendar_name">
             Need to add a calendar!

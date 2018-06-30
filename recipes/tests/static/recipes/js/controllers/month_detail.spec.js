@@ -74,3 +74,28 @@ describe('month_detail_controller testing retrieve_calendar function', function 
     });
 
 });
+
+describe('month_detail loading spinner function responds to underlying flags', function () {
+   var $scope, mock_calendar_service;
+
+   beforeEach(module('cait_rocks_app'));
+
+   beforeEach(inject(function ($controller, $rootScope, calendar_service) {
+       $scope = $rootScope.$new();
+       mock_calendar_service = calendar_service;
+       $controller('month_detail_controller', {
+           $scope: $scope,
+           calendar_service: mock_calendar_service
+       });
+   }));
+
+   it('should turn on whenever the month data is loading', function () {
+       $scope.loading_month_data = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+   });
+
+   it('should turn off when all flags are off', function () {
+       $scope.loading_month_data = false;
+       expect($scope.show_loading_spinner()).toBeFalsy();
+   })
+});

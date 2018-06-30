@@ -5,6 +5,7 @@ app.controller('month_detail_controller', ['$scope', 'calendar_service', functio
 
     $scope.get_month_data = function () {
         if ($scope.selected_calendar) {
+            $scope.loading_month_data = true;
             calendar_service.get_calendar_monthly_data($scope.selected_calendar.id).then(
                 function (date_response) {
                     $scope.month = date_response;
@@ -12,6 +13,8 @@ app.controller('month_detail_controller', ['$scope', 'calendar_service', functio
                 }
             ).catch(function () {
                 $scope.calendar_error_message = 'Could not get monthly calendar data; server broken?';
+            }).finally(function () {
+                $scope.loading_month_data = false;
             });
         } else {
             // nothing should really happen; I guess we could null out $scope variables
@@ -29,6 +32,10 @@ app.controller('month_detail_controller', ['$scope', 'calendar_service', functio
         });
     };
 
+    $scope.loading_month_data = false;
     $scope.days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+    $scope.show_loading_spinner = function () {
+        return $scope.loading_month_data;
+    };
 }]);

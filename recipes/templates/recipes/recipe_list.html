@@ -12,7 +12,14 @@
 {% block ng_init %}ng-init="init()"{% endblock %}
 
 {% block content %}
-    <h2>Recipes</h2>
+    <h2>
+        Recipes
+        <i id="recipes_load_spinner"
+           ng-show="show_loading_spinner()"
+           class="fa fa-spinner fa-spin"
+           style="color:gray;">
+        </i>
+    </h2>
 
     <form>
         <div class="form-group">

@@ -4,12 +4,13 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     'use strict';
 
     $scope.retrieve_recipes = function () {
-        recipe_service.get_recipes().then(
-            function (data) {
+        $scope.loading_recipes = true;
+        recipe_service.get_recipes().then(function (data) {
                 $scope.recipe_list = data;
-            }
-        ).catch(function () {
+        }).catch(function () {
             $scope.recipe_list = [];
+        }).finally(function () {
+            $scope.loading_recipes = false;
         });
     };
 
@@ -80,6 +81,7 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
     };
 
     $scope.retrieve_calendars = function () {
+        $scope.loading_calendars = true;
         calendar_service.get_calendars().then(
             function (calendars_response) {
                 if (calendars_response.length === 0) {
@@ -92,11 +94,14 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
             }
         ).catch(function () {
             $scope.calendar_error_message = 'Could not get calendars through API; server broken?';
+        }).finally(function () {
+            $scope.loading_calendars = false;
         });
     };
 
     $scope.get_month_data = function () {
         if ($scope.selected_calendar) {
+            $scope.loading_month_data = true;
             calendar_service.get_calendar_monthly_data($scope.selected_calendar.id).then(
                 function (date_response) {
                     $scope.month = date_response;
@@ -104,10 +109,16 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
                 }
             ).catch(function () {
                 $scope.calendar_error_message = 'Could not get monthly calendar data; server broken?';
+            }).finally(function () {
+                $scope.loading_month_data = false;
             });
         } else {
-            // nothing should really happen; I guess we could null out $scope variables
+            // nothing really to do here
         }
+    };
+
+    $scope.show_loading_spinner = function () {
+        return $scope.loading_calendars || $scope.loading_month_data || $scope.loading_recipes;
     };
 
     $scope.select_recipe_id = function (week_num, day_num, recipe_num, date_num) {
@@ -227,6 +238,9 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
 
     $scope.init = function () {
         // use this init for pages where you need recipes, calendars, date, etc.
+        $scope.loading_recipes = false;
+        $scope.loading_month_data = false;
+        $scope.loading_calendars = false;
         $scope.filter_text = '';
         $scope.blank_recipe_title = '';
         $scope.recipe_list = [];

@@ -74,3 +74,38 @@ describe('recipe_list_controller testing select_a_recipe function', function () 
     });
 
 });
+
+describe('recipe_list_controller loading spinner function responds to underlying flags', function () {
+    var $scope, mock_recipe_service;
+
+    beforeEach(module('cait_rocks_app'));
+
+    beforeEach(inject(function ($controller, $rootScope, recipe_service, $q) {
+        $scope = $rootScope.$new();
+        mock_recipe_service = recipe_service;
+        $scope.$q = $q;
+        $controller('recipe_list_controller', {
+            $scope: $scope,
+            recipe_service: mock_recipe_service
+        });
+    }));
+
+   it('should turn on whenever the anything is loading', function () {
+       $scope.loading_recipe = true;
+       $scope.loading_recipes = false;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_recipe = false;
+       $scope.loading_recipes = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+       $scope.loading_recipe = true;
+       $scope.loading_recipes = true;
+       expect($scope.show_loading_spinner()).toBeTruthy();
+   });
+
+   it('should turn off when all flags are off', function () {
+       $scope.loading_recipe = false;
+       $scope.loading_recipes = false;
+       expect($scope.show_loading_spinner()).toBeFalsy();
+   })
+
+});

@@ -75,10 +75,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="recipe in recipe_list">
-                        <td class="bordered_cell">{[{ recipe.recipe_type }]}</td>
-                        <td class="bordered_cell"><a href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
-                        <td class="bordered_cell">{[{ recipe.creator }]}</td>
+                    <tr ng-repeat="recipe in recipe_list | orderBy:sort_type:sort_reverse | recipe_match:filter_text">
+                        <td class="bordered_cell" title="Recipe Type">{[{ recipe.recipe_type }]}</td>
+                        <td class="bordered_cell link_holding_cell" title="Recipe Title"><a
+                                href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
+                        <td class="bordered_cell" title="Recipe Creator">{[{ recipe.creator }]}</td>
                         <td class="hidden_bordered_cell">{[{ recipe.ingredients }]}</td>
                     </tr>
                     </tbody>
@@ -96,9 +97,13 @@
                         ng-change="get_month_data()">
                 </select>
                 <span id="month_delete_button" class="input-group-btn">
-                    <button class="btn btn-danger form-control" type="submit" ng-click="remove_calendar()">Delete Current Month</button>
+                    <button class="btn btn-danger form-control" type="submit" ng-click="remove_calendar()">Delete Month</button>
+                </span>
+                <span id="month_link_button" class="input-group-btn">
+                    <a class="btn btn-primary form-control" role="button" ng-href="/planner/months/{[{month.id}]}">Link to Month</a>
                 </span>
             </div>
+            <hr id="month_options_divider">
             <form id="add_month_container" class="form-group row" ng-submit="add_calendar()">
                 <div class="col-md-3">
                     <input type="text" class="form-control" ng-model="calendar_name"
@@ -173,6 +178,7 @@
 {% block page_js %}
     {% load static %}
     <script src="{% static 'recipes/js/controllers/planner.js' %}"></script>
+    <script src="{% static 'recipes/js/filters/recipe_match.js' %}"></script>
     <script src="{% static 'recipes/js/services/calendar.js' %}"></script>
     <script src="{% static 'recipes/js/services/recipes.js' %}"></script>
 {% endblock %}

@@ -26,6 +26,11 @@ app.service('calendar_service', ['$http', function ($http) {
             return response.data;
         });
     };
+    this.get_my_calendars = function () {
+        return $http.get('/planner/api/calendars/mine/').then(function (response) {
+            return response.data;
+        });
+    };
     this.post_calendar = function (year, month, name) {
         return $http.post(
             '/planner/api/calendars/',

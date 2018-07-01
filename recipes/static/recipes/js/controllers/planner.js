@@ -14,75 +14,13 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
         });
     };
 
-    $scope.filter_table_rows = function () {
-
-        // Declare variables
-        var filter, table, tr, td, i, j, inner_a;
-        filter = $scope.filter_text.toUpperCase();
-        table = document.getElementById('recipe_list_table');
-        tr = table.getElementsByTagName('tr');
-
-        // make sure all rows are shown first
-        for (i = 0; i < tr.length; i++) {
-            tr[i].style.display = '';
-        }
-
-        // leave early with everything shown if the search string is too short
-        if (filter.length < 2) {
-            return;
-        }
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 1; i < tr.length; i++) {
-
-            // we will check each token of the search string
-            var tokens_to_check = filter.split(' ');
-
-            for (j = 0; j < tokens_to_check.length; j++) {
-                var token = tokens_to_check[j];
-                var token_found = false;
-                // check the title of the recipe
-                td = tr[i].getElementsByTagName('td')[1];
-                inner_a = td.getElementsByTagName('a')[0];
-                if (inner_a.innerHTML.toUpperCase().indexOf(token) > -1) {
-                    token_found = true;
-                }
-                // check the author of the recipe
-                if (!token_found) {
-                    td = tr[i].getElementsByTagName('td')[2];
-                    if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
-                        token_found = true;
-                    }
-                }
-                if (!token_found) {
-                    // check the ingredients of the recipe
-                    td = tr[i].getElementsByTagName('td')[3];
-                    if (td.innerHTML.toUpperCase().indexOf(token) > -1) {
-                        token_found = true;
-                    }
-                }
-                tokens_to_check[j] = token_found;
-            }
-
-            // now turn that one
-            if (tokens_to_check.every(function (t) {
-                return t;
-            })) {
-                // woo-hoo we have a match! leave it shown
-            } else {
-                tr[i].style.display = 'none';
-            }
-        }
-    };
-
     $scope.clear_filter = function () {
         $scope.filter_text = '';
-        $scope.filter_table_rows();
     };
 
     $scope.retrieve_calendars = function () {
         $scope.loading_calendars = true;
-        calendar_service.get_calendars().then(
+        calendar_service.get_my_calendars().then(
             function (calendars_response) {
                 if (calendars_response.length === 0) {
                     $scope.selected_calendar = null;
@@ -229,8 +167,6 @@ app.controller('planner_controller', ['$scope', 'calendar_service', 'recipe_serv
             }
         ).then(
             $scope.retrieve_recipes
-        ).then(
-            $scope.filter_table_rows
         ).catch(function (response) {
             $scope.calendar_error_message = 'Could not create a new recipe - duplicate title exists?!';
         })

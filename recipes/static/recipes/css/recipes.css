@@ -17,7 +17,7 @@
 */
 
 #recipe_list_container {
-    height: 450px;
+    max-height: 350px;
     overflow: auto;
     border-color: black;
     border-style: solid;

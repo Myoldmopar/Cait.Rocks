@@ -31,6 +31,14 @@
     padding-left: 15px;
 }
 
+#month_link_button {
+    padding-left: 15px;
+}
+
+#month_options_divider {
+    margin-top: 8px !important;
+}
+
 #add_month_container {
     margin-bottom: 0;
 }
@@ -79,7 +87,7 @@
 
 #recipe_table_container {
     overflow: auto;
-    max-height: 350px;
+    max-height: 250px;
 }
 
 #blank_recipe_title {

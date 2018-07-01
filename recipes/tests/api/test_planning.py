@@ -30,6 +30,57 @@ class TestPlanningAPIMethods(TestCase):
         self.assertIsInstance(body, list)
         self.assertEqual(len(body), 2)
 
+    def test_get_my_calendars_all_empty(self):
+        url_path = reverse('planner:api:calendar-mine')
+        self.assertEqual('/planner/api/calendars/mine/', url_path)
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = response.json()
+        self.assertIsInstance(body, list)
+        self.assertEqual(len(body), 0)
+
+    def test_get_my_calendars_none_of_mine(self):
+        User.objects.create_user(username='testuser', password='12345')
+        user_b = User.objects.create_user(username='testuser2', password='123456')
+        self.client.login(username='testuser', password='12345')
+        Calendar.objects.create(nickname='foo', year=2018, month=4, creator=user_b)
+        Calendar.objects.create(nickname='bar', year=2019, month=5, creator=user_b)
+        url_path = reverse('planner:api:calendar-mine')
+        self.assertEqual('/planner/api/calendars/mine/', url_path)
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = response.json()
+        self.assertIsInstance(body, list)
+        self.assertEqual(len(body), 0)
+
+    def test_get_my_calendars_some_of_mine(self):
+        user_a = User.objects.create_user(username='testuser', password='12345')
+        user_b = User.objects.create_user(username='testuser2', password='123456')
+        self.client.login(username='testuser', password='12345')
+        Calendar.objects.create(nickname='foo', year=2018, month=4, creator=user_a)
+        Calendar.objects.create(nickname='bar', year=2019, month=5, creator=user_b)
+        url_path = reverse('planner:api:calendar-mine')
+        self.assertEqual('/planner/api/calendars/mine/', url_path)
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = response.json()
+        self.assertIsInstance(body, list)
+        self.assertEqual(len(body), 1)
+
+    def test_get_my_calendars_all_mine(self):
+        user_a = User.objects.create_user(username='testuser', password='12345')
+        User.objects.create_user(username='testuser2', password='123456')
+        self.client.login(username='testuser', password='12345')
+        Calendar.objects.create(nickname='foo', year=2018, month=4, creator=user_a)
+        Calendar.objects.create(nickname='bar', year=2019, month=5, creator=user_a)
+        url_path = reverse('planner:api:calendar-mine')
+        self.assertEqual('/planner/api/calendars/mine/', url_path)
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        body = response.json()
+        self.assertIsInstance(body, list)
+        self.assertEqual(len(body), 2)
+
     def test_get_detail_item_invalid(self):
         url_path = reverse('planner:api:calendar-detail', args=[1])
         response = self.client.get(url_path)
@@ -110,18 +161,41 @@ class TestPlanningAPIMonthlyDatesView(TestCase):
         url_path = reverse('planner:api:calendar-monthly-data', args=[1])
         response = self.client.get(url_path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_data = response.json()
+        self.assertEqual(u'1', response_data['id'])
 
 
 class TestPlanningAPIRecipeIDView(TestCase):
     def test_recipe_id_fails_for_logged_out(self):
         Calendar.objects.create(year=2018, month=5)
+        Recipe.objects.create(title='Caits favorite')
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
-        response = self.client.post(
+        response = self.client.put(
             url_path,
             data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 1}),
             content_type='application/json'
         )
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_recipe_id_fails_for_wrong_user(self):
+        # create a first user, and login with it
+        User.objects.create_user(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+
+        # create a second user to hold the calendar we will try to modify
+        user2 = User.objects.create_user(username='testuser2', password='123456')
+        c = Calendar.objects.create(year=2018, month=5, creator=user2)
+        Recipe.objects.create(title='Caits favorite', creator=user2)
+        url_path = reverse('planner:api:calendar-recipe-id', args=[1])
+
+        # it will fail because of the authentication mismatch
+        response = self.client.put(
+            url_path,
+            data=json.dumps({'date_num': 3, 'daily_recipe_id': 1, 'recipe_pk': 1}),
+            content_type='application/json'
+        )
+        c.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_recipe_id_only_accepts_put(self):
         Calendar.objects.create(year=2018, month=5)
@@ -134,8 +208,10 @@ class TestPlanningAPIRecipeIDView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_updating_recipe_id_valid(self):
-        c = Calendar.objects.create(year=2018, month=5)
-        r = Recipe.objects.create(title='Caits favorite')
+        user = User.objects.create_user(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+        c = Calendar.objects.create(year=2018, month=5, creator=user)
+        r = Recipe.objects.create(title='Caits favorite', creator=user)
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
@@ -244,8 +320,10 @@ class TestPlanningAPIRecipeIDView(TestCase):
         self.assertIn(b'Cannot find object with pk=2', response.content)
 
     def test_updating_recipe_id_out_of_range_date(self):
-        Calendar.objects.create(year=2018, month=5)
-        Recipe.objects.create(title='Caits favorite')
+        user = User.objects.create_user(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+        Calendar.objects.create(year=2018, month=5, creator=user)
+        Recipe.objects.create(title='Caits favorite', creator=user)
         url_path = reverse('planner:api:calendar-recipe-id', args=[1])
 
         response = self.client.put(
@@ -257,8 +335,10 @@ class TestPlanningAPIRecipeIDView(TestCase):
         self.assertIn(b'Cannot locate field day32recipe1', response.content)
 
     def test_clearing_recipe_id(self):
-        c = Calendar.objects.create(year=2018, month=5, nickname='My Calendar')
-        r = Recipe.objects.create(title='Caits favorite')
+        user = User.objects.create_user(username='testuser', password='12345')
+        self.client.login(username='testuser', password='12345')
+        c = Calendar.objects.create(year=2018, month=5, nickname='My Calendar', creator=user)
+        r = Recipe.objects.create(title='Caits favorite', creator=user)
         c.day01recipe1 = r
         c.save()
         url_path = reverse('planner:api:calendar-recipe-id', args=[c.pk])

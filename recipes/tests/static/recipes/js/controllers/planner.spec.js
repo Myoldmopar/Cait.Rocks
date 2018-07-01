@@ -17,12 +17,12 @@ describe('planner_controller testing init function', function () {
     }));
 
     it('should initialize the controller using a specific list of method calls', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
+        spyOn(mock_calendar_service, 'get_my_calendars').and.returnValue($scope.$q.when([]));
         spyOn(mock_recipe_service, 'get_recipes').and.returnValue($scope.$q.when(['recipes']));
         $scope.init();
         $scope.$digest();
         expect(mock_recipe_service.get_recipes).toHaveBeenCalled();
-        expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
+        expect(mock_calendar_service.get_my_calendars).toHaveBeenCalled();
         expect($scope.recipe_list).toEqual(['recipes']);
     });
 });
@@ -125,23 +125,23 @@ describe('planner_controller testing retrieve_calendars function', function () {
     }));
 
     it('should get calendars through the calendar API service', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
+        spyOn(mock_calendar_service, 'get_my_calendars').and.returnValue($scope.$q.when([{'id': 1}, {'id': 2}]));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.initialize_to_calendar = undefined;
         $scope.retrieve_calendars();
         $scope.$digest();
-        expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
+        expect(mock_calendar_service.get_my_calendars).toHaveBeenCalled();
         expect($scope.selected_calendar.id).toEqual(2);
     });
 
     it('should fail to get calendars through the calendar API service', function () {
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.reject('reasons'));
+        spyOn(mock_calendar_service, 'get_my_calendars').and.returnValue($scope.$q.reject('reasons'));
         spyOn(mock_calendar_service, 'get_calendar_monthly_data').and.returnValue($scope.$q.when({'num_weeks': 5}));
         $scope.initialize_to_calendar = undefined;
         $scope.calendar_error_message = '';
         $scope.retrieve_calendars();
         $scope.$digest();
-        expect(mock_calendar_service.get_calendars).toHaveBeenCalled();
+        expect(mock_calendar_service.get_my_calendars).toHaveBeenCalled();
         expect($scope.calendar_error_message).toBeTruthy();
     });
 });
@@ -259,7 +259,7 @@ describe('planner_controller testing add_calendar function', function () {
 
     it('should add a new calendar based on $scope variables which are usually models on user inputs', function () {
         spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.when({}));
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
+        spyOn(mock_calendar_service, 'get_my_calendars').and.returnValue($scope.$q.when([]));
         $scope.calendar_year = 2018;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'Hey';
@@ -271,7 +271,7 @@ describe('planner_controller testing add_calendar function', function () {
 
     it('should fail to add a new calendar because the POST failed', function () {
         spyOn(mock_calendar_service, 'post_calendar').and.returnValue($scope.$q.reject('reasons'));
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when([]));
+        spyOn(mock_calendar_service, 'get_my_calendars').and.returnValue($scope.$q.when([]));
         $scope.calendar_year = 2018;
         $scope.calendar_month = 5;
         $scope.calendar_name = 'Hey';
@@ -391,7 +391,7 @@ describe('planner_controller testing remove_calendar function', function () {
     it('should delete the current calendar', function () {
         spyOn(window, 'confirm').and.returnValue(true);
         spyOn(mock_calendar_service, 'delete_calendar').and.returnValue($scope.$q.when({}));
-        spyOn(mock_calendar_service, 'get_calendars').and.returnValue($scope.$q.when({'data': []}));
+        spyOn(mock_calendar_service, 'get_my_calendars').and.returnValue($scope.$q.when({'data': []}));
         $scope.selected_calendar = {id: 1, nickname: 'Jo month', year: 2017, month: 3};
         $scope.remove_calendar();
         $scope.$digest();
@@ -513,175 +513,6 @@ describe('planner_controller testing clear_filter function', function () {
         $scope.filter_text = 'abc';
         $scope.clear_filter();
         expect($scope.filter_text).toEqual('');
-    });
-});
-
-describe('planner_controller testing filter_table_rows function', function () {
-    var $scope, mock_recipe_service, httpBackend;
-
-    beforeEach(module('cait_rocks_app'));
-
-    beforeEach(inject(function ($controller, $rootScope, recipe_service, $httpBackend, $q) {
-        $scope = $rootScope.$new();
-        mock_recipe_service = recipe_service;
-        httpBackend = $httpBackend;
-        $scope.$q = $q;
-        $controller('planner_controller', {
-            $scope: $scope,
-            recipe_service: mock_recipe_service
-        });
-    }));
-
-    beforeEach(function () {
-        var recipeTable =
-            '<table id="recipe_list_table">' +
-            '<tr>' +
-            '<th></th><th></th><th></th><th></th>' +
-            '</tr>' +
-            '<tr id="row1">' +
-            '<td>TypeA</td>' +
-            '<td><a href="#">TitleA</a></td>' +
-            '<td>CreatorA</td>' +
-            '<td>IngredientA</td>' +
-            '<tr id="row2">' +
-            '<td>TypeB</td>' +
-            '<td><a href="#">TitleB</a></td>' +
-            '<td>CreatorB</td>' +
-            '<td>IngredientB</td>' +
-            '</table>';
-        document.body.insertAdjacentHTML('afterbegin', recipeTable);
-
-        var datasetBasedItem = '<div id="someSpecialID" data-weeknum="0" data-daynum="0" data-recipenum="0"></div>';
-        document.body.insertAdjacentHTML('afterbegin', datasetBasedItem);
-    });
-
-    afterEach(function () {
-        document.body.removeChild(document.getElementById('recipe_list_table'));
-    });
-
-    it('should ignore if the filter text is too short', function () {
-        $scope.filter_text = '';
-        $scope.filter_table_rows();
-        // literally shouldn't do anything, just wait until possibly more text is entered before filtering
-    });
-
-    it('should re-show all table rows for a blank filter', function () {
-        var row1 = document.getElementById('row1');
-        var row2 = document.getElementById('row2');
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = '';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('');
-    });
-
-    it('should hide all table rows for a non-matching filter', function () {
-        var row1 = document.getElementById('row1');
-        var row2 = document.getElementById('row2');
-        row1.style.display = '';
-        row2.style.display = '';
-        $scope.filter_text = 'abc';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('none');
-        expect(row2.style.display).toEqual('none');
-    });
-
-    it('should show based on title', function () {
-        var row1 = document.getElementById('row1');
-        var row2 = document.getElementById('row2');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'Title';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'TitleA';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('none');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'TitleB';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('none');
-        expect(row2.style.display).toEqual('');
-    });
-
-    it('should show based on creator', function () {
-        var row1 = document.getElementById('row1');
-        var row2 = document.getElementById('row2');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'Creator';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'CreatorA';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('none');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'CreatorB';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('none');
-        expect(row2.style.display).toEqual('');
-    });
-
-    it('should show based on ingredients', function () {
-        var row1 = document.getElementById('row1');
-        var row2 = document.getElementById('row2');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'Ingredient';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'IngredientA';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('none');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'IngredientB';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('none');
-        expect(row2.style.display).toEqual('');
-    });
-
-    it('should match on multi-part search', function () {
-        var row1 = document.getElementById('row1');
-        var row2 = document.getElementById('row2');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'Ingredient Creator';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('');
-
-        row1.style.display = 'none';
-        row2.style.display = 'none';
-        $scope.filter_text = 'IngredientA Creator';
-        $scope.filter_table_rows();
-        expect(row1.style.display).toEqual('');
-        expect(row2.style.display).toEqual('none');
     });
 });
 

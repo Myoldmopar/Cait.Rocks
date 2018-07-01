@@ -79,4 +79,4 @@ class Recipe(models.Model):
 
         :return: string
         """
-        return reverse('planner:recipe_views-detail', kwargs={'pk': self.id})
+        return reverse('planner:recipes-detail', kwargs={'pk': self.id})

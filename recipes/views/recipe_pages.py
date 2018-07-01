@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from rest_framework.viewsets import ViewSet
-
-from recipes.models.ingredient import Ingredient
-from recipes.models.recipe import Recipe
 
 
 class RecipeViewSet(ViewSet):
@@ -19,8 +16,7 @@ class RecipeViewSet(ViewSet):
         :param request: An http request object
         :return: Rendered HTML
         """
-        recipes = Recipe.objects.all()
-        return render(request, 'recipes/recipe_list.html', {'recipes': recipes})
+        return render(request, 'recipes/recipes.html', {'django_recipe_id': False})
 
     def retrieve(self, request, pk=None):
         """
@@ -30,6 +26,4 @@ class RecipeViewSet(ViewSet):
         :param pk: The pk for the recipe of interest
         :return: Rendered HTML
         """
-        recipe = get_object_or_404(Recipe, pk=pk)
-        ingredients = Ingredient.objects.filter(recipe=recipe)
-        return render(request, 'recipes/recipe_detail.html', {'recipe': recipe, 'ingredients': ingredients})
+        return render(request, 'recipes/recipes.html', {'django_recipe_id': pk})

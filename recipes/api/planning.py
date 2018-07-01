@@ -11,11 +11,11 @@ from recipes.serializers.recipe import RecipeSerializer
 
 class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyModelViewSet):
     """
-    This class provides the API get and retrieve views for the calendar month objects, plus two workers:
+    This class provides the API get and retrieve views for the calendar month objects, plus three workers:
+    - mine, which is simply a GET call that filters by the current user, to list those available for editing
     - monthly_data, which is used to get the bulk data for a whole month
     - recipe_id, which is used to put the id onto a
     """
-    # queryset = Calendar.objects.all()
     serializer_class = CalendarSerializer
 
     def get_queryset(self):
@@ -25,7 +25,21 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
 
         :return: A queryset of Calendar objects belonging to the current user
         """
-        return Calendar.objects.filter(creator=self.request.user.id)
+        return Calendar.objects.all()
+
+    @action(methods=['GET'], detail=False)
+    def mine(self, request):
+        """
+        This function provides an alternate GET endpoint to get a list of the planning months that are owned by the
+        current user.  This is used to list the months available for editing in the planner page.  For the months page,
+        we want to expose them all, read-only of course, so that endpoint should just use the regular list method.
+
+        :return: A JSON response with all the calendar objects available for this user
+        """
+        my_calendars = Calendar.objects.filter(creator=request.user.id)
+        serializer = CalendarSerializer(instance=my_calendars, many=True)
+        output_data = serializer.data
+        return JsonResponse(output_data, status=status.HTTP_200_OK, safe=False)
 
     def create(self, request, *args, **kwargs):
         """
@@ -125,7 +139,7 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
                     }
                 )
             weekly_data.append(daily_data)
-        return JsonResponse({'num_weeks': len(dates), 'data': weekly_data})
+        return JsonResponse({'id': pk, 'num_weeks': len(dates), 'data': weekly_data})
 
     @action(methods=['put'], detail=True)
     def recipe_id(self, request, pk):
@@ -166,6 +180,19 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         if not calendar_query['success']:
             return calendar_query['response']
         calendar_to_modify = calendar_query['object']
+
+        # Validate ownership -- this may already be done through LoginRequired, unit tests should verify that I can't
+        # actually get to this point
+        if not request.user.id:
+            return JsonResponse(
+                {'message': 'Can\'t edit calendar from logged out state; login and retry'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        if not request.user.id == calendar_to_modify.creator_id:
+            return JsonResponse(
+                {'message': 'Can\'t edit calendar that you don\'t own'},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
         # Now get a two-digit date number so we can lookup a member variable, and set that variable using Python voodoo
         day_string = '%02d' % date_num

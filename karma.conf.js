@@ -21,8 +21,10 @@ module.exports = function (config) {
             'node_modules/angular-mocks/angular-mocks.js',
             'recipes/static/recipes/js/*.js',
             'recipes/static/recipes/js/controllers/*.js',
+            'recipes/static/recipes/js/filters/*.js',
             'recipes/static/recipes/js/services/*.js',
             'recipes/tests/static/recipes/js/controllers/*.js',
+            'recipes/tests/static/recipes/js/filters/*.js',
             'recipes/tests/static/recipes/js/services/*.js'
         ],
 
@@ -37,8 +39,10 @@ module.exports = function (config) {
             // development source files to generate coverage for, not external libraries
             'recipes/static/recipes/js/*.js': ['coverage'],
             'recipes/static/recipes/js/controllers/*.js': ['coverage'],
+            'recipes/static/recipes/js/filters/*.js': ['coverage'],
             'recipes/static/recipes/js/services/*.js': ['coverage'],
             'recipes/tests/static/recipes/js/controllers/*.js': ['coverage'],
+            'recipes/tests/static/recipes/js/filters/*.js': ['coverage'],
             'recipes/tests/static/recipes/js/services/*.js': ['coverage']
         },
 

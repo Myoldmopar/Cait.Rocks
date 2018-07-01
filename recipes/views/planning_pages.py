@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from calendar import month_name
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from rest_framework.viewsets import ViewSet
-
-from recipes.models.planning import Calendar
 
 
 class MonthViewSet(ViewSet):
@@ -19,8 +16,7 @@ class MonthViewSet(ViewSet):
         :param request: An http request object
         :return: Rendered HTML
         """
-        months = Calendar.objects.all()
-        return render(request, 'recipes/month_list.html', {'months': months})
+        return render(request, 'recipes/months.html', {'django_month_id': False})
 
     def retrieve(self, request, pk=None):
         """
@@ -29,9 +25,7 @@ class MonthViewSet(ViewSet):
         :param pk: The pk for the month of interest
         :return: Rendered HTML
         """
-        month = get_object_or_404(Calendar, pk=pk)
-        this_month_name = month_name[month.month]
-        return render(request, 'recipes/month_detail.html', {'month_id': month.id, 'month_name': this_month_name})
+        return render(request, 'recipes/months.html', {'django_month_id': pk})
 
 
 class PlannerViewSet(LoginRequiredMixin, ViewSet):

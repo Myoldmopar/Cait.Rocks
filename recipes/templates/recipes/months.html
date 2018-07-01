@@ -1,0 +1,93 @@
+{% extends 'recipes/base.html' %}
+
+{% block title %}Cait.Rocks Monthly Plan!{% endblock %}
+
+{% block page_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'recipes/css/months.css' %}">
+{% endblock %}
+
+{% block ng_controller %}ng-controller="months_controller"{% endblock %}
+
+{% block ng_init %}ng-init="init( {{ django_month_id }} )"{% endblock %}
+
+{% block content %}
+
+    <h1>
+        Monthly Plans
+        <i id="month_load_spinner"
+           ng-show="loading_month_data"
+           class="fa fa-spinner fa-spin"
+           style="color:gray;">
+        </i>
+    </h1>
+
+    <div id="month_list_container">
+        <table id="month_list_table" class="table table-bordered">
+
+            <thead>
+            <tr>
+                <th>Nickname</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Creator</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="month in all_months"
+                ng-click="select_a_month(month.id)"
+                class="pointer" id="month_row_{[{ month.id }]}"
+                ng-class="selected_month.id==month.id ? 'selected_month_row' : ''"
+            >
+                <td class="bordered_cell" title="Monthly Plan Nickname">{[{ month.nickname }]}</td>
+                <td class="bordered_cell" title="Monthly Plan Year">{[{ month.year }]}</td>
+                <td class="bordered_cell" title="Monthly Plan Month">{[{ month.month }]}</td>
+                <td class="bordered_cell" title="Monthly Plan Creator">{[{ month.creator }]}</td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <hr>
+
+    <div ng-show="selected_month">
+        <table id="month_table" class="table table-bordered">
+            <tr>
+                <th class="calendar_day_header_cell" ng-repeat="day in days_of_week">
+                    {[{ day }]}
+                </th>
+            </tr>
+            <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
+                ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
+                <td class="calendar_day_cell" ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
+                    <div>
+                        <p class="date_number_paragraph">{[{ selected_month.data[week_num][day_of_week].date_number }]}</p>
+                        <div class="list-group"
+                             ng-show="selected_month.data[week_num][day_of_week].date_number !== '-'">
+                            <a class="list-group-item list-group-item-action recipe_link_box"
+                               ng-repeat="recipe_num in [0, 1]"
+                               ng-show="selected_month.data[week_num][day_of_week]['recipe' + recipe_num] !== null"
+                               href="{[{ '/planner/recipes/' + selected_month.data[week_num][day_of_week]['recipe' + recipe_num].id + '/' }]}">
+                                {[{ selected_month.data[week_num][day_of_week]['recipe' + recipe_num]['title']}]}
+                            </a>
+                            <a class="list-group-item list-group-item-action disabled_recipe_link_box disabled"
+                               ng-repeat="recipe_num in [0, 1]"
+                               ng-show="selected_month.data[week_num][day_of_week]['recipe' + recipe_num] === null" href="">
+                                -
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block page_js %}
+    {% load static %}
+    <script src="{% static 'recipes/js/controllers/months.js' %}"></script>
+    <script src="{% static 'recipes/js/services/calendar.js' %}"></script>
+{% endblock %}

@@ -1,33 +1,47 @@
 var app = angular.module('cait_rocks_app');
 
-app.controller('recipe_list_controller', ['$scope', 'recipe_service', function ($scope, recipe_service) {
+app.controller('recipes_controller', ['$scope', 'recipe_service', '$timeout', function ($scope, recipe_service, $timeout) {
     'use strict';
 
     $scope.selected_recipe = null;
     $scope.sort_type = 'title';
     $scope.sort_reverse = false;
     $scope.search_recipe = '';
-    $scope.recipe_error_message = '';
+    $scope.recipe_warning_message = '';
     $scope.loading_recipe = false;
     $scope.loading_recipes = false;
 
-    $scope.init = function () {
-        $scope.recipe_error_message = '';
+    $scope.init = function (potential_recipe_id) {
+        $scope.recipe_warning_message = '';
         $scope.loading_recipe = true;
         recipe_service.get_recipes().then(
             function (response) {
-                $scope.allRecipes = response;
+                $scope.all_recipes = response;
+                /* istanbul ignore next */ // no way in HECK am I going to verify this actually scrolled
+                if (potential_recipe_id) {
+                    $timeout( // using $timeout here will force this callback to wait until the DOM is updated
+                        function () {
+                            var element = document.getElementById("recipe_row_" + potential_recipe_id);
+                            if (element) {
+                                element.scrollIntoView();
+                                element.click();
+                            } else {
+                                $scope.recipe_warning_message = 'Could not browse to recipe #' + potential_recipe_id;
+                            }
+                        }
+                    )
+                }
             }
         ).catch(function () {
-            $scope.allRecipes = [];
-            $scope.recipe_error_message = 'Could not retrieve recipes, is the server broken?'
+            $scope.all_recipes = [];
+            $scope.recipe_warning_message = 'Could not retrieve recipes, is the server broken?'
         }).finally(function () {
             $scope.loading_recipe = false;
         });
     };
 
     $scope.select_a_recipe = function (recipe_id) {
-        $scope.recipe_error_message = '';
+        $scope.recipe_warning_message = '';
         $scope.loading_recipe = true;
         recipe_service.get_recipe(recipe_id).then(
             function (response) {
@@ -47,7 +61,7 @@ app.controller('recipe_list_controller', ['$scope', 'recipe_service', function (
             }
         ).catch(function () {
             $scope.selected_recipe = null;
-            $scope.recipe_error_message = 'Could not retrieve recipe, is the server broken?';
+            $scope.recipe_warning_message = 'Could not retrieve recipe, is the server broken?';
         }).finally(function () {
             $scope.loading_recipe = false;
         });
@@ -56,4 +70,8 @@ app.controller('recipe_list_controller', ['$scope', 'recipe_service', function (
     $scope.show_loading_spinner = function () {
         return $scope.loading_recipes || $scope.loading_recipe;
     };
+
+    $scope.clear_recipe_warning = function () {
+        $scope.recipe_warning_message = false;
+    }
 }]);

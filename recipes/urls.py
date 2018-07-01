@@ -26,7 +26,7 @@ schema_view = get_swagger_view(title='RecipLees API', patterns=api_urlpatterns, 
 
 # Create a router to route all the other pages (the HTML pages)
 page_router = DefaultRouter()
-page_router.register(r'recipe_views', RecipePageViewSet, base_name='recipe_views')
+page_router.register(r'recipes', RecipePageViewSet, base_name='recipes')
 page_router.register(r'months', MonthViewSet, base_name='months')
 page_router.register(r'', PlannerViewSet, base_name='planner')
 

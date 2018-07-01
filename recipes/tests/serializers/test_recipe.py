@@ -15,7 +15,7 @@ class RecipeSerializerTests(TestCase):
         recipe_object = Recipe.objects.create(**recipe_attributes)
         recipe_serializer = RecipeSerializer(instance=recipe_object)
         url = recipe_serializer.get_absolute_url(recipe_object)
-        self.assertEqual(u'/planner/recipe_views/1/', url)
+        self.assertEqual(u'/planner/recipes/1/', url)
 
     def test_recipe_creator_method_empty(self):
         recipe_attributes = {

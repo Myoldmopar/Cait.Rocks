@@ -38,3 +38,43 @@ body {
 .date_number_paragraph {
     margin-bottom: 4px;
 }
+
+.selected_row {
+    background-color: orange;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* Settings for scroll tables like the recipes and monthly plans */
+
+/* This container takes up the entire width, adds a scroll bar, specifies a height, and sets a nice border;
+   It is used in conjunction with some JS to pin the thead at the top of the table when this container scrolls */
+.fixed-header-scroll-parent {
+    width: 100%;
+    overflow-y: auto;
+    max-height: 350px;
+    border: solid 1px black;
+}
+
+/* This adds a small border around the thead, which looks nice and also makes the table play well with the scrolls */
+.fixed-header-scroll-child thead {
+    background-color: #eeeeee;
+    border: solid 1px black;
+}
+
+/* This will remove the margin around the table itself so the bottom sits flush with the container */
+.fixed-header-scroll-child {
+    margin-bottom: 0;
+}
+
+/* This will remove the bottom border from the very bottom row; the container takes care of this instead */
+.fixed-header-scroll-child tbody > tr:last-child > td {
+    border-bottom: 0 !important;
+}
+
+/* This will remove the left border from all the rows; the container has a border instead*/
+.fixed-header-scroll-child thead,tbody > tr >td:first-child {
+    border-left: 0 !important;
+}

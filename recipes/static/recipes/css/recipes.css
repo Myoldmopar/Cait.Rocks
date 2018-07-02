@@ -1,48 +1,3 @@
-/*
-  This recipe list css got a bit goofy, but works really well.  It is based around two goals: getting the list to be
-  placed nicely, and then getting the borders looking really good.  Here are the guidelines:
-  - The recipe list is placed inside a div container called recipe_list_container
-  - This container is constrained to be 450px tall and uses an auto overflow to get scrolling as needed
-  - The left side of this container has zero border because the inside table provides the border there
-    I can't count on the inside table providing the top and bottom borders because as the table scrolls,
-    the lines disappear and it is difficult to tell where the table stops and the page begins
-    So the container provides the top and bottom borders.  The inside table should not.  The container object
-    also provides the right side border -outside- of the scroll bar
-  - So then the recipe_list_table itself is set to zero bottom margin so there isn't empty space inside the scrollable
-    area, and the border is totally removed from the table -- the cells may have borders however
-  - The header rows are then selected using a deep css selection and the bottom, right, and left borders are applied
-    Again, the top of the table uses the container object, so we shouldn't apply another top border here
-  - Finally, the crazy css selection finds the bottom row of the table and removes the very bottom border from the
-    bottom cells, so that it looks perfect.  Whew.  Peter Griffin...except it works and the blinds aren't destroyed.
-*/
-
-#recipe_list_container {
-    max-height: 350px;
-    overflow: auto;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px 1px 1px 0;
-}
-
-#recipe_list_table {
-    margin-bottom: 0;
-    border: 0;
-}
-
-#recipe_list_table thead tr th {
-    border-right: 1px solid black !important;
-    border-left: 1px solid black !important;
-    border-bottom: 1px solid black !important;
-}
-
-#recipe_list_table tbody > tr:last-child > td {
-    border-bottom: 0 !important;
-}
-
-.selected_recipe_row {
-    background-color: orange;
-}
-
 .recipe_image_container {
     border-right: solid 1px rgba(0, 0, 0, 0.1);
 }
@@ -50,10 +5,6 @@
 #selected_recipe_image {
     max-width: 100%;
     height: auto;
-}
-
-.pointer {
-    cursor: pointer;
 }
 
 .directions_heading_text {

@@ -37,11 +37,11 @@
         </div>
     </form>
 
-    <div id="recipe_list_container">
-        <table id="recipe_list_table" class="table table-bordered">
+    <div class="fixed-header-scroll-parent">
+        <table id="recipe_list_table" class="table fixed-header-scroll-child">
 
             <thead>
-            <tr>
+            <tr class="pointer">
                 <th ng-click="sort_type = 'recipe_type'; sort_reverse = !sort_reverse">
                     Recipe Type
                     <span ng-show="sort_type == 'recipe_type' && !sort_reverse" class="fa fa-caret-down"></span>
@@ -69,7 +69,7 @@
             <tr ng-repeat="recipe in all_recipes | orderBy:sort_type:sort_reverse | recipe_match:search_recipe"
                 ng-click="select_a_recipe(recipe.id)"
                 class="pointer" id="recipe_row_{[{ recipe.id }]}"
-                ng-class="selected_recipe.id==recipe.id ? 'selected_recipe_row' : ''"
+                ng-class="selected_recipe.id==recipe.id ? 'selected_row' : ''"
             >
                 <td class="bordered_cell" title="Recipe Type">{[{ recipe.recipe_type }]}</td>
                 <td class="bordered_cell" title="Recipe Title">{[{ recipe.title }]}</td>
@@ -80,7 +80,6 @@
 
         </table>
     </div>
-
     <hr>
 
     <div id="selected_recipe_container" ng-show="selected_recipe">

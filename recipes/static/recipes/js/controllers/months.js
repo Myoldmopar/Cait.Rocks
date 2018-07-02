@@ -8,6 +8,8 @@ app.controller('months_controller', ['$scope', 'calendar_service', '$timeout', f
         $scope.selected_month = false;
         $scope.loading_month_data = true;
         $scope.calendar_error_message = '';
+        $scope.sort_type = 'nickname';
+        $scope.sort_reverse = false;
 
         calendar_service.get_calendars().then(
             function (response) {

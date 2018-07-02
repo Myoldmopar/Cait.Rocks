@@ -1,6 +1,6 @@
 
 #month_list_container {
-    max-height: 150px;
+    max-height: 300px;
     overflow: auto;
     border-color: black;
     border-style: solid;

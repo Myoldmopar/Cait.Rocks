@@ -2,10 +2,10 @@
 from rest_framework import serializers
 
 from recipes.models.recipe import Recipe
-from recipes.serializers.utilities import get_creator_from_object
+from recipes.serializers.base import CreatorBaseSerializer
 
 
-class RecipeSerializer(serializers.ModelSerializer):
+class RecipeSerializer(CreatorBaseSerializer):
     """
     This serializer allows direct serialization for recipe objects, with additional keys as needed
     """
@@ -15,7 +15,6 @@ class RecipeSerializer(serializers.ModelSerializer):
     ingredients = serializers.StringRelatedField(many=True, required=False)
 
     absolute_url = serializers.SerializerMethodField()
-    creator = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
@@ -28,6 +27,3 @@ class RecipeSerializer(serializers.ModelSerializer):
         :return: The fully formed URL for this recipe instance
         """
         return recipe_instance.get_absolute_url()
-
-    def get_creator(self, recipe_instance):
-        return get_creator_from_object(recipe_instance)

@@ -15,13 +15,14 @@
                 <p>If you have an account, go to your <a href="{% url 'planner:planner-list' %}">planner</a>, and you
                     can start laying out your own monthly meal plans. If not, you can still check out the
                     <a href="{% url 'planner:recipes-list' %}">full recipe list</a> and pick something out for
-                    dinner.
+                    dinner.  If you just want to learn a bit more about the site, check the <a href="{% url 'about' %}">
+                    about</a> page.
                 </p>
 
                 <h1>Anything else?</h1>
-                <p>You can also look at the <a href="{% url 'planner:months-list' %}">monthly plans</a> Cait has made! Be
-                    patient with the formatting of the calendars, as this experience isn't optimized for mobile just
-                    yet. For now turn your phone sideways and it should get you close enough.</p>
+                <p>You can also look at the <a href="{% url 'planner:months-list' %}">monthly plans</a> Cait has made!
+                    The mobile experience is coming along, and should keep getting better.
+                </p>
 
                 <h1>What about my own plans?</h1>
                 <p>To make your own calendars, you'll need to have an account to <a href="{% url 'login' %}">login</a>.

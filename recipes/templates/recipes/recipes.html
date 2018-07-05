@@ -12,14 +12,27 @@
 {% block ng_init %}ng-init="init( {{ django_recipe_id }} )"{% endblock %}
 
 {% block content %}
-    <h2>
-        Recipes
-        <i id="recipes_load_spinner"
-           ng-show="show_loading_spinner()"
-           class="fa fa-spinner fa-spin"
-           style="color:gray;">
-        </i>
-    </h2>
+    <div class="row centered_text large_bottom_margin">
+        <div class="col-12">
+            <h2>
+                Recipes
+            </h2>
+        </div>
+        <div class="col-12">
+            <h2>
+                <i id="recipes_load_spinner"
+                   ng-show="show_loading_spinner()"
+                   class="fa fa-spinner fa-spin gray_object">
+                </i>
+            </h2>
+        </div>
+        <div class="col-12">
+            <button id="manage_recipes_button" class="btn btn-primary small_bottom_margin" type="button"
+                    data-toggle="collapse" data-target="#recipe_list_container">
+                Show/Hide List
+            </button>
+        </div>
+    </div>
 
     <div id="recipe_warning_msg" class="alert alert-warning" ng-show="recipe_warning_message">
         <div class="col-md-12">
@@ -37,7 +50,7 @@
         </div>
     </form>
 
-    <div class="fixed-header-scroll-parent">
+    <div id="recipe_list_container" class="fixed-header-scroll-parent collapse show">
         <table id="recipe_list_table" class="table fixed-header-scroll-child">
 
             <thead>
@@ -71,9 +84,9 @@
                 class="pointer" id="recipe_row_{[{ recipe.id }]}"
                 ng-class="selected_recipe.id==recipe.id ? 'selected_row' : ''"
             >
-                <td class="bordered_cell" title="Recipe Type">{[{ recipe.recipe_type }]}</td>
-                <td class="bordered_cell" title="Recipe Title">{[{ recipe.title }]}</td>
-                <td class="bordered_cell" title="Recipe Creator">{[{ recipe.creator }]}</td>
+                <td class="full_border" title="Recipe Type">{[{ recipe.recipe_type }]}</td>
+                <td class="full_border" title="Recipe Title">{[{ recipe.title }]}</td>
+                <td class="full_border" title="Recipe Creator">{[{ recipe.creator }]}</td>
                 <td class="hidden_bordered_cell">{[{ recipe.ingredients }]}</td>
             </tr>
             </tbody>

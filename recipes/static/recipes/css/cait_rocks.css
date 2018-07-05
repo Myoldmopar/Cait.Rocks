@@ -10,17 +10,65 @@ body {
     padding-top: 15px;
 }
 
-.bordered_cell {
-    border: 1px solid black !important;
+.top_and_bottom_border {
+    border-top: 1px solid #888888 !important;
+    border-bottom: 1px solid #888888 !important;
+}
+
+.right_border {
+    border-right: 1px solid #888888 !important;
+}
+
+.full_border {
+    border: 1px solid #888888 !important;
 }
 
 .hidden_bordered_cell {
-    border: 1px solid black !important;
+    border: 1px solid #888888 !important;
     display: none;
+}
+
+.large_bottom_margin {
+    margin-bottom: 16px;
 }
 
 #month_table {
     table-layout: fixed;
+}
+
+.centered_text {
+    text-align: center;
+}
+
+.gray_object {
+    color: #888888;
+}
+
+.eighth-column-cell {
+    display: none;
+    text-align: center;
+    font-style: italic;
+    color: #888888;
+    background-color: white;
+}
+
+@media (max-width: 767px) {
+    .responsive-table > thead {
+        display: none;
+    }
+
+    .responsive-table > thead > tr > th.eighth-column-cell {
+        display: inline-block !important;
+    }
+
+    .responsive-table > tbody > tr td {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .responsive-table > tbody > tr > td.eighth-column-cell {
+        display: inline-block !important;
+    }
 }
 
 .calendar_day_header_cell {
@@ -55,13 +103,13 @@ body {
     width: 100%;
     overflow-y: auto;
     max-height: 350px;
-    border: solid 1px black;
+    border: solid 1px #888888;
 }
 
 /* This adds a small border around the thead, which looks nice and also makes the table play well with the scrolls */
 .fixed-header-scroll-child thead {
     background-color: #eeeeee;
-    border: solid 1px black;
+    border: solid 1px #888888;
 }
 
 /* This will remove the margin around the table itself so the bottom sits flush with the container */
@@ -72,9 +120,4 @@ body {
 /* This will remove the bottom border from the very bottom row; the container takes care of this instead */
 .fixed-header-scroll-child tbody > tr:last-child > td {
     border-bottom: 0 !important;
-}
-
-/* This will remove the left border from all the rows; the container has a border instead*/
-.fixed-header-scroll-child thead,tbody > tr >td:first-child {
-    border-left: 0 !important;
 }

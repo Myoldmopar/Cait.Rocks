@@ -13,29 +13,36 @@
 
 {% block content %}
 
-    <div>
-        <h1 ng-show="selected_calendar" id="calendar_name">
-            {[{ selected_calendar.nickname }]}
-            <i id="planner_load_spinner"
-               ng-show="show_loading_spinner()"
-               class="fa fa-spinner fa-spin"
-               style="color:gray;">
-            </i>
-        </h1>
-        <h1 ng-hide="selected_calendar" id="calendar_name">
-            Need to add a calendar!
-        </h1>
-        <button id="manage_months_button" class="btn btn-primary small_bottom_margin" type="button"
-                data-toggle="collapse" data-target="#collapse_manage_months" aria-expanded="false">
-            Manage Months
-        </button>
-        <button id="view_recipes_button" class="btn btn-primary small_bottom_margin" type="button"
-                data-toggle="collapse" data-target="#collapse_recipe_view" aria-expanded="false">
-            Toggle Recipes
-        </button>
+    <div class="row centered_text">
+        <div class="col-12">
+            <h1 ng-show="selected_calendar" id="calendar_name">
+                {[{ selected_calendar.nickname }]}
+            </h1>
+            <h1 ng-hide="selected_calendar" id="calendar_name">
+                Need to add a calendar!
+            </h1>
+        </div>
+        <div class="col-12">
+            <h2>
+                <i id="planner_load_spinner"
+                   ng-show="show_loading_spinner()"
+                   class="fa fa-spinner fa-spin gray_object">
+                </i>
+            </h2>
+        </div>
+        <div class="col-12 large_bottom_margin centered_text">
+            <button id="manage_months_button" class="btn btn-primary" type="button"
+                    data-toggle="collapse" data-target="#collapse_manage_months">
+                Show Months
+            </button>
+            <button id="view_recipes_button" class="btn btn-primary" type="button"
+                    data-toggle="collapse" data-target="#collapse_recipe_view">
+                Show Recipes
+            </button>
+        </div>
     </div>
 
-    <div class="collapse small_bottom_margin" id="collapse_recipe_view">
+    <div class="collapse large_bottom_margin" id="collapse_recipe_view">
         <div id="view_recipes_container" class="card card-body">
 
             <form>
@@ -43,43 +50,49 @@
                     <input id="blank_recipe_title" type="text" class="form-control" ng-model="blank_recipe_title"
                            placeholder="Quick Add New Recipe Title">
                     <div class="input-group-append">
-                        <button style="float:right;" class="btn btn-primary" ng-click="add_blank_recipe()"
-                                type="submit">
+                        <button class="btn btn-primary right-addon-button"
+                                type="submit"
+                                ng-click="add_blank_recipe()">
                             Quick Add
                         </button>
                     </div>
                 </div>
             </form>
 
-            <h2>
+            <h3>
                 All Recipes {[{ recipe_list.length ? '(' + recipe_list.length + ')' : '' }]}
-            </h2>
+            </h3>
 
-            <div id="recipe_filter_group" class="input-group">
-                <input type="text" class="form-control" ng-model="filter_text" ng-change="filter_table_rows()"
-                       placeholder="Filter by recipe title, creator, or ingredient list..."/>
-                <span class="input-group-btn">
-                    <button id="recipe_filter_clear_button" class="btn btn-primary" type="button"
-                            ng-click="clear_filter()">Clear</button>
-                </span>
-            </div>
+            <form>
+                <div class="input-group mb-3">
+                    <input id="recipe_filter_input" type="text" class="form-control" ng-model="filter_text"
+                           placeholder="Filter by recipe title, creator, or ingredient list..."/>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary right-addon-button"
+                                type="submit"
+                                ng-click="clear_filter()">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </form>
 
             <div id="recipe_table_container">
                 <table id="recipe_list_table" class="table table-striped">
                     <thead>
                     <tr>
-                        <th class="bordered_cell">Recipe Type</th>
-                        <th class="bordered_cell">Recipe Name</th>
-                        <th class="bordered_cell">Creator</th>
+                        <th class="full_border">Recipe Type</th>
+                        <th class="full_border">Recipe Name</th>
+                        <th class="full_border">Creator</th>
                         <th class="hidden_bordered_cell">Ingredients-HIDDEN</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="recipe in recipe_list | orderBy:sort_type:sort_reverse | recipe_match:filter_text">
-                        <td class="bordered_cell" title="Recipe Type">{[{ recipe.recipe_type }]}</td>
-                        <td class="bordered_cell link_holding_cell" title="Recipe Title"><a
+                        <td class="full_border" title="Recipe Type">{[{ recipe.recipe_type }]}</td>
+                        <td class="full_border link_holding_cell" title="Recipe Title"><a
                                 href="{[{ recipe.absolute_url }]}">{[{ recipe.title }]}</a></td>
-                        <td class="bordered_cell" title="Recipe Creator">{[{ recipe.creator }]}</td>
+                        <td class="full_border" title="Recipe Creator">{[{ recipe.creator }]}</td>
                         <td class="hidden_bordered_cell">{[{ recipe.ingredients }]}</td>
                     </tr>
                     </tbody>
@@ -89,37 +102,45 @@
         </div>
     </div>
 
-    <div class="collapse small_bottom_margin" id="collapse_manage_months">
+    <div class="collapse large_bottom_margin" id="collapse_manage_months">
         <div id="manage_months_container" class="card card-body">
-            <div id="month_dropdown_container" class="input-group">
-                <select id="month_dropdown" ng-model="selected_calendar" ng-options="c.nickname for c in allCalendars"
-                        class="form-control input-sm"
-                        ng-change="get_month_data()">
-                </select>
-                <span id="month_delete_button" class="input-group-btn">
-                    <button class="btn btn-danger form-control" type="submit" ng-click="remove_calendar()">Delete Month</button>
-                </span>
-                <span id="month_link_button" class="input-group-btn">
-                    <a class="btn btn-primary form-control" role="button" ng-href="/planner/months/{[{month.id}]}">Link to Month</a>
-                </span>
-            </div>
+            <h3>Month Selection</h3>
+
+            <form>
+                <div class="input-group mb-3">
+                    <select ng-model="selected_calendar" ng-options="c.nickname for c in allCalendars"
+                            class="form-control full_border"
+                            ng-change="get_month_data()">
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-danger form-control fa fa-trash-o top_and_bottom_border" type="submit"
+                            title="Delete the currently selected monthly plan"
+                            ng-click="remove_calendar()"></button>
+                    </div>
+                    <div class="input-group-append">
+                        <a class="btn btn-primary form-control top_and_bottom_border right_border" role="button" ng-href="/planner/months/{[{month.id}]}"
+                       title="Go to this monthly plan view">Go</a>
+                    </div>
+                </div>
+            </form>
             <hr id="month_options_divider">
+            <h3>Add New Month</h3>
             <form id="add_month_container" class="form-group row" ng-submit="add_calendar()">
-                <div class="col-md-3">
-                    <input type="text" class="form-control" ng-model="calendar_name"
+                <div class="col-md-3 large_bottom_margin">
+                    <input type="text" class="form-control full_border" ng-model="calendar_name"
                            placeholder="New Calendar Nickname">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 large_bottom_margin">
                     <select ng-model="calendar_year"
                             ng-options="y for y in [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]"
-                            class="form-control"></select>
+                            class="form-control full_border"></select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 large_bottom_margin">
                     <select ng-model="calendar_month" ng-options="m for m in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
-                            class="form-control"></select>
+                            class="form-control full_border"></select>
                 </div>
-                <div class="col-md-3">
-                    <input class="btn btn-primary form-control" type="submit" value="Add New Month">
+                <div class="col-md-3 large_bottom_margin">
+                    <input class="btn btn-primary form-control full_border" type="submit" value="Add New Month">
                 </div>
             </form>
         </div>
@@ -132,16 +153,20 @@
         </div>
     </div>
 
-    <table id="month_table" class="table table-bordered" ng-show="month">
+    <table id="month_table" class="table table-bordered responsive-table" ng-show="month">
+        <thead>
         <tr>
             <th ng-repeat="day in days_of_week" class="calendar_day_header_cell">
                 {[{ day }]}
             </th>
         </tr>
+        </thead>
+        <tbody>
         <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
             ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
             <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" class="calendar_day_cell">
-                <div class="form-group small_bottom_margin">
+                <div class="form-group small_bottom_margin"
+                     ng-class="selected_month.data[week_num][day_of_week].date_number === '-' ? 'non_month_day' : ''">
                     <label class="control-label">{[{ month.data[week_num][day_of_week].date_number }]}</label>
                     <div class="input-group small_bottom_margin"
                          ng-show="month.data[week_num][day_of_week].date_number !== '-'"
@@ -171,6 +196,7 @@
                 </div>
             </td>
         </tr>
+        </tbody>
     </table>
 
 {% endblock %}

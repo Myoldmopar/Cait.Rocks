@@ -1,22 +1,9 @@
-#calendar_name {
-    display: inline-block;
-}
-
-#manage_months_button {
-    float: right;
-}
-
-#view_recipes_button {
-    margin-right: 10px;
-    float: right;
-}
-
 #view_recipes_container {
     padding: 10px;
 }
 
 #manage_months_container {
-    padding: 10px;
+    padding: 10px 10px 0 10px;
 }
 
 #month_dropdown_container {
@@ -75,13 +62,15 @@
     margin-bottom: 4px;
 }
 
-#recipe_filter_group {
-    border: 1px solid black;
-    margin-bottom: 2px;
+.large_bottom_margin {
+    margin-bottom: 16px;
 }
 
-#recipe_filter_clear_button {
-    border-radius: 0;
+#recipe_filter_input {
+    border: 1px solid #888888;
+}
+
+.right-addon-button {
     float: right;
 }
 
@@ -91,5 +80,5 @@
 }
 
 #blank_recipe_title {
-    border: 1px solid black;
+    border: 1px solid #888888;
 }

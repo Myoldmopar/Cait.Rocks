@@ -13,16 +13,29 @@
 
 {% block content %}
 
-    <h1>
-        Monthly Plans
-        <i id="month_load_spinner"
-           ng-show="loading_month_data"
-           class="fa fa-spinner fa-spin"
-           style="color:gray;">
-        </i>
-    </h1>
+    <div class="row centered_text">
+        <div class="col-12">
+            <h1>
+                Monthly Plans
+            </h1>
+        </div>
+        <div class="col-12">
+            <h2>
+                <i id="month_load_spinner"
+                   ng-show="loading_month_data"
+                   class="fa fa-spinner fa-spin gray_object">
+                </i>
+            </h2>
+        </div>
+        <div class="col-12 large_bottom_margin">
+            <button id="manage_months_button" class="btn btn-primary small_bottom_margin" type="button"
+                    data-toggle="collapse" data-target="#month_list_container">
+                Show/Hide List
+            </button>
+        </div>
+    </div>
 
-    <div id="month_list_container" class="fixed-header-scroll-parent">
+    <div id="month_list_container" class="fixed-header-scroll-parent collapse show">
         <table id="month_list_table" class="table fixed-header-scroll-child">
 
             <thead>
@@ -60,10 +73,10 @@
                 class="pointer" id="month_row_{[{ month.id }]}"
                 ng-class="selected_month.id==month.id ? 'selected_row' : ''"
             >
-                <td class="bordered_cell" title="Monthly Plan Nickname">{[{ month.nickname }]}</td>
-                <td class="bordered_cell" title="Monthly Plan Year">{[{ month.year }]}</td>
-                <td class="bordered_cell" title="Monthly Plan Month">{[{ month.month }]}</td>
-                <td class="bordered_cell" title="Monthly Plan Creator">{[{ month.creator }]}</td>
+                <td class="full_border" title="Monthly Plan Nickname">{[{ month.nickname }]}</td>
+                <td class="full_border" title="Monthly Plan Year">{[{ month.year }]}</td>
+                <td class="full_border" title="Monthly Plan Month">{[{ month.month }]}</td>
+                <td class="full_border" title="Monthly Plan Creator">{[{ month.creator }]}</td>
             </tr>
             </tbody>
 
@@ -73,17 +86,22 @@
     <hr>
 
     <div ng-show="selected_month">
-        <table id="month_table" class="table table-bordered">
+        <table id="month_table" class="table table-bordered responsive-table">
+            <thead>
             <tr>
                 <th class="calendar_day_header_cell" ng-repeat="day in days_of_week">
                     {[{ day }]}
                 </th>
+                <th class="eighth-column-cell">-</th>
             </tr>
+            </thead>
+            <tbody>
             <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
                 ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
                 <td class="calendar_day_cell" ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
-                    <div>
-                        <p class="date_number_paragraph">{[{ selected_month.data[week_num][day_of_week].date_number }]}</p>
+                    <div ng-class="selected_month.data[week_num][day_of_week].date_number === '-' ? 'non_month_day' : ''">
+                        <p class="date_number_paragraph">{[{ selected_month.data[week_num][day_of_week].date_number
+                            }]}</p>
                         <div class="list-group"
                              ng-show="selected_month.data[week_num][day_of_week].date_number !== '-'">
                             <a class="list-group-item list-group-item-action recipe_link_box"
@@ -94,13 +112,16 @@
                             </a>
                             <a class="list-group-item list-group-item-action disabled_recipe_link_box disabled"
                                ng-repeat="recipe_num in [0, 1]"
-                               ng-show="selected_month.data[week_num][day_of_week]['recipe' + recipe_num] === null" href="">
+                               ng-show="selected_month.data[week_num][day_of_week]['recipe' + recipe_num] === null"
+                               href="">
                                 -
                             </a>
                         </div>
                     </div>
                 </td>
+                <td class="eighth-column-cell">-weekend-</td>
             </tr>
+            </tbody>
         </table>
     </div>
 

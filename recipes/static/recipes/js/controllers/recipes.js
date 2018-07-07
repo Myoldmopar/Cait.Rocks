@@ -24,6 +24,7 @@ app.controller('recipes_controller', ['$scope', 'recipe_service', '$timeout', fu
                             var element = document.getElementById("recipe_row_" + potential_recipe_id);
                             if (element) {
                                 element.scrollIntoView();
+                                document.getElementById('recipe_list_container').scrollTop -= 70;
                                 element.click();
                             } else {
                                 $scope.recipe_warning_message = 'Could not browse to recipe #' + potential_recipe_id;

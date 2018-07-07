@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import datetime
 import json
 
+from dateutil.tz import tzlocal
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
@@ -163,6 +165,26 @@ class TestPlanningAPIMonthlyDatesView(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_data = response.json()
         self.assertEqual(u'1', response_data['id'])
+
+    def test_calendar_shows_today_properly(self):
+        today = datetime.datetime.now(tzlocal())
+        c = Calendar(year=today.year, month=today.month)
+        r = Recipe(title='temporary')
+        r.save()
+        c.day01recipe0 = r
+        c.day01recipe1 = r
+        c.save()
+        url_path = reverse('planner:api:calendar-monthly-data', args=[1])
+        response = self.client.get(url_path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_data = response.json()
+        date_data = response_data['data']
+        for week in date_data:
+            for day in week:
+                if day['date_number'] == today.day:
+                    self.assertTrue(day['is_today'])
+                else:
+                    self.assertFalse(day['is_today'])
 
 
 class TestPlanningAPIRecipeIDView(TestCase):

@@ -17,15 +17,11 @@
         <div class="col-12">
             <h1>
                 Monthly Plans
-            </h1>
-        </div>
-        <div class="col-12">
-            <h2>
                 <i id="month_load_spinner"
                    ng-show="loading_month_data"
                    class="fa fa-spinner fa-spin gray_object">
                 </i>
-            </h2>
+            </h1>
         </div>
         <div class="col-12 large_bottom_margin">
             <button id="manage_months_button" class="btn btn-primary small_bottom_margin" type="button"
@@ -98,8 +94,8 @@
             <tbody>
             <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
                 ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
-                <td class="calendar_day_cell" ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]">
-                    <div ng-class="selected_month.data[week_num][day_of_week].date_number === '-' ? 'non_month_day' : ''">
+                <td class="calendar_day_cell" ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" ng-class="selected_month.data[week_num][day_of_week].is_today ? 'today_cell' : ''">
+                    <div>
                         <p class="date_number_paragraph">{[{ selected_month.data[week_num][day_of_week].date_number
                             }]}</p>
                         <div class="list-group"

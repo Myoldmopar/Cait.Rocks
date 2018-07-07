@@ -17,18 +17,14 @@
         <div class="col-12">
             <h1 ng-show="selected_calendar" id="calendar_name">
                 {[{ selected_calendar.nickname }]}
-            </h1>
-            <h1 ng-hide="selected_calendar" id="calendar_name">
-                Need to add a calendar!
-            </h1>
-        </div>
-        <div class="col-12">
-            <h2>
                 <i id="planner_load_spinner"
                    ng-show="show_loading_spinner()"
                    class="fa fa-spinner fa-spin gray_object">
                 </i>
-            </h2>
+            </h1>
+            <h1 ng-hide="selected_calendar" id="calendar_name">
+                Need to add a calendar!
+            </h1>
         </div>
         <div class="col-12 large_bottom_margin centered_text">
             <button id="manage_months_button" class="btn btn-primary" type="button"
@@ -114,12 +110,13 @@
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-danger form-control fa fa-trash-o top_and_bottom_border" type="submit"
-                            title="Delete the currently selected monthly plan"
-                            ng-click="remove_calendar()"></button>
+                                title="Delete the currently selected monthly plan"
+                                ng-click="remove_calendar()"></button>
                     </div>
                     <div class="input-group-append">
-                        <a class="btn btn-primary form-control top_and_bottom_border right_border" role="button" ng-href="/planner/months/{[{month.id}]}"
-                       title="Go to this monthly plan view">Go</a>
+                        <a class="btn btn-primary form-control top_and_bottom_border right_border" role="button"
+                           ng-href="/planner/months/{[{month.id}]}"
+                           title="Go to this monthly plan view">Go</a>
                     </div>
                 </div>
             </form>
@@ -164,10 +161,12 @@
         <tbody>
         <tr ng-repeat="week_num in [0, 1, 2, 3, 4, 5]"
             ng-show="(week_num < 4) || (week_num === 4 && num_weeks >= 5) || (week_num === 5 && num_weeks === 6)">
-            <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" class="calendar_day_cell">
-                <div class="form-group small_bottom_margin"
-                     ng-class="selected_month.data[week_num][day_of_week].date_number === '-' ? 'non_month_day' : ''">
-                    <label class="control-label">{[{ month.data[week_num][day_of_week].date_number }]}</label>
+            <td ng-repeat="day_of_week in [0, 1, 2, 3, 4, 5, 6]" class="calendar_day_cell"
+                ng-class="month.data[week_num][day_of_week].is_today ? 'today_cell' : ''">
+                <div class="form-group small_bottom_margin">
+                    <label class="control-label">
+                        {[{ month.data[week_num][day_of_week].date_number }]}
+                    </label>
                     <div class="input-group small_bottom_margin"
                          ng-show="month.data[week_num][day_of_week].date_number !== '-'"
                          ng-repeat="recipe_num in [0, 1]">

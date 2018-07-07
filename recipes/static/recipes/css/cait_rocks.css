@@ -87,6 +87,11 @@ body {
     margin-bottom: 4px;
 }
 
+.today_cell {
+    /*color: white;*/
+    background-color: #dbecff; /*#007bff; /*orange;*/
+}
+
 .selected_row {
     background-color: orange;
 }

@@ -21,6 +21,7 @@ app.controller('months_controller', ['$scope', 'calendar_service', '$timeout', f
                             var element = document.getElementById("month_row_" + potential_month_id);
                             if (element) {
                                 element.scrollIntoView();
+                                document.getElementById('month_list_container').scrollTop -= 100;
                                 element.click();
                             } else {
                                 $scope.calendar_error_message = 'Could not browse to month #' + potential_month_id;

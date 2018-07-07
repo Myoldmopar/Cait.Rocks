@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+from dateutil.tz import tzlocal
 from django.http import JsonResponse
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -123,16 +125,21 @@ class CalendarViewSet(CreateModelMixin, DestroyModelMixin, viewsets.ReadOnlyMode
         if not data['success']:
             return data['response']
         c = data['object']
+        today = datetime.datetime.now(tzlocal())
         dates = c.get_monthly_data()
         weekly_data = []
         for week_num, week_dates in enumerate(dates):
             daily_data = []
             for day_num, date_data in enumerate(week_dates):
                 date_number = '-'
+                cell_is_today = False
                 if date_data['date_number'] > 0:
                     date_number = date_data['date_number']
+                    if c.month == today.month and int(c.year) == today.year and date_number == today.day:
+                        cell_is_today = True
                 daily_data.append(
                     {
+                        'is_today': cell_is_today,
                         'date_number': date_number,
                         'recipe0': self._get_recipe_data_or_none(date_data, 'recipe0'),
                         'recipe1': self._get_recipe_data_or_none(date_data, 'recipe1'),

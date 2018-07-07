@@ -16,7 +16,7 @@ env:
   - TOX_ENV=flake8
   - TOX_ENV=structure
   - TOX_ENV=karma
-  - TOX_ENV=spelling
+#  - TOX_ENV=spelling
 
 matrix:
   exclude:

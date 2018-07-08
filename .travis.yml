@@ -16,7 +16,7 @@ env:
   - TOX_ENV=flake8
   - TOX_ENV=structure
   - TOX_ENV=karma
-#  - TOX_ENV=spelling
+  - TOX_ENV=spelling
 
 matrix:
   exclude:
@@ -34,8 +34,7 @@ before_install:
 install:
   - sudo apt-get install python-enchant -y
   - pip install --upgrade pip
-  - pip install tox coveralls sphinxcontrib-spelling
-  - pip install codecov
+  - pip install codecov coveralls tox
 
 script:
   - tox -e $TOX_ENV

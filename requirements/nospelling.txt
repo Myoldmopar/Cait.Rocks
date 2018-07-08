@@ -1,0 +1,22 @@
+# This list of requirements is the main list except for the spelling, which needs to be skipped on RTD and Heroku
+
+# Common dependencies
+beautifulsoup4==4.6.0
+coverage==4.2
+coveralls==1.1
+python-dateutil==2.7.3
+Django==1.11.12
+django-extensions==2.0.7
+djangorestframework==3.8.2
+django-rest-swagger==2.1.2
+pillow==5.1.0
+pyparsing==2.2.0
+pydot==1.2.4
+six==1.11.0
+tox==3.0.0
+
+# For deployment on Heroku
+dj-database-url==0.5.0  # Django database configuration
+gunicorn==19.7.1  # Web server
+psycopg2-binary==2.7.4  # Postgres interaction
+whitenoise==3.3.1  # Static asset server

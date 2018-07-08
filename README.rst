@@ -47,7 +47,7 @@ Follow these steps to get a development version up and running:
 
 - Install Python dependencies:
 
-  - `pip install -r requirements.txt`
+  - `pip install -r requirements/dev.txt`
 
 - Install Node.js runtime:
 
@@ -69,6 +69,10 @@ Follow these steps to get a development version up and running:
 - Create your initial database:
 
   - `python manage.py migrate`
+
+- All the tests should pass:
+
+  - To run all test types, just execute: `tox`
 
 - Run the server and open the website:
 

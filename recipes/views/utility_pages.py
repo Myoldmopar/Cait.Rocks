@@ -29,6 +29,7 @@ def server_version_data(request):
     settings_version = settings.VERSION
     git_sha = ''
     git_sha_found = False
+    git_dirty_message = ''
     working_dir_clean = True
 
     # get the current Git sha
@@ -45,9 +46,12 @@ def server_version_data(request):
             # if this still didn't work, it will just remain False
 
     if git_sha_found:  # pragma: no cover
-        git_sha_message = git_sha
+        if len(git_sha) >= 10:
+            git_sha_message = git_sha[:10]
+        else:
+            git_sha_message = git_sha  # default to just whatever is happening then
         if not working_dir_clean:
-            git_sha_message += ' (Working directory dirty)'
+            git_dirty_message = ' (Working directory dirty)'
     else:  # pragma: no cover
         git_sha_message = 'Could not get any Git information'
 
@@ -56,6 +60,7 @@ def server_version_data(request):
         'common/about.html',
         context={
             'version': settings_version,
-            'git_sha': git_sha_message
+            'git_sha': git_sha_message,
+            'git_dirty_message': git_dirty_message
         }
     )

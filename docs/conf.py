@@ -58,7 +58,7 @@ extensions = [
     'sphinx.ext.coverage',
 ]
 
-if 'TRAVIS' in os.environ:
+if 'READTHEDOCS' not in os.environ:
     extensions.append('sphinxcontrib.spelling')
 
 # Add any paths that contain templates here, relative to this directory.

@@ -1,7 +1,7 @@
 Cait.Rocks |versionimage|_ |climateimage|_
 ==========================================
 
-This repo holds the Django-backed and Angular-fronted website for CaitRocks_.
+This repo comprises the Django-backed and Angular-fronted website for CaitRocks_.
 
 .. _CaitRocks: <https://cait.rocks/>
 

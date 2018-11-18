@@ -5,6 +5,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
 
+from recipes.models.enums import AmountType, MeasurementType
+
 
 class RecipeTypes(object):
     """
@@ -80,3 +82,17 @@ class Recipe(models.Model):
         :return: string
         """
         return reverse('planner:recipes-detail', kwargs={'pk': self.id})
+
+    def is_poor(self):
+        for ingredient in self.ingredients.all():
+            if ingredient.amount != AmountType.NONE or ingredient.measurement != MeasurementType.NONE:
+                return False
+        return True
+
+    @staticmethod
+    def get_poor_recipes():
+        dumb_recipes = []
+        for recipe in Recipe.objects.all():
+            if recipe.is_poor():
+                dumb_recipes.append(recipe.title)
+        return dumb_recipes

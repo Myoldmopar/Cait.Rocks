@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import JsonResponse
-from rest_framework import mixins, status, viewsets
+from rest_framework import decorators, mixins, status, viewsets
 
 from recipes.models.recipe import Recipe
 from recipes.serializers.recipe import RecipeSerializer
@@ -44,3 +44,7 @@ class RecipeViewSet(mixins.CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         recipe_instance = Recipe.objects.create(**request.data)
         recipe_serializer = RecipeSerializer(recipe_instance)
         return JsonResponse(recipe_serializer.data, status=status.HTTP_201_CREATED)
+
+    @decorators.action(methods=['GET'], detail=False)
+    def poor_recipes(self, request):
+        return JsonResponse({'poor_recipes': Recipe.get_poor_recipes()})

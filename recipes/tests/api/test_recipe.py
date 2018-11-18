@@ -6,7 +6,9 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 
-from recipes.models.recipe import Recipe
+from recipes.models.enums import AmountType, MeasurementType
+from recipes.models.ingredient import Ingredient
+from recipes.models.recipe import Recipe, RecipeTypes
 
 
 class TestRecipeAPIMethods(TestCase):
@@ -72,3 +74,82 @@ class TestRecipeAPIMethods(TestCase):
         url_path = reverse('planner:api:recipe-detail', args=[1])
         response = self.client.delete(url_path)
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_poor_recipes_empty(self):
+        url_path = reverse('planner:api:recipe-poor-recipes')
+        response = self.client.get(url_path)
+        body = response.json()
+        self.assertIn('poor_recipes', body)
+        self.assertEqual(0, len(body['poor_recipes']))
+
+    def test_poor_recipes_some(self):
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
+        r_1 = Recipe.objects.create(
+            title='Recipe TITLE',
+            recipe_type=RecipeTypes.SALAD,
+            creator=u
+        )
+        r_2 = Recipe.objects.create(
+            title='Recipe TITLE 2',
+            recipe_type=RecipeTypes.SALAD,
+            creator=u,
+        )
+        Ingredient.objects.create(
+            amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff', recipe=r_1
+        )
+        url_path = reverse('planner:api:recipe-poor-recipes')
+        response = self.client.get(url_path)
+        body = response.json()
+        self.assertIn('poor_recipes', body)
+        self.assertEqual(1, len(body['poor_recipes']))
+        self.assertEqual(r_2.title, body['poor_recipes'][0])  # should just have r_2 in it
+
+    def test_poor_recipes_none(self):
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
+        r_1 = Recipe.objects.create(
+            title='Recipe TITLE',
+            recipe_type=RecipeTypes.SALAD,
+            creator=u
+        )
+        r_2 = Recipe.objects.create(
+            title='Recipe TITLE 2',
+            recipe_type=RecipeTypes.SALAD,
+            creator=u,
+
+        )
+        Ingredient.objects.create(
+            amount=AmountType.ONE_HALF, measurement=MeasurementType.TEASPOON, item_description='Foodstuff', recipe=r_1
+        )
+        Ingredient.objects.create(
+            amount=AmountType.ONE_HALF, measurement=MeasurementType.TABLESPOON, item_description='Foodstuff', recipe=r_2
+        )
+        url_path = reverse('planner:api:recipe-poor-recipes')
+        response = self.client.get(url_path)
+        body = response.json()
+        self.assertIn('poor_recipes', body)
+        self.assertEqual(0, len(body['poor_recipes']))
+
+    def test_poor_recipes_all(self):
+        u = User.objects.create_user(username='dummy', password='pass', first_name='A', last_name='B')
+        r_1 = Recipe.objects.create(
+            title='Recipe TITLE',
+            recipe_type=RecipeTypes.SALAD,
+            creator=u
+        )
+        r_2 = Recipe.objects.create(
+            title='Recipe TITLE 2',
+            recipe_type=RecipeTypes.SALAD,
+            creator=u,
+
+        )
+        Ingredient.objects.create(
+            item_description='Foodstuff 1', recipe=r_1
+        )
+        Ingredient.objects.create(
+            item_description='Foodstuff 2', recipe=r_2
+        )
+        url_path = reverse('planner:api:recipe-poor-recipes')
+        response = self.client.get(url_path)
+        body = response.json()
+        self.assertIn('poor_recipes', body)
+        self.assertEqual(0, len(body['poor_recipes']))

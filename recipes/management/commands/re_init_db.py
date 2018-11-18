@@ -2,8 +2,9 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 
+from recipes.models.enums import MeasurementType, AmountType
 from recipes.models.recipe import Recipe, RecipeTypes
-from recipes.models.ingredient import Ingredient, MeasurementType, AmountType
+from recipes.models.ingredient import Ingredient
 from recipes.models.planning import Calendar
 
 

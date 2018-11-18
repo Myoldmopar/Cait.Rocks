@@ -2,7 +2,8 @@
 from django.test import TestCase
 import six
 
-from recipes.models.ingredient import Ingredient, AmountType, MeasurementType
+from recipes.models.enums import AmountType, MeasurementType
+from recipes.models.ingredient import Ingredient
 
 
 class IngredientModelConstructionTests(TestCase):

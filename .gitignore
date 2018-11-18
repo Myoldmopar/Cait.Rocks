@@ -6,6 +6,7 @@ staticfiles
 old.db.sqlite3
 coverage/
 upload/
+heroku_db*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

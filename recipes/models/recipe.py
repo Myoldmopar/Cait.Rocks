@@ -90,9 +90,13 @@ class Recipe(models.Model):
         return True
 
     @staticmethod
-    def get_poor_recipes():
+    def get_poor_recipes(request_user_id=None):
         dumb_recipes = []
-        for recipe in Recipe.objects.all():
+        if request_user_id:
+            recipes_to_search = Recipe.objects.filter(creator=request_user_id)
+        else:
+            recipes_to_search = Recipe.objects.all()
+        for recipe in recipes_to_search:
             if recipe.is_poor():
                 dumb_recipes.append(recipe.title)
         return dumb_recipes

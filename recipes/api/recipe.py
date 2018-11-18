@@ -31,7 +31,7 @@ class RecipeViewSet(mixins.CreateModelMixin, viewsets.ReadOnlyModelViewSet):
         if request.user.is_anonymous:
             return JsonResponse(
                 {
-                    'message': 'Must be logged in to create calendar!'
+                    'message': 'Must be logged in to create recipe!'
                 },
                 status=status.HTTP_403_FORBIDDEN
             )
@@ -47,4 +47,11 @@ class RecipeViewSet(mixins.CreateModelMixin, viewsets.ReadOnlyModelViewSet):
 
     @decorators.action(methods=['GET'], detail=False)
     def poor_recipes(self, request):
-        return JsonResponse({'poor_recipes': Recipe.get_poor_recipes()})
+        if request.user.is_anonymous:
+            return JsonResponse(
+                {
+                    'message': 'Must be logged in to get poor recipe list!'
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+        return JsonResponse({'poor_recipes': Recipe.get_poor_recipes(request.user.id)})

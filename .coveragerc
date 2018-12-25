@@ -3,5 +3,6 @@ omit =
         /usr/*
         .tox/*
         */.pyenv/*
+        */venv/*
         recipes/migrations/*
         manage.py
